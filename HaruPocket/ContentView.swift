@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  HaruPocket
 //
-//  Created by 장지현 on 5/12/25.
+//  Created by ten on 5/12/25.
 //
 
 import SwiftUI
