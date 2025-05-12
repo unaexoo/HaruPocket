@@ -15,7 +15,7 @@ class BasicEntry {
     @Attribute(.unique) var id: UUID
     var title: String
     var content: String?
-    var createAt: Date
+    var date: Date
     var money: Int
     var imageBase64: String?  // SwiftData는 Data 저장 불가 → Base64 문자열
 
@@ -25,7 +25,7 @@ class BasicEntry {
         id: UUID = UUID(),
         title: String,
         content: String? = nil,
-        createAt: Date = Date(),
+        date: Date = Date(),
         money: Int,
         imageData: Data? = nil,
         category: Category? = nil
@@ -33,7 +33,7 @@ class BasicEntry {
         self.id = id
         self.title = title
         self.content = content
-        self.createAt = createAt
+        self.date = date
         self.money = money
         self.imageBase64 = imageData?.base64EncodedString()
         self.category = category
