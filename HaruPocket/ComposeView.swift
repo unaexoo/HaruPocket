@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 // FIXME: 임시
 enum TemporaryCategory: String, Identifiable, Hashable, CaseIterable {
@@ -16,14 +17,20 @@ enum TemporaryCategory: String, Identifiable, Hashable, CaseIterable {
 }
 
 struct ComposeView: View {
+    @AppStorage("username") var username: String = "default_user" // 데이터 받고, 그 안에서
+
     @Environment(\.dismiss) private var dismiss
 
     @State private var date = Date.now // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
-    @State private var category: TemporaryCategory? = .food
+    @State private var selectedCategory: Category?
+
     @State private var title: String = ""
     @State private var money: String = ""
     @State private var content: String = ""
     @State private var img: String = ""
+
+//    @Query var categories: [Category]
+    let categories = Category.sampleList
 
     var body: some View {
         VStack {
@@ -77,13 +84,14 @@ struct ComposeView: View {
                                 .padding(.leading, 10)
 
                             Menu {
-                                ForEach(TemporaryCategory.allCases) { item in
+                                ForEach(categories) { category in
                                     Button {
-                                        category = item
+                                        selectedCategory = category
+                                        print("\(category.color)")
                                     } label: {
-                                        Text(item.rawValue)
+                                        Text("\(category.name)")
 
-                                        if item == category {
+                                        if category == selectedCategory {
                                             Spacer()
                                             Image(systemName: "checkmark")
                                         }
@@ -91,27 +99,37 @@ struct ComposeView: View {
                                 }
                             } label: {
                                 HStack(spacing: 2) {
-                                    Text(category?.rawValue ?? "카테고리 없음")
-                                        .tint(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    if let category = selectedCategory {
+                                        Text("\(category.name)")
+                                            .tint(.primary)
+//                                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                                    // 1번
-                                    //                                    Text("🍚")
-                                    //                                        .font(.footnote)
-                                    //                                        .padding(7)
-                                    //                                        .background(.red)
-                                    //                                        .clipShape(Circle())
+                                        // 1번
+                                        //                                    Text("🍚")
+                                        //                                        .font(.footnote)
+                                        //                                        .padding(7)
+                                        //                                        .background(.red)
+                                        //                                        .clipShape(Circle())
 
-                                    //                                    Text("🍚")
-                                    //                                        .font(.footnote)
+                                        //                                    Text("🍚")
+                                        //                                        .font(.footnote)
 
-                                    Circle()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(.red)
+                                        Circle()
+                                            .fill(category.color)
+                                            .frame(width: 15, height: 15)
 
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color.lightPointColor)
+                                    } else {
+                                        Text("카테고리 선택")
+                                            .tint(.secondary)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(Color.lightPointColor)
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color.lightPointColor)
+
+                                    }
+
                                 }
                                 .padding()
                             }
