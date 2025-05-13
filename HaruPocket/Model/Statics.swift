@@ -13,30 +13,72 @@ import SwiftData
 @Model
 class Statics {
     @Attribute(.unique) var id: UUID
-    var name: String
+    var userID: String
+    var categoryName: String
     private var colorHex: String
     var totalAmount: Int
     var categoryAmount: Int
     var categoryCount: Int
 
     var color: Color {
-        get { Color(hexString: colorHex) }
+        get { Color(colorHex) }
         set { colorHex = newValue.toHex() ?? "#000000" }
     }
 
     init(
         id: UUID = UUID(),
-        name: String,
+        userID: String,
+        categoryName: String,
         color: Color,
-        totalAmount: Int,
-        categoryAmount: Int,
-        categoryCount: Int,
+        totalAmount: Int = 0,
+        categoryAmount: Int = 0,
+        categoryCount: Int = 0
     ) {
         self.id = id
-        self.name = name
+        self.userID = userID
+        self.categoryName = categoryName
         self.colorHex = color.toHex() ?? "#000000"
         self.totalAmount = totalAmount
         self.categoryAmount = categoryAmount
         self.categoryCount = categoryCount
+    }
+}
+
+extension Statics {
+    static func fetchOrCreate(
+        context: ModelContext,
+        userID: String,
+        categoryName: String,
+        categoryColor: Color
+    ) -> Statics {
+        let descriptor = FetchDescriptor<Statics>(
+            predicate: #Predicate {
+                $0.userID == userID && $0.categoryName == categoryName
+            }
+        )
+
+        if let existing = try? context.fetch(descriptor).first {
+            return existing
+        } else {
+            let newStat = Statics(
+                userID: userID,
+                categoryName: categoryName,
+                color: categoryColor
+            )
+            context.insert(newStat)
+            return newStat
+        }
+    }
+
+    func updateWith(entry: BasicEntry) {
+        categoryAmount += entry.money
+        categoryCount += 1
+        totalAmount += entry.money
+    }
+
+    func removeEntry(_ entry: BasicEntry) {
+        categoryAmount -= entry.money
+        categoryCount = max(categoryCount - 1, 0)
+        totalAmount = max(totalAmount - entry.money, 0)
     }
 }

@@ -10,23 +10,27 @@ import SwiftData
 
 @main
 struct HaruPocketApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    let sharedModelContainer: ModelContainer
+
+    init() {
+        let schema = Schema([BasicEntry.self, Category.self, Statics.self])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            sharedModelContainer = try ModelContainer(for: schema, configurations: [config])
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            print("모델 컨테이너 생성 실패:", error)
+            sharedModelContainer = try! ModelContainer(
+                for: schema,
+                configurations: [.init(schema: schema, isStoredInMemoryOnly: true)]
+            )
         }
-    }()
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView(viewModel: SpendingViewModel())
+                .modelContainer(sharedModelContainer)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
