@@ -29,10 +29,17 @@ struct SelectCategoryView: View {
 
                     ForEach(categories) { category in
                         HStack {
+                            Circle()
+                                .fill(category.color)
+                                .frame(width: 10, height: 10)
+                                .padding(.trailing)
+
                             Text(category.name)
                                 .foregroundColor(selected == category ? Color.lightPointColor : .primary)
 
                             Spacer()
+
+
 
                             if selected == category {
                                 Image(systemName: "checkmark")
@@ -45,6 +52,8 @@ struct SelectCategoryView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .listStyle(.plain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
