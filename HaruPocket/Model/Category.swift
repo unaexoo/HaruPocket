@@ -29,7 +29,7 @@ class Category {
 
     @Transient
     var color: Color {
-        get { Color(colorHex) }
+        get { Color(hexString: colorHex) }
         set { colorHex = newValue.toHex() ?? "#000000" }
     }
 }
