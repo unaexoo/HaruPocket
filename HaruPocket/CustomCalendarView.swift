@@ -6,12 +6,13 @@ struct CustomCalendarView: View {
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("username") private var username: String = "default_user"
 
-    @ObservedObject var spendingViewModel: SpendingViewModel
     @StateObject private var calendarViewModel: CalendarViewModel
+    @StateObject private var spendingViewModel = SpendingViewModel()
 
-    init(viewModel: SpendingViewModel) {
-        self._calendarViewModel = StateObject(wrappedValue: CalendarViewModel(username: viewModel.username))
-        self.spendingViewModel = viewModel
+    init() {
+        let storedUsername = UserDefaults.standard.string(forKey: "username") ?? "default_user"
+        _calendarViewModel = StateObject(wrappedValue: CalendarViewModel(username: storedUsername))
+        _spendingViewModel = StateObject(wrappedValue: SpendingViewModel())
     }
 
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
@@ -43,6 +44,16 @@ struct CustomCalendarView: View {
 
         }
         .padding()
+        .onAppear {
+            spendingViewModel.username = username
+            spendingViewModel.loadCategory(context: context)
+            spendingViewModel.loadEntry(context: context)
+            spendingViewModel.updateStatics(context: context)
+
+            Task {
+                await spendingViewModel.insertSampleData(context: context)
+            }
+        }
 
     }
 
@@ -142,6 +153,6 @@ struct CustomCalendarView: View {
 
 
 #Preview {
-    CustomCalendarView(viewModel: SpendingViewModel())
+    CustomCalendarView()
         .modelContainer(for: [BasicEntry.self, Category.self, Statics.self], inMemory: true)
 }
