@@ -23,7 +23,7 @@ struct ComposeView: View {
     @State private var date = Date.now // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
     @State private var selectedCategory: Category?
     //    @State private var categories: [Category] = []
-
+    @State private var presentModal: Bool = false
     @State private var title: String = ""
     @State private var money: String = ""
     @State private var content: String = ""
@@ -85,46 +85,81 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
-                            Menu {
-                                ForEach(categories) { category in
+                            if categories.count <= 6 {
+                                Menu {
                                     Button {
-                                        selectedCategory = category
+                                        // FIXME: CategoryComposeView Push
                                     } label: {
-                                        Text("\(category.name)")
+                                        Label("새로운 카테고리", systemImage: "plus")
+                                    }
+                                    
+                                    ForEach(categories) { category in
+                                        Button {
+                                            selectedCategory = category
+                                        } label: {
+                                            Text(category.name)
 
-                                        if category == selectedCategory {
-                                            Spacer()
-                                            Image(systemName: "checkmark")
+                                            if category == selectedCategory {
+                                                Spacer()
+                                                Image(systemName: "checkmark")
+                                            }
                                         }
                                     }
+                                } label: {
+                                    HStack(spacing: 2) {
+                                        let category = selectedCategory ?? basics?.category
+
+                                        HStack(spacing: 2) {
+                                            Text(category?.name ?? "카테고리 선택")
+                                                .tint(category == nil ? .secondary : .primary)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                                            if let category {
+                                                Text(category.emoji)
+                                                    .font(.footnote)
+                                                    .padding(7)
+                                                    .background(category.color)
+                                                    .clipShape(Circle())
+                                                    .frame(maxHeight: 10)
+                                            }
+
+                                            Image(systemName: "chevron.right")
+                                                .foregroundStyle(Color.lightPointColor)
+                                        }
+                                    }
+                                    .padding()
                                 }
-                            } label: {
-                                HStack(spacing: 2) {
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.lightPointColor, lineWidth: 1)
+                                }
+                            } else {
+                                Button {
+                                    presentModal = true
+                                } label: {
                                     let category = selectedCategory ?? basics?.category
 
-                                    HStack(spacing: 2) {
-                                        Text(category?.name ?? "카테고리 선택")
-                                            .tint(category == nil ? .secondary : .primary)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(category?.name ?? "카테고리 선택")
+                                        .tint(category == nil ? .secondary : .primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        if let category {
-                                            Text(category.emoji)
-                                                .font(.footnote)
-                                                .padding(7)
-                                                .background(category.color)
-                                                .clipShape(Circle())
-                                                .frame(maxHeight: 10)
-                                        }
-
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(Color.lightPointColor)
+                                    if let category {
+                                        Text(category.emoji)
+                                            .font(.footnote)
+                                            .padding(7)
+                                            .background(category.color)
+                                            .clipShape(Circle())
+                                            .frame(maxHeight: 10)
                                     }
+
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(Color.lightPointColor)
                                 }
                                 .padding()
-                            }
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.lightPointColor, lineWidth: 1)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.lightPointColor, lineWidth: 1)
+                                }
                             }
                         }
                     }
@@ -173,6 +208,13 @@ struct ComposeView: View {
             }
         }
         .environment(\.locale, Locale(identifier: "ko_kr"))
+        .sheet(isPresented: $presentModal) {
+                SelectCategoryView { item in
+                    selectedCategory = item
+                    presentModal = false
+                }
+//                    .presentationDetents([.medium, .large]) // half sheet
+        }
         //        .onAppear {
         //            fetchCategories()
         //        }
