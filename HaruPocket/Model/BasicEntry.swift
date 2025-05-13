@@ -18,7 +18,7 @@ class BasicEntry {
     var date: Date
     var money: Int
     var imageBase64: String?  // SwiftData는 Data 저장 불가 → Base64 문자열
-
+    var userID: String
     @Relationship var category: Category?  // N:1 관계
 
     init(
@@ -28,6 +28,7 @@ class BasicEntry {
         date: Date = Date(),
         money: Int,
         imageData: Data? = nil,
+        userID: String,
         category: Category? = nil
     ) {
         self.id = id
@@ -36,6 +37,7 @@ class BasicEntry {
         self.date = date
         self.money = money
         self.imageBase64 = imageData?.base64EncodedString()
+        self.userID = userID
         self.category = category
     }
 
