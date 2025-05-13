@@ -8,29 +8,32 @@
 import SwiftUI
 import SwiftData
 
-// FIXME: 임시
-enum TemporaryCategory: String, Identifiable, Hashable, CaseIterable {
-    case food = "음식"
-    case shopping = "쇼핑"
-
-    var id: Self { return self }
+enum FieldType: Int, Hashable {
+    case title
+    case money
+    case content
 }
 
 struct ComposeView: View {
-    @AppStorage("username") var username: String = "default_user" // 데이터 받고, 그 안에서
+    //    @AppStorage("userID") var userID: String = ""
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
 
     @State private var date = Date.now // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
     @State private var selectedCategory: Category?
+    //    @State private var categories: [Category] = []
 
     @State private var title: String = ""
     @State private var money: String = ""
     @State private var content: String = ""
     @State private var img: String = ""
 
-//    @Query var categories: [Category]
+    @FocusState private var focused: FieldType?
+
+    //    @Query var categories: [Category]
     let categories = Category.sampleList
+    var basics: BasicEntry? = nil
 
     var body: some View {
         VStack {
@@ -60,8 +63,7 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
-                            // TODO: 날짜 포맷팅
-                            Text(date, style: .date)
+                            Text(basics?.date ?? date, style: .date)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .overlay {
@@ -87,7 +89,6 @@ struct ComposeView: View {
                                 ForEach(categories) { category in
                                     Button {
                                         selectedCategory = category
-                                        print("\(category.color)")
                                     } label: {
                                         Text("\(category.name)")
 
@@ -99,37 +100,25 @@ struct ComposeView: View {
                                 }
                             } label: {
                                 HStack(spacing: 2) {
-                                    if let category = selectedCategory {
-                                        Text("\(category.name)")
-                                            .tint(.primary)
-//                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    let category = selectedCategory ?? basics?.category
 
-                                        // 1번
-                                        //                                    Text("🍚")
-                                        //                                        .font(.footnote)
-                                        //                                        .padding(7)
-                                        //                                        .background(.red)
-                                        //                                        .clipShape(Circle())
-
-                                        //                                    Text("🍚")
-                                        //                                        .font(.footnote)
-
-                                        Circle()
-                                            .fill(category.color)
-                                            .frame(width: 15, height: 15)
-
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(Color.lightPointColor)
-                                    } else {
-                                        Text("카테고리 선택")
-                                            .tint(.secondary)
+                                    HStack(spacing: 2) {
+                                        Text(category?.name ?? "카테고리 선택")
+                                            .tint(category == nil ? .secondary : .primary)
                                             .frame(maxWidth: .infinity, alignment: .leading)
 
+                                        if let category {
+                                            Text(category.emoji)
+                                                .font(.footnote)
+                                                .padding(7)
+                                                .background(category.color)
+                                                .clipShape(Circle())
+                                                .frame(maxHeight: 10)
+                                        }
+
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(Color.lightPointColor)
-
                                     }
-
                                 }
                                 .padding()
                             }
@@ -142,63 +131,16 @@ struct ComposeView: View {
                 }
 
                 GridRow {
-                    HStack {
-                        VStack(spacing: 5) {
-                            Text("제목")
-                                .font(.callout)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 10)
-
-                            TextField("제목", text: $title)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.lightPointColor, lineWidth: 1)
-                                }
-                        }
-                    }
+                    textFieldView(value: $title, focused: $focused, title: "제목", fieldType: .title, basics: basics)
                 }
 
                 GridRow {
-                    HStack {
-                        VStack(spacing: 5) {
-                            Text("가격")
-                                .font(.callout)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 10)
-
-                            TextField("가격", text: $money)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.lightPointColor, lineWidth: 1)
-                                }
-                        }
-                    }
+                    textFieldView(value: $money, focused: $focused, title: "가격", fieldType: .money, basics: basics)
                 }
 
                 GridRow {
-                    HStack {
-                        VStack(spacing: 5) {
-                            Text("내용")
-                                .font(.callout)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 10)
-
-                            TextField("내용", text: $content)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.lightPointColor, lineWidth: 1)
-                                }
-                        }
-                    }
+                    textFieldView(value: $content, focused: $focused, title: "내용", fieldType: .content, basics: basics)
                 }
-
-
             }
 
         }
@@ -230,12 +172,102 @@ struct ComposeView: View {
                 }
             }
         }
+        .environment(\.locale, Locale(identifier: "ko_kr"))
+        //        .onAppear {
+        //            fetchCategories()
+        //        }
     }
 
+    //    private func fetchCategories() {
+    //        let descriptor = FetchDescriptor<Category>(
+    //            predicate: #Predicate { $0.userID == userID }
+    //        )
+    //        do {
+    //            categories = try context.fetch(descriptor)
+    //        } catch {
+    //            print("Fetch error: \(error)")
+    //        }
+    //    }
 }
 
-#Preview {
+#Preview("Create") {
+    NavigationStack {
+        ComposeView(basics: BasicEntry(
+            title: "샘플 소비",
+            content: "테스트",
+            date: Date(),
+            money: 10000,
+            userID: "default_user",
+            category: Category(
+                name: "테스트",
+                color: .blue,
+                emoji: "💡",
+                userID: "default_user"
+            )
+        ))
+    }
+}
+
+#Preview("Update") {
     NavigationStack {
         ComposeView()
+    }
+}
+
+struct textFieldView: View {
+    @Binding var value: String
+    @FocusState<FieldType?>.Binding var focused: FieldType?
+    var title: String
+    var fieldType: FieldType
+    var basics: BasicEntry?
+
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(title)
+                .font(.callout)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 10)
+
+            HStack {
+                TextField(title, text: $value)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .focused($focused, equals: fieldType)
+                    .submitLabel(title != "내용" ? .next : .done)
+                    .onSubmit {
+                        switch fieldType {
+                        case .title:
+                            focused = .money
+                        case .money:
+                            focused = .content
+                        case .content:
+                            focused = nil
+                        }
+                    }
+                    .onAppear{
+                        if let basics {
+                            switch fieldType {
+                            case .title:
+                                value = basics.title
+                            case .money:
+                                value = String(basics.money)
+                            case .content:
+                                value = basics.content ?? ""
+                            }
+                        }
+                    }
+
+                Text(title == "가격" ? "원" : "")
+                    .padding(.horizontal)
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.lightPointColor, lineWidth: 1)
+            }
+
+        }
     }
 }
