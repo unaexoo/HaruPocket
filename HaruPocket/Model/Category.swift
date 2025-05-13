@@ -15,13 +15,15 @@ class Category {
     var name: String
     private var colorHex: String
     var emoji: String
+    var userID: String
     @Relationship(deleteRule: .cascade, inverse: \BasicEntry.category) var diary: [BasicEntry] = []
 
-    init(id: UUID = UUID(), name: String, color: Color, emoji: String) {
+    init(id: UUID = UUID(), name: String, color: Color, emoji: String, userID: String) {
         self.id = id
         self.name = name
         self.colorHex = color.toHex() ?? "#000000"
         self.emoji = emoji
+        self.userID = userID
     }
 
     var color: Color {
