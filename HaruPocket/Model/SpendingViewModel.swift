@@ -9,6 +9,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 
+/// CRUD
 class SpendingViewModel: ObservableObject {
     @Published var spending: [BasicEntry] = []
     @Published var categories: [Category] = []
