@@ -110,8 +110,15 @@ struct StatisticsView: View {
                                     Circle()
                                         .fill(items.color)
                                         .frame(width: 10, height: 10)
+
                                     Text(items.title)
                                         .font(.callout)
+
+                                    Spacer()
+
+                                    Text("\(items.count)건")
+                                        .font(.callout)
+                                        .foregroundStyle(.gray)
                                 }
                             }
                         }
@@ -170,8 +177,15 @@ struct StatisticsView: View {
                                     Circle()
                                         .fill(items.color)
                                         .frame(width: 10, height: 10)
+
                                     Text(items.title)
                                         .font(.callout)
+
+                                    Spacer()
+
+                                    Text("\(items.money)원")
+                                        .font(.callout)
+                                        .foregroundStyle(.gray)
                                 }
                             }
                         }
