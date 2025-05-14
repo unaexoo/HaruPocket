@@ -12,7 +12,10 @@ struct SelectCategoryView: View {
 
     @Environment(\.dismiss) var dismiss
     @Environment(\.editMode) private var editMode
+    @Environment(\.colorScheme) private var colorScheme
+
     @State private var selected: Category? = nil
+    @State private var showCategoryComposeView = false
 
     let categories = Category.sampleList
 
@@ -21,7 +24,7 @@ struct SelectCategoryView: View {
             VStack {
                 List(selection: $selected) {
                     Button {
-                        // FIXME: CategoryComposeView Push
+                        showCategoryComposeView = true
                     } label: {
                         Label("새로운 카테고리", systemImage: "plus")
                     }
@@ -83,6 +86,9 @@ struct SelectCategoryView: View {
             }
             .toolbarBackground(Color.creamWhite, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            .navigationDestination(isPresented: $showCategoryComposeView) {
+                CategoryComposeView()
+            }
         }
         .onAppear {
             editMode?.wrappedValue = .active
