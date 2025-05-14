@@ -137,7 +137,7 @@ struct ComposeView: View {
                                     .onSubmit {
                                         focused = nil
                                     }
-                                    .onAppear{
+                                    .onAppear {
                                         content = basics?.content ?? ""
                                     }
                                     .scrollIndicators(.hidden)
@@ -251,7 +251,7 @@ extension ComposeView {
     NavigationStack {
         ComposeView(basics: .constant(BasicEntry(
             title: "샘플 이미지 항목 1",
-            content: "테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.",
+            content: "테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.",
             date: Date(),
             money: 42494,
             imageFileName: "gift.jpg",
@@ -300,7 +300,6 @@ struct textFieldView: View {
                 TextField(title, text: $value)
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .focused($focused, equals: fieldType)
@@ -315,7 +314,7 @@ struct textFieldView: View {
                             focused = nil
                         }
                     }
-                    .onAppear{
+                    .onAppear {
                         if let basics {
                             switch fieldType {
                             case .title:
