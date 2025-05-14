@@ -105,7 +105,9 @@ struct CustomCalendarView: View {
                             case .category:
                                 CategoryView()
                             case .list:
-                                CategoryView()
+                                CategoryListView(
+                                    category: spendingViewModel.categories[0]
+                                )
                             case .photo:
                                 CategoryView()
                             case .stats:
@@ -382,7 +384,7 @@ struct EntryListView: View {
 
                                 ForEach(group, id: \.id) { entry in
                                     NavigationLink(
-                                        destination: CategoryView() /*DetailView(entry: entry)*/
+                                        destination: DetailView()
                                     ) {
                                         HStack {
                                             Circle()
