@@ -22,7 +22,7 @@ struct StatisticsView: View {
     @Environment(\.modelContext) private var context
 
     @AppStorage("username") private var username: String = "default_user"
-    @StateObject private var spendingViewModel = SpendingViewModel()
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
     @StateObject private var statisticsViewModel: StatisticsViewModel
 
     init() {
@@ -224,6 +224,7 @@ struct StatisticsView: View {
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
             )
+            .environmentObject(SpendingViewModel())
     }
 }
 
