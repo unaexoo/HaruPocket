@@ -9,130 +9,112 @@ import SwiftUI
 import EmojiPicker
 
 struct CategoryComposeView: View {
-    @State private var title: String = ""
-    @State private var selectedColor: Color? = nil
-    @State private var selectedEmoji: String = ""
+    @State private var name: String = ""
+    @State private var selectedColor: Color = Color.lightMainColor
+    @State private var selectedEmoji: String = "🫥"
     @State private var isColorPickerVisible: Bool = false
     @State private var isEmojiPickerVisible: Bool = false
 
-    //var onSave: (CategoryModel) -> Void
-//    var onCancel: () -> Void
-    @Environment(\.dismiss) var dismiss
+    @AppStorage("username") private var username: String = "default_user"
+
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
+
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+
+    @Binding var category: Category?
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 30) {
-                // 제목 입력
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("제목")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                        .padding(.leading, 10)
+        VStack(spacing: 30) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("제목")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .padding(.leading, 10)
 
-                    TextField("카테고리 이름", text: $title)
-                        .padding(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.lightPointColor, lineWidth: 1)
-                        )
-                }
+                TextField("카테고리 이름", text: $name)
+                    .padding(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.lightPointColor, lineWidth: 1)
+                    )
+                    .onAppear {
+                        name = category?.name ?? ""
+                    }
+            }
 
-                // 색상 선택
-                VStack {
-                    HStack {
-                        Text("색상")
-                            .font(.title2)
-                            .foregroundColor(.black)
+            VStack {
+                HStack {
+                    Text("색상")
+                        .font(.title2)
+                        .foregroundColor(.black)
 
-                        Spacer()
+                    Spacer()
 
-                        ColorPicker("색상", selection: Binding(
-                            get: { selectedColor ?? .gray },
-                            set: { selectedColor = $0 }
-                        ))
+                    ColorPicker("색상", selection: $selectedColor)
                         .labelsHidden()
                         .onTapGesture {
                             withAnimation {
                                 isColorPickerVisible.toggle()
                             }
                         }
-                        // '>' 버튼 없음
-                    }
-                    .padding(.horizontal, 10)
+                }
 
-                    if isColorPickerVisible {
-                        ColorPicker("", selection: Binding(
-                            get: { selectedColor ?? .gray },
-                            set: { selectedColor = $0 }
-                        ))
+                if isColorPickerVisible {
+                    ColorPicker("", selection: $selectedColor)
                         .labelsHidden()
-                        .padding(.horizontal, 10)
                         .transition(.opacity.combined(with: .move(edge: .top)))
-                    }
                 }
+            }
 
-                // 이모지 선택
-                HStack {
-                    Text("이모지")
-                        .font(.title2)
-                        .foregroundColor(.black)
-
-                    Spacer()
-
-                    Group {
-                        if selectedEmoji.isEmpty {
-                            Image(systemName: "smiley")
-                                .foregroundColor(.gray)
-                                .font(.title2)
-                        } else {
-                            Text(selectedEmoji)
-                                .font(.title2)
-                        }
-                    }
-                    .onTapGesture {
-                        withAnimation {
-                            isEmojiPickerVisible.toggle()
-                        }
-                    }
-                }
-                .padding(.horizontal, 10)
+            HStack {
+                Text("이모지")
+                    .font(.title2)
+                    .foregroundColor(.black)
 
                 Spacer()
+
+                Text(selectedEmoji)
+                    .font(.title2)
+                    .onTapGesture {
+                        isEmojiPickerVisible.toggle()
+                    }
             }
-            .padding()
-            .padding(.top, -30)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-//                        onCancel()
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Color.lightPointColor)
-                    }
+
+            Spacer()
+        }
+        .padding(20)
+        .onAppear {
+            selectedColor = category?.color ?? Color.lightMainColor
+            selectedEmoji = category?.emoji ?? "🫥"
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color.lightPointColor)
                 }
+            }
 
-                ToolbarItem(placement: .principal) {
-                    Text("카테고리 생성")
-                        .font(.title2)
-                }
+            ToolbarItem(placement: .principal) {
+                Text(category != nil ? "카테고리 수정" : "카테고리 생성")
+                    .font(.title2)
+            }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("완료") {
-                        guard let color = selectedColor, !title.isEmpty, !selectedEmoji.isEmpty else { return }
-
-                        //let newCategory = CategoryModel(
-//                            title: title,
-//                            color: color,
-//                            emoji: selectedEmoji
-//                        )
-                        //onSave(newCategory)
-                    }
-                    .foregroundColor(Color.lightPointColor)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    save()
+                } label: {
+                    Text("완료")
+                        .font(.title3)
+                        .foregroundColor(Color.lightPointColor)
                 }
             }
         }
@@ -146,9 +128,44 @@ struct CategoryComposeView: View {
     }
 }
 
+extension CategoryComposeView {
+    func save() {
+        if let category {
+            category.name = name
+            category.color = selectedColor
+            category.emoji = selectedEmoji
+        } else {
+            let newCategory = Category(
+                name: name,
+                color: selectedColor,
+                emoji: selectedEmoji,
+                userID: username
+            )
+            context.insert(newCategory)
+        }
+
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            print("저장 실패: \(error.localizedDescription)")
+        }
+    }
+}
+
 #Preview {
-    CategoryComposeView(
-        //onSave: { _ in },
-//        onCancel: { }
-    )
+    NavigationStack {
+        CategoryComposeView(category: .constant(nil))
+    }
+}
+
+#Preview("수정") {
+    NavigationStack {
+        CategoryComposeView(category: .constant(Category(
+            name: "테스트",
+            color: .blue,
+            emoji: "💡",
+            userID: "default_user"
+        )))
+    }
 }
