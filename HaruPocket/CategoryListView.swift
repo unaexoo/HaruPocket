@@ -107,7 +107,7 @@ struct CategoryListView: View {
             }
         }
         .navigationDestination(isPresented: $showCateogryComposeView) {
-            CategoryEditView()
+//            CategoryEditView()
         }
     }
 

@@ -147,7 +147,7 @@ struct CategoryView: View {
             CategoryListComposeView(categories: categories)
         }
         .navigationDestination(isPresented: $showCategoryComposeView) {
-            CategoryComposeView()
+//            CategoryComposeView()
         }
     }
 }
