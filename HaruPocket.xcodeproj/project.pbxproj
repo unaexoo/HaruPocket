@@ -15,9 +15,22 @@
 		4EF8C80B2DD11B0C00C387E1 /* HaruPocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HaruPocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7A6BD45F2DD45C4E00C4759A /* Exceptions for "HaruPocket" folder in "HaruPocket" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4EF8C80A2DD11B0C00C387E1 /* HaruPocket */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4EF8C80D2DD11B0C00C387E1 /* HaruPocket */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7A6BD45F2DD45C4E00C4759A /* Exceptions for "HaruPocket" folder in "HaruPocket" target */,
+			);
 			path = HaruPocket;
 			sourceTree = "<group>";
 		};
