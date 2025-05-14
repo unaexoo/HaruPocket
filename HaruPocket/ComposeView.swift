@@ -17,7 +17,7 @@ enum FieldType: Int, Hashable {
 struct ComposeView: View {
     @AppStorage("username") private var username: String = "default_user"
 
-    @StateObject private var spendingViewModel = SpendingViewModel()
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -119,7 +119,6 @@ struct ComposeView: View {
                 }
 
                 GridRow {
-//                    textFieldView(value: $content, focused: $focused, basics: $basics, title: "내용", fieldType: .content)
                     VStack(spacing: 5) {
                         Text("내용")
                             .font(.callout)
@@ -130,7 +129,6 @@ struct ComposeView: View {
                             TextEditor(text: $content)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
-
                                 .textInputAutocapitalization(.never)
                                 .autocorrectionDisabled()
                                 .focused($focused, equals: .content)
@@ -142,6 +140,7 @@ struct ComposeView: View {
                                 .onAppear{
                                     content = basics?.content ?? ""
                                 }
+                                .scrollIndicators(.hidden)
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 10)
@@ -207,7 +206,6 @@ struct ComposeView: View {
 extension ComposeView {
     func save() {
         if let basics {
-            // 기존 항목 수정
             basics.title = title
             basics.money = Int(money) ?? 0
             basics.content = content
@@ -215,7 +213,6 @@ extension ComposeView {
             basics.imageFileName = img
             basics.category = selectedCategory ?? basics.category
         } else {
-            // 새 항목 저장
             let newEntry = BasicEntry(
                 title: title,
                 content: content,
@@ -241,7 +238,7 @@ extension ComposeView {
 
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateStyle = .long     // "2025년 5월 14일"
+        formatter.dateStyle = .long
         formatter.timeStyle = .none
 
         return formatter.string(from: date)
@@ -267,6 +264,7 @@ extension ComposeView {
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true
         )
+        .environmentObject(SpendingViewModel())
     }
 }
 
@@ -277,6 +275,7 @@ extension ComposeView {
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
             )
+            .environmentObject(SpendingViewModel())
     }
 }
 
@@ -303,7 +302,7 @@ struct textFieldView: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .focused($focused, equals: fieldType)
-                    .submitLabel(title != "내용" ? .next : .done)
+                    .submitLabel(.next)
                     .onSubmit {
                         switch fieldType {
                         case .title:
