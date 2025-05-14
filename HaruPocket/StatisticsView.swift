@@ -18,7 +18,9 @@ struct DataItem: Identifiable {
 }
 
 struct StatisticsView: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+
     @AppStorage("username") private var username: String = "default_user"
     @StateObject private var spendingViewModel = SpendingViewModel()
     @StateObject private var statisticsViewModel: StatisticsViewModel
@@ -194,7 +196,7 @@ struct StatisticsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-
+                        dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
                             .resizable()
