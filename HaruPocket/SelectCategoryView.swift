@@ -55,32 +55,34 @@ struct SelectCategoryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("취소")
-                            .font(.title3)
-                            .foregroundColor(Color.lightPointColor)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("취소")
+                                .font(.title3)
+                                .foregroundColor(Color.lightPointColor)
+                        }
                     }
-                }
 
-                ToolbarItem(placement: .principal) {
-                    Text("카테고리 선택")
-                        .font(.title2)
-                }
-
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        onSelect(selected)
-                    } label: {
-                        Text("완료")
-                            .font(.title3)
-                            .foregroundColor(selected == nil ? .gray : Color.lightPointColor)
+                    ToolbarItem(placement: .principal) {
+                        Text("카테고리 선택")
+                            .font(.title2)
                     }
-                    .disabled(selected == nil)
-                }
+
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            onSelect(selected)
+                        } label: {
+                            Text("완료")
+                                .font(.title3)
+                                .foregroundColor(selected == nil ? .gray : Color.lightPointColor)
+                        }
+                        .disabled(selected == nil)
+                    }
             }
+            .toolbarBackground(Color.creamWhite, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
         .onAppear {
             editMode?.wrappedValue = .active

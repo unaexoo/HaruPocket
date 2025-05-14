@@ -15,10 +15,12 @@ enum FieldType: Int, Hashable {
 }
 
 struct ComposeView: View {
-    //    @AppStorage("userID") var userID: String = ""
+    @AppStorage("username") private var username: String = "default_user"
 
-    @Environment(\.dismiss) private var dismiss
+    @StateObject private var spendingViewModel = SpendingViewModel()
+
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
 
     @State private var date = Date.now // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
     @State private var selectedCategory: Category?
@@ -32,7 +34,7 @@ struct ComposeView: View {
     @FocusState private var focused: FieldType?
 
     //    @Query var categories: [Category]
-    let categories = Category.sampleList
+    //    let categories = Category.sampleList
     var basics: BasicEntry? = nil
 
     var body: some View {
@@ -40,19 +42,30 @@ struct ComposeView: View {
             Button {
                 print("이미지 버튼 클릭")
             } label: {
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .tint(Color.lightPointColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-
+                if let uiImage = basics?.image {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 300)
+                        .frame(width: 360)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                }
+                else {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .tint(Color.lightPointColor)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 30)
                     .stroke(Color.lightPointColor, lineWidth: 1)
             }
-            .padding(.vertical)
+            .frame(height: 300)
+            .frame(width: 360)
+            .padding(.bottom)
 
             Grid(verticalSpacing: 20) {
                 GridRow {
@@ -85,6 +98,10 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
+                            let categories = spendingViewModel.categories.filter {
+                                $0.userID == spendingViewModel.username
+                            }
+
                             if categories.count <= 6 {
                                 Menu {
                                     Button {
@@ -92,7 +109,7 @@ struct ComposeView: View {
                                     } label: {
                                         Label("새로운 카테고리", systemImage: "plus")
                                     }
-                                    
+
                                     ForEach(categories) { category in
                                         Button {
                                             selectedCategory = category
@@ -180,7 +197,16 @@ struct ComposeView: View {
 
         }
         .padding()
+        .onAppear {
+            spendingViewModel.username = username
+            spendingViewModel.loadCategory(context: context)
+
+            Task {
+                await spendingViewModel.insertSampleData(context: context)
+            }
+        }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -209,11 +235,11 @@ struct ComposeView: View {
         }
         .environment(\.locale, Locale(identifier: "ko_kr"))
         .sheet(isPresented: $presentModal) {
-                SelectCategoryView { item in
-                    selectedCategory = item
-                    presentModal = false
-                }
-//                    .presentationDetents([.medium, .large]) // half sheet
+            SelectCategoryView { item in
+                selectedCategory = item
+                presentModal = false
+            }
+            //                    .presentationDetents([.medium, .large]) // half sheet
         }
         //        .onAppear {
         //            fetchCategories()
@@ -232,13 +258,14 @@ struct ComposeView: View {
     //    }
 }
 
-#Preview("Create") {
+#Preview("Update") {
     NavigationStack {
         ComposeView(basics: BasicEntry(
-            title: "샘플 소비",
-            content: "테스트",
+            title: "샘플 이미지 항목 1",
+            content: "테스트용 이미지가 포함된 항목입니다.",
             date: Date(),
-            money: 10000,
+            money: 42494,
+            imageFileName: "gift.jpg",
             userID: "default_user",
             category: Category(
                 name: "테스트",
@@ -247,12 +274,20 @@ struct ComposeView: View {
                 userID: "default_user"
             )
         ))
+        .modelContainer(
+            for: [BasicEntry.self, Category.self, Statics.self],
+            inMemory: true
+        )
     }
 }
 
-#Preview("Update") {
+#Preview("Create") {
     NavigationStack {
         ComposeView()
+            .modelContainer(
+                for: [BasicEntry.self, Category.self, Statics.self],
+                inMemory: true
+            )
     }
 }
 
