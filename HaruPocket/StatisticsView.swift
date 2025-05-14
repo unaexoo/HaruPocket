@@ -63,139 +63,10 @@ struct StatisticsView: View {
                 .fontWeight(.semibold)
                 .padding(.vertical, 20)
 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.gray.opacity(0.05))
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                ChartView(title: "최다", dataItems: top5ByCountItems)
 
-                    VStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            Text("어디에 가장 ")
+                ChartView(title: "최대", dataItems: top5ByMoneyItems)
 
-                            Text("자주 ")
-                                .foregroundStyle(Color.lightMainColor)
-
-                            Text("썼을까?")
-                        }
-                        .font(.title3)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
-
-                        Chart(top5ByCountItems) { element in
-                            SectorMark(
-                                angle: .value("Count", element.count),
-                                innerRadius: .ratio(0.618),
-                                angularInset: 1.5
-                            )
-                            .cornerRadius(10.0)
-                            .foregroundStyle(element.color.opacity(0.7))
-                        }
-                        .chartLegend(alignment: .center, spacing: 18)
-                        .chartLegend(.hidden)
-                        .padding()
-                        .scaledToFit()
-                        .frame(width: 300, height: 300)
-
-                        Text("이번 달 최다 소비")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal)
-                            .padding(.top)
-
-                        VStack(alignment: .leading) {
-                            ForEach(top5ByCountItems) { items in
-                                HStack {
-                                    Circle()
-                                        .fill(items.color)
-                                        .frame(width: 10, height: 10)
-
-                                    Text(items.title)
-                                        .font(.callout)
-
-                                    Spacer()
-
-                                    Text("\(items.count)건")
-                                        .font(.callout)
-                                        .foregroundStyle(.gray)
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-
-                    }
-                    .padding(20)
-                }
-
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.gray.opacity(0.05))
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    VStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            Text("어디에 가장 ")
-
-                            Text("많이 ")
-                                .foregroundStyle(Color.lightMainColor)
-
-                            Text("썼을까?")
-                        }
-                        .font(.title3)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
-
-                        Chart(top5ByMoneyItems) { element in
-                            SectorMark(
-                                angle: .value("Money", element.money),
-                                innerRadius: .ratio(0.618),
-                                angularInset: 1.5
-                            )
-                            .cornerRadius(10.0)
-                            .foregroundStyle(element.color.opacity(0.7))
-                        }
-                        .chartLegend(alignment: .center, spacing: 18)
-                        .chartLegend(.hidden)
-                        .padding()
-                        .scaledToFit()
-                        .frame(width: 300, height: 300)
-
-                        Text("이번 달 최고 소비")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal)
-                            .padding(.top)
-
-                        VStack(alignment: .leading) {
-                            ForEach(top5ByMoneyItems) { items in
-                                HStack {
-                                    Circle()
-                                        .fill(items.color)
-                                        .frame(width: 10, height: 10)
-
-                                    Text(items.title)
-                                        .font(.callout)
-
-                                    Spacer()
-
-                                    Text("\(items.money)원")
-                                        .font(.callout)
-                                        .foregroundStyle(.gray)
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-
-                    }
-                    .padding(20)
-                }
             }
             .onAppear {
                 spendingViewModel.username = username
@@ -242,3 +113,77 @@ struct StatisticsView: View {
     }
 }
 
+
+struct ChartView: View {
+    let title: String
+    let dataItems: [DataItem]
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.gray.opacity(0.05))
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    Text("어디에 가장 ")
+                    
+                    Text(title == "최다" ? "자주" : "많이")
+                        .foregroundStyle(Color.lightMainColor)
+                    
+                    Text(" 썼을까?")
+                }
+                .font(.title3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top)
+                .padding(.horizontal)
+                
+                Chart(dataItems) { element in
+                    SectorMark(
+                        angle: .value("angle", title == "최다" ? element.count : element.money),
+                        innerRadius: .ratio(0.618),
+                        angularInset: 1.5
+                    )
+                    .cornerRadius(10.0)
+                    .foregroundStyle(element.color.opacity(0.7))
+                }
+                .chartLegend(alignment: .center, spacing: 18)
+                .chartLegend(.hidden)
+                .padding()
+                .scaledToFit()
+                .frame(width: 300, height: 300)
+                
+                Text(title == "최다" ? "이번 달 최다 소비" : "이번 달 최고 소비")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.top)
+                
+                VStack(alignment: .leading) {
+                    ForEach(dataItems) { items in
+                        HStack {
+                            Circle()
+                                .fill(items.color)
+                                .frame(width: 10, height: 10)
+                            
+                            Text(items.title)
+                                .font(.callout)
+                            
+                            Spacer()
+                            
+                            Text("\(title == "최다" ? items.count : items.money)건")
+                                .font(.callout)
+                                .foregroundStyle(.gray)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                
+            }
+            .padding(20)
+        }
+    }
+}
