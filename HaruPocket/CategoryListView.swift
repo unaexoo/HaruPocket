@@ -13,6 +13,8 @@ struct CategoryListView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("username") private var username: String = "default_user"
 
+    @State private var showCateogryComposeView = false
+
     @StateObject private var spendingViewModel = SpendingViewModel()
 
     @Environment(\.dismiss) var dismiss
@@ -25,15 +27,14 @@ struct CategoryListView: View {
             // 사용자의 항목 중 현재 카테고리에 해당하는 항목만 필터링하고, 날짜 기준 최신순으로 정렬
             let filtereditems = spendingViewModel.spending
                 .filter { ($0.userID == spendingViewModel.username) && ($0.category?.name == category.name) }
-            	// 최신 날짜가 먼저 오도록 정렬
+            // 최신 날짜가 먼저 오도록 정렬
                 .sorted { $0.date > $1.date }
 
 
 
             ForEach(filtereditems) { item in
                 NavigationLink {
-                  
-                  
+                    DetailView()
                 } label: {
                     HStack {
                         VStack(alignment: .leading) {
@@ -66,15 +67,15 @@ struct CategoryListView: View {
         }
         .listStyle(.plain)
         .onAppear {
-                    spendingViewModel.username = username
-                    spendingViewModel.loadCategory(context: context)
-                    spendingViewModel.loadEntry(context: context)
-                    spendingViewModel.updateStatics(context: context)
+            spendingViewModel.username = username
+            spendingViewModel.loadCategory(context: context)
+            spendingViewModel.loadEntry(context: context)
+            spendingViewModel.updateStatics(context: context)
 
-                    Task {
-                        await spendingViewModel.insertSampleData(context: context)
-                    }
-                }
+            Task {
+                await spendingViewModel.insertSampleData(context: context)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -95,7 +96,7 @@ struct CategoryListView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-
+                    showCateogryComposeView = true
                 } label: {
                     Image(systemName: "pencil")
                         .resizable()
@@ -105,8 +106,11 @@ struct CategoryListView: View {
                 }
             }
         }
+        .navigationDestination(isPresented: $showCateogryComposeView) {
+            CategoryEditView()
+        }
     }
-    
+
     // 날짜를 yyyy.MM.dd 형식으로 변환해주는 포맷터 함수
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()

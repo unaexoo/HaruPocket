@@ -11,6 +11,7 @@ struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showDeleteAlert = false
+    @State private var showComposeView = false
 
     let dateString = "2025.05.12"
     let image = Image("sampleImage")
@@ -121,8 +122,9 @@ struct DetailView: View {
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
+
                 Button {
-                    // 수정 화면 이동 처리
+                    showComposeView = true
                 } label: {
                     Image(systemName: "pencil")
                         .resizable()
@@ -149,6 +151,22 @@ struct DetailView: View {
             Button("아니오", role: .cancel) {
                 // alert 자동으로 사라짐
             }
+        }
+        .navigationDestination(isPresented: $showComposeView) {
+            ComposeView(basics: .constant(BasicEntry(
+                title: "샘플 이미지 항목 1",
+                content: "테스트용 이미지가 포함된 항목입니다.",
+                date: Date(),
+                money: 42494,
+                imageFileName: "gift.jpg",
+                userID: "default_user",
+                category: Category(
+                    name: "테스트",
+                    color: .blue,
+                    emoji: "💡",
+                    userID: "default_user"
+                ))))
+
         }
     }
 }

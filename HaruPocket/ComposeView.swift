@@ -22,9 +22,9 @@ struct ComposeView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
-    @State private var date = Date.now // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
+    // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
+    @State private var date = Date.now
     @State private var selectedCategory: Category?
-    //    @State private var categories: [Category] = []
     @State private var presentModal: Bool = false
     @State private var title: String = ""
     @State private var money: String = ""
@@ -33,16 +33,15 @@ struct ComposeView: View {
 
     @FocusState private var focused: FieldType?
 
-    //    @Query var categories: [Category]
-    //    let categories = Category.sampleList
-    var basics: BasicEntry? = nil
+    let basics: Binding<BasicEntry>?
 
     var body: some View {
         VStack {
             Button {
+                // TODO: 이미지피커
                 print("이미지 버튼 클릭")
             } label: {
-                if let uiImage = basics?.image {
+                if let uiImage = basics?.wrappedValue.image {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -76,7 +75,7 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
-                            Text(basics?.date ?? date, style: .date)
+                            Text(basics?.wrappedValue.date ?? Date(), style: .date)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .overlay {
@@ -103,80 +102,9 @@ struct ComposeView: View {
                             }
 
                             if categories.count <= 6 {
-                                Menu {
-                                    Button {
-                                        // FIXME: CategoryComposeView Push
-                                    } label: {
-                                        Label("새로운 카테고리", systemImage: "plus")
-                                    }
-
-                                    ForEach(categories) { category in
-                                        Button {
-                                            selectedCategory = category
-                                        } label: {
-                                            Text(category.name)
-
-                                            if category == selectedCategory {
-                                                Spacer()
-                                                Image(systemName: "checkmark")
-                                            }
-                                        }
-                                    }
-                                } label: {
-                                    HStack(spacing: 2) {
-                                        let category = selectedCategory ?? basics?.category
-
-                                        HStack(spacing: 2) {
-                                            Text(category?.name ?? "카테고리 선택")
-                                                .tint(category == nil ? .secondary : .primary)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-
-                                            if let category {
-                                                Text(category.emoji)
-                                                    .font(.footnote)
-                                                    .padding(7)
-                                                    .background(category.color)
-                                                    .clipShape(Circle())
-                                                    .frame(maxHeight: 10)
-                                            }
-
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(Color.lightPointColor)
-                                        }
-                                    }
-                                    .padding()
-                                }
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.lightPointColor, lineWidth: 1)
-                                }
+                                SelectCategoryByMenu(selectedCategory: $selectedCategory, categories: categories, basics: basics)
                             } else {
-                                Button {
-                                    presentModal = true
-                                } label: {
-                                    let category = selectedCategory ?? basics?.category
-
-                                    Text(category?.name ?? "카테고리 선택")
-                                        .tint(category == nil ? .secondary : .primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                                    if let category {
-                                        Text(category.emoji)
-                                            .font(.footnote)
-                                            .padding(7)
-                                            .background(category.color)
-                                            .clipShape(Circle())
-                                            .frame(maxHeight: 10)
-                                    }
-
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(Color.lightPointColor)
-                                }
-                                .padding()
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.lightPointColor, lineWidth: 1)
-                                }
+                                SelectCategoryBySheet(presentModal: $presentModal, selectedCategory: $selectedCategory, basics: basics)
                             }
                         }
                     }
@@ -220,7 +148,7 @@ struct ComposeView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                Text("제목입력")
+                Text(formattedDate(from: basics?.wrappedValue.date) ?? "새로운 소비")
                     .font(.title2)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -239,28 +167,24 @@ struct ComposeView: View {
                 selectedCategory = item
                 presentModal = false
             }
-            //                    .presentationDetents([.medium, .large]) // half sheet
         }
-        //        .onAppear {
-        //            fetchCategories()
-        //        }
     }
 
-    //    private func fetchCategories() {
-    //        let descriptor = FetchDescriptor<Category>(
-    //            predicate: #Predicate { $0.userID == userID }
-    //        )
-    //        do {
-    //            categories = try context.fetch(descriptor)
-    //        } catch {
-    //            print("Fetch error: \(error)")
-    //        }
-    //    }
+    func formattedDate(from date: Date?) -> String? {
+        guard let date else { return nil }
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateStyle = .long     // "2025년 5월 14일"
+        formatter.timeStyle = .none
+
+        return formatter.string(from: date)
+    }
 }
 
 #Preview("Update") {
     NavigationStack {
-        ComposeView(basics: BasicEntry(
+        ComposeView(basics: .constant(BasicEntry(
             title: "샘플 이미지 항목 1",
             content: "테스트용 이미지가 포함된 항목입니다.",
             date: Date(),
@@ -272,8 +196,7 @@ struct ComposeView: View {
                 color: .blue,
                 emoji: "💡",
                 userID: "default_user"
-            )
-        ))
+            ))))
         .modelContainer(
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true
@@ -283,7 +206,7 @@ struct ComposeView: View {
 
 #Preview("Create") {
     NavigationStack {
-        ComposeView()
+        ComposeView(basics: nil)
             .modelContainer(
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
@@ -296,7 +219,7 @@ struct textFieldView: View {
     @FocusState<FieldType?>.Binding var focused: FieldType?
     var title: String
     var fieldType: FieldType
-    var basics: BasicEntry?
+    let basics: Binding<BasicEntry>?
 
     var body: some View {
         VStack(spacing: 5) {
@@ -328,11 +251,11 @@ struct textFieldView: View {
                         if let basics {
                             switch fieldType {
                             case .title:
-                                value = basics.title
+                                value = basics.wrappedValue.title
                             case .money:
-                                value = String(basics.money)
+                                value = String(basics.wrappedValue.money)
                             case .content:
-                                value = basics.content ?? ""
+                                value = basics.wrappedValue.content ?? ""
                             }
                         }
                     }
@@ -345,6 +268,100 @@ struct textFieldView: View {
                     .stroke(Color.lightPointColor, lineWidth: 1)
             }
 
+        }
+    }
+}
+
+struct SelectCategoryByMenu: View {
+    @Binding var selectedCategory: Category?
+    let categories: [Category]
+    let basics: Binding<BasicEntry>?
+    var currentCategory: Category? {
+        selectedCategory ?? basics?.wrappedValue.category
+    }
+
+    var body: some View {
+        Menu {
+            Button {
+                // FIXME: CategoryComposeView Push
+            } label: {
+                Label("새로운 카테고리", systemImage: "plus")
+            }
+
+            ForEach(categories) { category in
+                Button {
+                    selectedCategory = category
+                } label: {
+                    Text(category.name)
+
+                    if category == selectedCategory {
+                        Spacer()
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+        } label: {
+            HStack(spacing: 2) {
+                HStack(spacing: 2) {
+                    Text(currentCategory?.name ?? "카테고리 선택")
+                        .tint(currentCategory == nil ? .secondary : .primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    if let category = currentCategory {
+                        Text(category.emoji)
+                            .font(.footnote)
+                            .padding(7)
+                            .background(category.color)
+                            .clipShape(Circle())
+                            .frame(maxHeight: 10)
+                    }
+
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(Color.lightPointColor)
+                }
+            }
+            .padding()
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.lightPointColor, lineWidth: 1)
+        }
+    }
+}
+
+struct SelectCategoryBySheet: View {
+    @Binding var presentModal: Bool
+    @Binding var selectedCategory: Category?
+    let basics: Binding<BasicEntry>?
+
+    var currentCategory: Category? {
+        selectedCategory ?? basics?.wrappedValue.category
+    }
+
+    var body: some View {
+        Button {
+            presentModal = true
+        } label: {
+            Text(currentCategory?.name ?? "카테고리 선택")
+                .tint(currentCategory == nil ? .secondary : .primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            if let category = currentCategory {
+                Text(category.emoji)
+                    .font(.footnote)
+                    .padding(7)
+                    .background(category.color)
+                    .clipShape(Circle())
+                    .frame(maxHeight: 10)
+            }
+
+            Image(systemName: "chevron.right")
+                .foregroundStyle(Color.lightPointColor)
+        }
+        .padding()
+        .overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.lightPointColor, lineWidth: 1)
         }
     }
 }

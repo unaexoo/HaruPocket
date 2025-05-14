@@ -39,7 +39,8 @@ struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var showCategoryListComposeView = false
-    
+    @State private var showCategoryComposeView = false
+
     let categories = Category.sampleList
     
     
@@ -126,13 +127,9 @@ struct CategoryView: View {
                     
                 }
                 
-                .navigationDestination(isPresented: $showCategoryListComposeView) {
-                    CategoryListComposeView(categories: categories)
-                }
-                
                 // 플로팅 버튼
                 Button {
-                    // TODO: 아래 하단 + 버튼 연결 필요
+                    showCategoryComposeView = true
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 20, weight: .bold))
@@ -145,6 +142,12 @@ struct CategoryView: View {
                 .padding()
             }
             
+        }
+        .navigationDestination(isPresented: $showCategoryListComposeView) {
+            CategoryListComposeView(categories: categories)
+        }
+        .navigationDestination(isPresented: $showCategoryComposeView) {
+            CategoryComposeView()
         }
     }
 }
