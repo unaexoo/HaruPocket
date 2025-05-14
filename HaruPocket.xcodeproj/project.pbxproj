@@ -7,42 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4EDDD0252DD43B8C006DAC5C /* SampleImage in Resources */ = {isa = PBXBuildFile; fileRef = 4EDDD0242DD43B8C006DAC5C /* SampleImage */; };
+		4E12C4A62DD45928002404C7 /* SampleImage in Resources */ = {isa = PBXBuildFile; fileRef = 4E12C4A52DD45928002404C7 /* SampleImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4EDDD0242DD43B8C006DAC5C /* SampleImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SampleImage; sourceTree = "<group>"; };
+		4E12C4A52DD45928002404C7 /* SampleImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SampleImage; sourceTree = "<group>"; };
 		4EF8C80B2DD11B0C00C387E1 /* HaruPocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HaruPocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4EDDD0232DD43950006DAC5C /* Exceptions for "SampleImage" folder in "HaruPocket" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				bbq.jpg,
-				book.jpg,
-				brunch.jpg,
-				exhibition.jpg,
-				flower.jpg,
-				friedChicken.jpg,
-				gift.jpg,
-				gym.jpg,
-				musical.jpg,
-				shopping.jpg,
-			);
-			target = 4EF8C80A2DD11B0C00C387E1 /* HaruPocket */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4EDDD0222DD43950006DAC5C /* SampleImage */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				4EDDD0232DD43950006DAC5C /* Exceptions for "SampleImage" folder in "HaruPocket" target */,
-			);
-			path = SampleImage;
-			sourceTree = "<group>";
-		};
 		4EF8C80D2DD11B0C00C387E1 /* HaruPocket */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = HaruPocket;
@@ -64,8 +37,7 @@
 		4EF8C8022DD11B0C00C387E1 = {
 			isa = PBXGroup;
 			children = (
-				4EDDD0222DD43950006DAC5C /* SampleImage */,
-				4EDDD0242DD43B8C006DAC5C /* SampleImage */,
+				4E12C4A52DD45928002404C7 /* SampleImage */,
 				4EF8C80D2DD11B0C00C387E1 /* HaruPocket */,
 				4EF8C80C2DD11B0C00C387E1 /* Products */,
 			);
@@ -95,7 +67,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				4EDDD0222DD43950006DAC5C /* SampleImage */,
 				4EF8C80D2DD11B0C00C387E1 /* HaruPocket */,
 			);
 			name = HaruPocket;
@@ -144,7 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EDDD0252DD43B8C006DAC5C /* SampleImage in Resources */,
+				4E12C4A62DD45928002404C7 /* SampleImage in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
