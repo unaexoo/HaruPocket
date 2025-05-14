@@ -63,18 +63,6 @@ struct StatisticsView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Color.lightPointColor)
-                    }
-                }
-
                 ToolbarItem(placement: .principal) {
                     Text("통계")
                         .font(.title2)
