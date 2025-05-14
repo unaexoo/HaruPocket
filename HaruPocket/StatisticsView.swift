@@ -26,6 +26,8 @@ struct StatisticsView: View {
     @StateObject private var statisticsViewModel: StatisticsViewModel
 
     @State private var date = Date.now
+    @State private var isExpenseListEmpty = false
+    let screenHeight = UIScreen.main.bounds.height
 
     init() {
         _statisticsViewModel = StateObject(wrappedValue: StatisticsViewModel(entries: []))
@@ -33,80 +35,97 @@ struct StatisticsView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            HStack {
+                Button {
+                    date = changeMonth(by: -1, from: date)
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.lightPointColor)
+                }
 
-                HStack {
-                    Button {
-                        date = changeMonth(by: -1, from: date)
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(Color.lightPointColor)
+                Spacer()
+
+                Text(formattedDate(from: date) ?? "\(date)")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .overlay {
+                        DatePicker("날짜", selection: $date, displayedComponents: .date)
+                            .labelsHidden()
+                            .colorMultiply(.clear)
                     }
 
-                    Spacer()
+                Spacer()
 
-                    Text(formattedDate(from: date) ?? "\(date)")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            DatePicker("날짜", selection: $date, displayedComponents: .date)
-                                .labelsHidden()
-                                .colorMultiply(.clear)
-                        }
-
-                    Spacer()
-
-                    Button {
-                        date = changeMonth(by: 1, from: date)
-                    } label: {
-                        Image(systemName: "chevron.forward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(Color.lightPointColor)
-                    }
-                }
-                .padding(.top)
-                .padding(.horizontal)
-
-                let (totalMoney, top5ByCountItems, top5ByMoneyItems) = computeStatistics()
-
-                HStack(spacing: 0) {
-                    Text("이번 달에는 ")
-
-                    Text("\(totalMoney)원 ")
-                        .foregroundStyle(Color.lightMainColor)
-                        .fontWeight(.semibold)
-
-                    Text("썼어요!")
-
-                }
-                .font(.title2)
-                .padding()
-                .padding(.top, 20)
-
-                ChartView(title: "최다", dataItems: top5ByCountItems)
-
-                ChartView(title: "최대", dataItems: top5ByMoneyItems)
-
-            }
-            .onAppear {
-                spendingViewModel.username = username
-                spendingViewModel.loadEntry(context: context)
-
-                Task {
-                    await spendingViewModel.insertSampleData(context: context)
+                Button {
+                    date = changeMonth(by: 1, from: date)
+                } label: {
+                    Image(systemName: "chevron.forward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.lightPointColor)
                 }
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("통계")
+            .padding(.top)
+            .padding(.horizontal)
+
+            if isExpenseListEmpty {
+                VStack {
+                    Text("아직 사용한 금액이 없어요!")
                         .font(.title2)
+                        .padding()
+
+                    Text("지갑 속 하루를 기록해볼까요?")
+                        .font(.title)
+                        .foregroundStyle(Color.lightPointColor)
+
+                    Image("pocekt")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                }
+                .padding(.top, screenHeight/5)
+            } else {
+                VStack(spacing: 0) {
+                    let (totalMoney, top5ByCountItems, top5ByMoneyItems) = computeStatistics()
+
+                    HStack(spacing: 0) {
+                        Text("이번 달에는 ")
+
+                        Text("\(totalMoney)원 ")
+                            .foregroundStyle(Color.lightMainColor)
+                            .fontWeight(.semibold)
+
+                        Text("썼어요!")
+
+                    }
+                    .font(.title2)
+                    .padding()
+                    .padding(.top, 20)
+
+                    ChartView(title: "최다", dataItems: top5ByCountItems)
+
+                    ChartView(title: "최대", dataItems: top5ByMoneyItems)
+
+                }
+                .onAppear {
+                    spendingViewModel.username = username
+                    spendingViewModel.loadEntry(context: context)
+
+                    Task {
+                        await spendingViewModel.insertSampleData(context: context)
+                    }
+                }
+                .navigationBarBackButtonHidden(true)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text("통계")
+                            .font(.title2)
+                    }
                 }
             }
         }
@@ -126,6 +145,13 @@ extension StatisticsView {
 
         let totalMoney = statisticsViewModel.totalMoneyForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
+		print(totalMoney)
+
+        DispatchQueue.main.async {
+            if totalMoney == 0 {
+                isExpenseListEmpty = true
+            }
+        }
 
         let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
