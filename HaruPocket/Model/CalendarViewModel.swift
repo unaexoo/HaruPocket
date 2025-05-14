@@ -31,6 +31,17 @@ final class CalendarViewModel: ObservableObject {
         }
     }
 
+    func startOfMonth(for date: Date) -> Date {
+        calendar.date(from: calendar.dateComponents([.year, .month], from: date)) ?? date
+    }
+
+    func move(to date: Date) {
+        let current = currentDate
+        let target = startOfMonth(for: date)
+
+        let components = calendar.dateComponents([.month], from: startOfMonth(for: current), to: target)
+        currentMonthOffset += components.month ?? 0
+    }
 
     func monthFormatter(from date: Date) -> String {
         let formatter = DateFormatter()

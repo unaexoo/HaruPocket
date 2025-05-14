@@ -9,6 +9,12 @@ struct CustomCalendarView: View {
     @StateObject private var calendarViewModel: CalendarViewModel
     @EnvironmentObject var spendingViewModel: SpendingViewModel
 
+    @State private var showYearPicker = false
+    @State private var selectedYear = Calendar.current.component(
+        .year,
+        from: Date()
+    )
+
     @Environment(\.dismiss) var dismiss
 
     @State private var selectedTab = 2
@@ -39,66 +45,95 @@ struct CustomCalendarView: View {
                     }
                 }
         } else {
-            TabView(selection: $selectedTab) {
-                NavigationStack {
-                    CategoryView()
-                        .navigationTitle("카테고리")
-                }
-                .tabItem {
-                    Label("카테고리", systemImage: "tag")
-                }
-                .tag(0)
+            ZStack(alignment: .bottomTrailing) {
+                TabView(selection: $selectedTab) {
+                    NavigationStack {
+                        CategoryView()
+                            .navigationTitle("카테고리")
+                    }
+                    .tabItem {
+                        Label("카테고리", systemImage: "tag")
+                    }
+                    .tag(0)
 
-                NavigationStack {
-                    CategoryView()
-                        .navigationTitle("리스트")
-                        .toolbar(.hidden, for: .navigationBar)
-                }
-                .tabItem {
-                    Label("리스트", systemImage: "list.bullet")
-                }
-                .tag(1)
+                    NavigationStack {
+                        CategoryView()
+                            .navigationTitle("리스트")
+                            .toolbar(.hidden, for: .navigationBar)
+                    }
+                    .tabItem {
+                        Label("리스트", systemImage: "list.bullet")
+                    }
+                    .tag(1)
 
-                NavigationStack {
-                    homeTabView
-                        .navigationTitle("지갑 속 하루")
-                        .navigationBarTitleDisplayMode(.large)
-                        .navigationDestination(isPresented: $showComposeView) {
-                            ComposeView(basics: .constant(nil))
-                                .onDisappear {
-                                    showComposeView = false
-                                    spendingViewModel.loadEntry(
-                                        context: context
-                                    )
+                    NavigationStack {
+                        ZStack(alignment: .bottomTrailing) {
+                                homeTabView
+                                if showComposeView == false {
+                                    floatingAddButton
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .padding(.trailing, 20)
                                 }
-                        }
-                }
-                .tabItem {
-                    Label("홈", systemImage: "house")
-                }
-                .tag(2)
+                            }
+                            .navigationTitle("지갑 속 하루")
+                            .navigationBarTitleDisplayMode(.large)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button {
+                                        showYearPicker.toggle()
+                                    } label: {
+                                        HStack {
+                                            Text("\(String(selectedYear))년")
+                                            Image(systemName: "chevron.down")
+                                        }
+                                        .font(.headline)
+                                        .foregroundStyle(
+                                            colorScheme == .dark ? Color.darkPointColor : Color.lightPointColor
+                                        )
+                                        .offset(y: 45)
 
-                NavigationStack {
-                    CategoryView()
-                        .navigationTitle("사진")
-                }
-                .tabItem {
-                    Label("사진", systemImage: "photo")
-                }
-                .tag(3)
+                                    }
+                                }
+                            }
+                            .sheet(isPresented: $showYearPicker) {
+                                  yearPickerSheet
+                              }
+                            .navigationDestination(isPresented: $showComposeView) {
+                                ComposeView(basics: .constant(nil))
+                                    .onDisappear {
+                                        showComposeView = false
+                                        spendingViewModel.loadEntry(context: context)
+                                    }
+                            }
+                    }
+                    .tabItem {
+                        Label("홈", systemImage: "house")
+                    }
+                    .tag(2)
 
-                NavigationStack {
-                    StatisticsView()
-                        .navigationTitle("통계")
-                }
-                .tabItem {
-                    Label("통계", systemImage: "chart.pie")
-                }
-                .tag(4)
-            }
-            .overlay(alignment: .bottomTrailing) {
-                if selectedTab == 2 {
-                    floatingAddButton
+
+                    .tabItem {
+                        Label("홈", systemImage: "house")
+                    }
+                    .tag(2)
+
+                    NavigationStack {
+                        CategoryView()
+                            .navigationTitle("사진")
+                    }
+                    .tabItem {
+                        Label("사진", systemImage: "photo")
+                    }
+                    .tag(3)
+
+                    NavigationStack {
+                        StatisticsView()
+                            .navigationTitle("통계")
+                    }
+                    .tabItem {
+                        Label("통계", systemImage: "chart.pie")
+                    }
+                    .tag(4)
                 }
             }
             .tint(
@@ -118,7 +153,7 @@ struct CustomCalendarView: View {
     }
 
     private var homeTabView: some View {
-        VStack {
+        VStack(spacing: 10) {
             headerView
             Rectangle()
                 .fill(.quaternary)
@@ -133,6 +168,7 @@ struct CustomCalendarView: View {
                     content: dayCell
                 )
             }
+
             Rectangle()
                 .fill(.quaternary)
                 .frame(width: 400, height: 0.5)
@@ -151,23 +187,22 @@ struct CustomCalendarView: View {
     }
 
     private var floatingAddButton: some View {
-        VStack {
-            if selectedTab == 2 && showComposeView == false {
-                Button {
-                    showComposeView = true
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 50, height: 50)
-                        .background(Color.lightMainColor)
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
-                }
+        ZStack {
+            Button {
+                showComposeView = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 50)
+                    .background(Color.lightMainColor)
+                    .clipShape(Circle())
+                    .shadow(radius: 4)
             }
+
         }
         .padding(.trailing, 20)
-        .padding(.bottom, 70)
+        .padding(.bottom, 20)
     }
 
     private var headerView: some View {
@@ -232,6 +267,39 @@ struct CustomCalendarView: View {
             onSelect: { calendarViewModel.selectedDate = date }
         )
     }
+
+    private var yearPickerSheet: some View {
+        VStack {
+            Text("연도 선택")
+                .font(.headline)
+
+            Picker("연도", selection: $selectedYear) {
+                ForEach(2000...2030, id: \.self) { year in
+                    Text("\(String(year))년").tag(year)
+                }
+            }
+            .pickerStyle(.wheel)
+
+            Button("확인") {
+                let currentMonth = Calendar.current.component(
+                    .month,
+                    from: calendarViewModel.currentDate
+                )
+                if let targetDate = Calendar.current.date(
+                    from: DateComponents(
+                        year: selectedYear,
+                        month: currentMonth
+                    )
+                ) {
+                    calendarViewModel.move(to: targetDate)
+                }
+                showYearPicker = false
+            }
+            .padding()
+        }
+        .presentationDetents([.medium])
+    }
+
 }
 
 #Preview {
@@ -242,7 +310,6 @@ struct CustomCalendarView: View {
                 inMemory: true
             )
             .environmentObject(SpendingViewModel())
-            .navigationTitle("지갑 속 하루")
     }
 }
 
