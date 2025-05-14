@@ -17,7 +17,7 @@ class BasicEntry {
     var content: String?
     var date: Date
     var money: Int
-    var imageBase64: String?  // SwiftData는 Data 저장 불가 → Base64 문자열
+    var imageFileName: String?
     var userID: String
     @Relationship var category: Category?  // N:1 관계
 
@@ -27,7 +27,7 @@ class BasicEntry {
         content: String? = nil,
         date: Date = Date(),
         money: Int,
-        imageData: Data? = nil,
+        imageFileName: String? = nil,
         userID: String,
         category: Category? = nil
     ) {
@@ -36,12 +36,23 @@ class BasicEntry {
         self.content = content
         self.date = date
         self.money = money
-        self.imageBase64 = imageData?.base64EncodedString()
+        self.imageFileName = imageFileName
         self.userID = userID
         self.category = category
     }
 
-    var imageData: Data? {
-        imageBase64.flatMap { Data(base64Encoded: $0) }
+    var image: UIImage? {
+        guard let imageFileName else { return nil }
+        let components = imageFileName.split(separator: ".")
+        guard components.count == 2 else { return nil }
+
+        let name = String(components[0])
+        let ext = String(components[1])
+
+        if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "SampleImage") {
+            return UIImage(contentsOfFile: url.path)
+        } else {
+            return nil
+        }
     }
 }

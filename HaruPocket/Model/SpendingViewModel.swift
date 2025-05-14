@@ -92,8 +92,9 @@ class SpendingViewModel: ObservableObject {
         context: ModelContext,
         title: String,
         content: String? = nil,
-        money: Int,
         date: Date,
+        money: Int,
+        imageFileName: String? = nil,
         category: Category?,
         imageData: Data? = nil
     ) {
@@ -103,7 +104,7 @@ class SpendingViewModel: ObservableObject {
             content: content,
             date: date,
             money: money,
-            imageData: imageData,
+            imageFileName: imageFileName,
             userID: userID,
             category: category
         )
