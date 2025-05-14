@@ -31,235 +31,351 @@ extension BasicEntry {
                 title: "브런치 카페",
                 content: "음식 관련으로 브런치 카페에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-16"),
-                money: 2546000,
-                userID: "default_user",
+                money: 69000,
+                imageFileName: "SampleImage/brunch", userID: "default_user",
                 category: category(named: "음식")
-            ),
-
-            BasicEntry(
-                title: "영화관람",
-                content: "영화관람 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
-                date: date("2025-03-07"),
-                money: 530000,
-                userID: "default_user",
-                category: category(named: "문화생활")
-            ),
-
-            BasicEntry(
-                title: "신발 구매",
-                content: "신발 구매는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
-                date: date("2025-03-14"),
-                money: 1525000,
-                userID: "default_user",
-                category: category(named: "쇼핑")
-            ),
-
-            BasicEntry(
-                title: "고양이 모래",
-                content: "고양이 모래 하면서 하루를 마무리했다. 반려동물 항목으로 기록!",
-                date: date("2025-05-25"),
-                money: 3271000,
-                userID: "default_user",
-                category: category(named: "반려동물")
-            ),
-
-            BasicEntry(
-                title: "맛집 투어",
-                content: "맛집 투어 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
-                date: date("2025-04-22"),
-                money: 266000,
-                userID: "default_user",
-                category: category(named: "여행")
             ),
 
             BasicEntry(
                 title: "서점 구경",
                 content: "아침부터 서점 구경 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-28"),
-                money: 3257000,
-                userID: "default_user",
+                money: 68900,
+                imageFileName: "SampleImage/book", userID: "default_user",
                 category: category(named: "문화생활")
             ),
 
             BasicEntry(
-                title: "호텔 예약",
-                content: "여행 관련으로 호텔 예약에 돈을 썼다. 잘한 선택이었길!",
-                date: date("2025-08-01"),
-                money: 4143000,
-                userID: "default_user",
-                category: category(named: "여행")
+                title: "꽃다발",
+                content: "문득 꽃다발 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
+                date: date("2025-06-06"),
+                money: 5900,
+                imageFileName: "SampleImage/flower", userID: "default_user",
+                category: category(named: "선물")
+            ),
+
+            BasicEntry(
+                title: "기념일 선물",
+                content: "선물 관련으로 기념일 선물에 돈을 썼다. 잘한 선택이었길!",
+                date: date("2025-07-07"),
+                money: 1674000,
+                imageFileName: "SampleImage/gift", userID: "default_user",
+                category: category(named: "선물")
+            ),
+
+            BasicEntry(
+                title: "헬스장 등록",
+                content: "헬스장 등록 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
+                date: date("2025-05-15"),
+                money: 32300,
+                imageFileName: "SampleImage/gym", userID: "default_user",
+                category: category(named: "운동")
             ),
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "뮤지컬는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-23"),
-                money: 3440000,
-                userID: "default_user",
+                money: 191600,
+                imageFileName: "SampleImage/musical", userID: "default_user",
                 category: category(named: "문화생활")
             ),
 
             BasicEntry(
-                title: "기차 예매",
-                content: "아침부터 기차 예매 준비하느라 정신 없었지만 잘 마무리되었다.",
-                date: date("2025-06-17"),
-                money: 4870000,
-                userID: "default_user",
-                category: category(named: "교통")
-            ),
-
-            BasicEntry(
-                title: "분식집 떡볶이",
-                content: "아침부터 분식집 떡볶이 준비하느라 정신 없었지만 잘 마무리되었다.",
-                date: date("2025-06-07"),
-                money: 1228000,
-                userID: "default_user",
-                category: category(named: "음식")
-            ),
-
-            BasicEntry(
-                title: "편지지 구매",
-                content: "편지지 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
-                date: date("2025-08-30"),
-                money: 2185000,
-                userID: "default_user",
-                category: category(named: "선물")
-            ),
-
-            BasicEntry(
-                title: "기타 비용",
-                content: "기타 비용 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
-                date: date("2025-03-06"),
-                money: 1813000,
-                userID: "default_user",
-                category: category(named: "카테고리 없음")
-            ),
-
-            BasicEntry(
-                title: "옷 쇼핑",
-                content: "옷 쇼핑 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
-                date: date("2025-04-30"),
-                money: 4704000,
-                userID: "default_user",
-                category: category(named: "쇼핑")
+                title: "전시회",
+                content: "전시회 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
+                date: date("2025-06-27"),
+                money: 75900,
+                imageFileName: "SampleImage/exhibition", userID: "default_user",
+                category: category(named: "문화생활")
             ),
 
             BasicEntry(
                 title: "신발 구매",
                 content: "신발 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-30"),
-                money: 4431000,
+                money: 10100,
+                imageFileName: "SampleImage/shopping", userID: "default_user",
+                category: category(named: "쇼핑")
+            ),
+
+            BasicEntry(
+                title: "저녁 치킨",
+                content: "음식 관련으로 저녁 치킨에 돈을 썼다. 잘한 선택이었길!",
+                date: date("2025-04-06"),
+                money: 149400,
+                imageFileName: "SampleImage/friedChicken", userID: "default_user",
+                category: category(named: "음식")
+            ),
+
+            BasicEntry(
+                title: "BBQ 치킨 파티",
+                content: "BBQ 치킨 파티에서 친구들과 좋은 시간을 보냈다.",
+                date: date("2025-06-18"),
+                money: 92000,
+                imageFileName: "SampleImage/bbq", userID: "default_user",
+                category: category(named: "음식")
+            ),
+
+            BasicEntry(
+                title: "브런치 카페",
+                content: "음식 관련으로 브런치 카페에 돈을 썼다. 잘한 선택이었길!",
+                date: date("2025-04-16"),
+                money: 69000,
+                userID: "default_user",
+                category: category(named: "음식")
+            ),
+
+
+            BasicEntry(
+                title: "영화관람",
+                content: "영화관람 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
+                date: date("2025-03-07"),
+                money: 18800,
+                userID: "default_user",
+                category: category(named: "문화생활")
+            ),
+
+
+            BasicEntry(
+                title: "신발 구매",
+                content: "신발 구매는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
+                date: date("2025-03-14"),
+                money: 191100,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
+
+            BasicEntry(
+                title: "고양이 모래",
+                content: "고양이 모래 하면서 하루를 마무리했다. 반려동물 항목으로 기록!",
+                date: date("2025-05-25"),
+                money: 37000,
+                userID: "default_user",
+                category: category(named: "반려동물")
+            ),
+
+
+            BasicEntry(
+                title: "맛집 투어",
+                content: "맛집 투어 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
+                date: date("2025-04-22"),
+                money: 14700,
+                userID: "default_user",
+                category: category(named: "여행")
+            ),
+
+
+            BasicEntry(
+                title: "서점 구경",
+                content: "아침부터 서점 구경 준비하느라 정신 없었지만 잘 마무리되었다.",
+                date: date("2025-06-28"),
+                money: 68900,
+                userID: "default_user",
+                category: category(named: "문화생활")
+            ),
+
+
+            BasicEntry(
+                title: "호텔 예약",
+                content: "여행 관련으로 호텔 예약에 돈을 썼다. 잘한 선택이었길!",
+                date: date("2025-08-01"),
+                money: 157900,
+                userID: "default_user",
+                category: category(named: "여행")
+            ),
+
+
+            BasicEntry(
+                title: "뮤지컬",
+                content: "뮤지컬는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
+                date: date("2025-07-23"),
+                money: 191600,
+                userID: "default_user",
+                category: category(named: "문화생활")
+            ),
+
+
+            BasicEntry(
+                title: "기차 예매",
+                content: "아침부터 기차 예매 준비하느라 정신 없었지만 잘 마무리되었다.",
+                date: date("2025-06-17"),
+                money: 41500,
+                userID: "default_user",
+                category: category(named: "교통")
+            ),
+
+
+            BasicEntry(
+                title: "분식집 떡볶이",
+                content: "아침부터 분식집 떡볶이 준비하느라 정신 없었지만 잘 마무리되었다.",
+                date: date("2025-06-07"),
+                money: 13700,
+                userID: "default_user",
+                category: category(named: "음식")
+            ),
+
+
+            BasicEntry(
+                title: "편지지 구매",
+                content: "편지지 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
+                date: date("2025-08-30"),
+                money: 13700,
+                userID: "default_user",
+                category: category(named: "선물")
+            ),
+
+
+            BasicEntry(
+                title: "기타 비용",
+                content: "기타 비용 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
+                date: date("2025-03-06"),
+                money: 14000,
+                userID: "default_user",
+                category: category(named: "카테고리 없음")
+            ),
+
+
+            BasicEntry(
+                title: "옷 쇼핑",
+                content: "옷 쇼핑 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
+                date: date("2025-04-30"),
+                money: 247800,
+                userID: "default_user",
+                category: category(named: "쇼핑")
+            ),
+
+
+            BasicEntry(
+                title: "신발 구매",
+                content: "신발 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
+                date: date("2025-08-30"),
+                money: 10100,
+                userID: "default_user",
+                category: category(named: "쇼핑")
+            ),
+
 
             BasicEntry(
                 title: "김밥천국 김밥",
                 content: "아침부터 김밥천국 김밥 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-03"),
-                money: 2596000,
+                money: 10600,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "PT 비용",
                 content: "PT 비용는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-09"),
-                money: 523000,
+                money: 176800,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "장난감",
                 content: "장난감 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-04"),
-                money: 1762000,
+                money: 5600,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "강아지 사료",
                 content: "강아지 사료 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-05"),
-                money: 386000,
+                money: 156800,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "미용비",
                 content: "문득 미용비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-05"),
-                money: 3786000,
+                money: 170400,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
                 content: "오늘은 약국 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-07-26"),
-                money: 2886000,
+                money: 195100,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "현금 인출",
                 content: "문득 현금 인출 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-16"),
-                money: 3139000,
+                money: 151800,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "콘서트",
                 content: "콘서트 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-03-27"),
-                money: 3136000,
+                money: 103100,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "오늘은 택시비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-06"),
-                money: 1233000,
+                money: 5900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "예비비",
                 content: "문득 예비비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-21"),
-                money: 89000,
+                money: 14800,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "영화관람",
                 content: "오늘은 영화관람에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-12"),
-                money: 4755000,
+                money: 38400,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "뮤지컬 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
                 date: date("2025-07-01"),
-                money: 2157000,
+                money: 120400,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "저녁 치킨",
@@ -270,41 +386,46 @@ extension BasicEntry {
                 category: category(named: "음식")
             ),
 
+
             BasicEntry(
                 title: "문구류 구매",
                 content: "쇼핑 관련으로 문구류 구매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-06"),
-                money: 2258000,
+                money: 7000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "호텔 예약",
                 content: "문득 호텔 예약 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-06"),
-                money: 3191000,
+                money: 187500,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "문득 꽃다발 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-06"),
-                money: 1842000,
+                money: 5900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "현금 인출",
                 content: "오늘은 현금 인출에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-02"),
-                money: 3702000,
+                money: 145700,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
@@ -315,212 +436,236 @@ extension BasicEntry {
                 category: category(named: "선물")
             ),
 
+
             BasicEntry(
                 title: "헬스장 등록",
                 content: "헬스장 등록 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-15"),
-                money: 4726000,
+                money: 32300,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "전시회 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
                 date: date("2025-06-27"),
-                money: 2753000,
+                money: 75900,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
                 content: "도서 구매 하면서 하루를 마무리했다. 공부 항목으로 기록!",
                 date: date("2025-04-10"),
-                money: 377000,
+                money: 100900,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-07"),
-                money: 3930000,
+                money: 130700,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "지하철 요금 하면서 하루를 마무리했다. 교통 항목으로 기록!",
                 date: date("2025-06-01"),
-                money: 1391000,
+                money: 67400,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "비행기 예매",
                 content: "문득 비행기 예매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-03-30"),
-                money: 964000,
+                money: 315900,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "예비비",
                 content: "문득 예비비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-09"),
-                money: 28000,
+                money: 9000,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "요가 클래스",
                 content: "운동 관련으로 요가 클래스에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-05-09"),
-                money: 229000,
+                money: 158400,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "문득 꽃다발 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-28"),
-                money: 2900000,
+                money: 13500,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "아침부터 자격증 응시료 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-11"),
-                money: 1565000,
+                money: 191800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "아침부터 꽃다발 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-03-09"),
-                money: 755000,
+                money: 6800,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "오늘은 기차 예매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-07-10"),
-                money: 4072000,
+                money: 32700,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "저녁 치킨",
                 content: "음식 관련으로 저녁 치킨에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-06"),
-                money: 974000,
+                money: 149400,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "아침부터 자격증 응시료 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-16"),
-                money: 4060000,
+                money: 45000,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
                 content: "오늘은 기념일 선물에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-15"),
-                money: 3183000,
+                money: 189400,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "김밥천국 김밥",
                 content: "김밥천국 김밥 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-01"),
-                money: 478000,
+                money: 5200,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "비행기 예매",
                 content: "비행기 예매 하면서 하루를 마무리했다. 여행 항목으로 기록!",
                 date: date("2025-06-29"),
-                money: 4796000,
+                money: 218700,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "예비비",
                 content: "예비비는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-13"),
-                money: 2646000,
+                money: 12900,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "문득 편지지 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-05"),
-                money: 1819000,
+                money: 8000,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "브런치 카페",
                 content: "문득 브런치 카페 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-30"),
-                money: 3285000,
+                money: 43800,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "아침부터 꽃다발 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-28"),
-                money: 1273000,
+                money: 6900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "콘서트",
                 content: "콘서트 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-03"),
-                money: 672000,
+                money: 88700,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "아침부터 기타 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-08-28"),
-                money: 4570000,
+                money: 14400,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "요가 클래스",
@@ -531,23 +676,26 @@ extension BasicEntry {
                 category: category(named: "운동")
             ),
 
+
             BasicEntry(
                 title: "맛집 투어",
                 content: "여행 관련으로 맛집 투어에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-07"),
-                money: 3992000,
+                money: 131300,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "운동화",
                 content: "운동화 하면서 하루를 마무리했다. 운동 항목으로 기록!",
                 date: date("2025-03-15"),
-                money: 73000,
+                money: 226600,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
@@ -558,59 +706,66 @@ extension BasicEntry {
                 category: category(named: "건강")
             ),
 
+
             BasicEntry(
                 title: "필라테스",
                 content: "필라테스 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-04-13"),
-                money: 595000,
+                money: 147400,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
                 content: "건강 관련으로 약국 구매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-05-30"),
-                money: 1671000,
+                money: 61500,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "자격증 응시료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-18"),
-                money: 357000,
+                money: 32900,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "요가 클래스",
                 content: "요가 클래스 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-03-09"),
-                money: 2511000,
+                money: 184200,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "브런치 카페",
                 content: "브런치 카페 하면서 하루를 마무리했다. 음식 항목으로 기록!",
                 date: date("2025-08-04"),
-                money: 3548000,
+                money: 78200,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "자격증 응시료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-06"),
-                money: 1042000,
+                money: 85100,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "서점 구경",
@@ -621,68 +776,76 @@ extension BasicEntry {
                 category: category(named: "문화생활")
             ),
 
+
             BasicEntry(
                 title: "비행기 예매",
                 content: "여행 관련으로 비행기 예매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-22"),
-                money: 3791000,
+                money: 288400,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "아침부터 전시회 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-08-21"),
-                money: 4114000,
+                money: 64000,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "스터디카페는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-27"),
-                money: 1081000,
+                money: 49800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "오늘은 택시비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-03-08"),
-                money: 2872000,
+                money: 68100,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "영화관람",
                 content: "영화관람 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-07"),
-                money: 3009000,
+                money: 106000,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
                 content: "도서 구매는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-05-15"),
-                money: 622000,
+                money: 73100,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "건강검진",
                 content: "문득 건강검진 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-08-15"),
-                money: 4941000,
+                money: 56200,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
@@ -693,131 +856,146 @@ extension BasicEntry {
                 category: category(named: "건강")
             ),
 
+
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "오늘은 옷 쇼핑에 돈을 썼다. 예상보다 적게 나왔다.",
                 date: date("2025-03-24"),
-                money: 46000,
+                money: 288100,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "렌터카 결제",
                 content: "렌터카 결제 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-06-25"),
-                money: 997000,
+                money: 294400,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "버스 교통카드",
                 content: "문득 버스 교통카드 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-03-18"),
-                money: 3669000,
+                money: 78000,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "스터디카페는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-06"),
-                money: 1042000,
+                money: 294800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "화장품 구매",
                 content: "화장품 구매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-22"),
-                money: 4115000,
+                money: 7000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
                 content: "문득 도서 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-03"),
-                money: 1077000,
+                money: 76200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "헬스장 등록",
                 content: "문득 헬스장 등록 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-08-02"),
-                money: 2676000,
+                money: 12800,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "아침부터 택시비 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-28"),
-                money: 3769000,
+                money: 49600,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "문득 편지지 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-07"),
-                money: 2101000,
+                money: 10900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "지하철 요금 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-01"),
-                money: 3763000,
+                money: 12300,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "서점 구경",
                 content: "서점 구경는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-20"),
-                money: 2953000,
+                money: 96000,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-12"),
-                money: 2283000,
+                money: 21600,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "고양이 모래",
                 content: "고양이 모래 하면서 하루를 마무리했다. 반려동물 항목으로 기록!",
                 date: date("2025-08-02"),
-                money: 952000,
+                money: 143900,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "한의원 방문",
                 content: "건강 관련으로 한의원 방문에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-11"),
-                money: 1810000,
+                money: 35800,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
@@ -828,41 +1006,46 @@ extension BasicEntry {
                 category: category(named: "선물")
             ),
 
+
             BasicEntry(
                 title: "저녁 치킨",
                 content: "아침부터 저녁 치킨 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-05-18"),
-                money: 715000,
+                money: 145300,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "브런치 카페",
                 content: "문득 브런치 카페 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-03-28"),
-                money: 3410000,
+                money: 137100,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "기차 예매 하면서 하루를 마무리했다. 교통 항목으로 기록!",
                 date: date("2025-06-09"),
-                money: 3838000,
+                money: 32000,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "뮤지컬는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-05"),
-                money: 1103000,
+                money: 65900,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "기프트 카드",
@@ -873,257 +1056,286 @@ extension BasicEntry {
                 category: category(named: "선물")
             ),
 
+
             BasicEntry(
                 title: "운동화",
                 content: "운동화 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-19"),
-                money: 4189000,
+                money: 94300,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "버스 교통카드",
                 content: "버스 교통카드 하면서 하루를 마무리했다. 교통 항목으로 기록!",
                 date: date("2025-03-04"),
-                money: 4969000,
+                money: 182100,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
                 content: "아침부터 약국 구매 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-06"),
-                money: 1554000,
+                money: 43300,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "예비비",
                 content: "오늘은 예비비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-04-28"),
-                money: 3438000,
+                money: 10600,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "미용비",
                 content: "문득 미용비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-20"),
-                money: 885000,
+                money: 18100,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "PT 비용",
                 content: "오늘은 PT 비용에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-23"),
-                money: 4417000,
+                money: 110600,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
                 content: "오늘은 기념일 선물에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-31"),
-                money: 1779000,
+                money: 193500,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "버스 교통카드",
                 content: "교통 관련으로 버스 교통카드에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-05-21"),
-                money: 1005000,
+                money: 129900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "아침부터 전시회 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-05-27"),
-                money: 2241000,
+                money: 63600,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "지하철 요금는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-02"),
-                money: 1343000,
+                money: 42700,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "오늘은 스터디카페에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-03"),
-                money: 3108000,
+                money: 102600,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
                 content: "문득 도서 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-01"),
-                money: 341000,
+                money: 46800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기타 비용",
                 content: "기타 비용 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-21"),
-                money: 1615000,
+                money: 13800,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "옷 쇼핑 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
                 date: date("2025-05-05"),
-                money: 2023000,
+                money: 178300,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 하면서 하루를 마무리했다. 여행 항목으로 기록!",
                 date: date("2025-04-29"),
-                money: 3550000,
+                money: 300400,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "콘서트",
                 content: "오늘은 콘서트에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-04-08"),
-                money: 4241000,
+                money: 35700,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "문득 꽃다발 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-07"),
-                money: 2266000,
+                money: 11600,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "문구류 구매",
                 content: "문구류 구매 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
                 date: date("2025-07-06"),
-                money: 3877000,
+                money: 13300,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "오늘은 강의 수강에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-03-22"),
-                money: 2422000,
+                money: 99700,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
                 content: "아침부터 보조식품 구매 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-03-13"),
-                money: 815000,
+                money: 120600,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "문득 기차 예매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-06"),
-                money: 4625000,
+                money: 50200,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "한의원 방문",
                 content: "한의원 방문 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-10"),
-                money: 176000,
+                money: 47900,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "비행기 예매",
                 content: "비행기 예매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-06-11"),
-                money: 1677000,
+                money: 317200,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-25"),
-                money: 1351000,
+                money: 205700,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "병원 진료",
                 content: "건강 관련으로 병원 진료에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-03"),
-                money: 3835000,
+                money: 42400,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "강아지 사료",
                 content: "아침부터 강아지 사료 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-13"),
-                money: 3035000,
+                money: 72800,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "공부 관련으로 스터디카페에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-05-03"),
-                money: 1011000,
+                money: 239400,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "문득 시험 접수비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-13"),
-                money: 2497000,
+                money: 67500,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
@@ -1134,113 +1346,126 @@ extension BasicEntry {
                 category: category(named: "선물")
             ),
 
+
             BasicEntry(
                 title: "문구류 구매",
                 content: "오늘은 문구류 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-01"),
-                money: 1257000,
+                money: 7300,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "아침부터 자격증 응시료 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-26"),
-                money: 4993000,
+                money: 277200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "서점 구경",
                 content: "오늘은 서점 구경에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-15"),
-                money: 2657000,
+                money: 16900,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "시험 접수비는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-04"),
-                money: 1956000,
+                money: 96500,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "필라테스는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-24"),
-                money: 4386000,
+                money: 75000,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "오늘은 편지지 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-07"),
-                money: 882000,
+                money: 4800,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "호텔 예약",
                 content: "호텔 예약 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-10"),
-                money: 12000,
+                money: 283600,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "기타는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-08"),
-                money: 3833000,
+                money: 7600,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "저녁 치킨",
                 content: "문득 저녁 치킨 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-08-05"),
-                money: 4985000,
+                money: 54600,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "콘서트",
                 content: "아침부터 콘서트 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-20"),
-                money: 3493000,
+                money: 20300,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-03-06"),
-                money: 4270000,
+                money: 155000,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "가전제품 구매 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
                 date: date("2025-03-08"),
-                money: 82000,
+                money: 4700,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
@@ -1251,23 +1476,26 @@ extension BasicEntry {
                 category: category(named: "건강")
             ),
 
+
             BasicEntry(
                 title: "예비비",
                 content: "예비비는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-06-28"),
-                money: 1875000,
+                money: 6100,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "오늘은 뮤지컬에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-04-25"),
-                money: 2012000,
+                money: 162400,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "잡비",
@@ -1278,194 +1506,216 @@ extension BasicEntry {
                 category: category(named: "카테고리 없음")
             ),
 
+
             BasicEntry(
                 title: "콘서트",
                 content: "콘서트 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-26"),
-                money: 2751000,
+                money: 52700,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "영화관람",
                 content: "오늘은 영화관람에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-07-14"),
-                money: 2248000,
+                money: 75000,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "미용비",
                 content: "오늘은 미용비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-07-27"),
-                money: 2665000,
+                money: 57500,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-06-06"),
-                money: 3645000,
+                money: 216900,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "오늘은 필라테스에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-13"),
-                money: 4701000,
+                money: 116800,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "비행기 예매",
                 content: "오늘은 비행기 예매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-23"),
-                money: 2899000,
+                money: 192600,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "PT 비용",
                 content: "운동 관련으로 PT 비용에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-12"),
-                money: 1945000,
+                money: 167400,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "옷 쇼핑 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-13"),
-                money: 690000,
+                money: 113200,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "오늘은 자격증 응시료에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-18"),
-                money: 2973000,
+                money: 131100,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
                 content: "보조식품 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-04-06"),
-                money: 1797000,
+                money: 167200,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-30"),
-                money: 3501000,
+                money: 206400,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "기타 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-30"),
-                money: 1160000,
+                money: 6400,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "화장품 구매",
                 content: "쇼핑 관련으로 화장품 구매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-08-21"),
-                money: 4614000,
+                money: 6100,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "건강검진",
                 content: "건강검진는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-22"),
-                money: 2494000,
+                money: 49400,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-04-12"),
-                money: 1579000,
+                money: 363000,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-15"),
-                money: 524000,
+                money: 268500,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기프트 카드",
                 content: "기프트 카드 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-27"),
-                money: 542000,
+                money: 161900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "동물병원",
                 content: "아침부터 동물병원 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-27"),
-                money: 4701000,
+                money: 120300,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "영화관람",
                 content: "오늘은 영화관람에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-02"),
-                money: 4175000,
+                money: 114500,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "아침부터 지하철 요금 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-05"),
-                money: 3795000,
+                money: 19900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "신발 구매",
                 content: "신발 구매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-09"),
-                money: 1921000,
+                money: 158000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "신발 구매",
@@ -1476,6 +1726,7 @@ extension BasicEntry {
                 category: category(named: "쇼핑")
             ),
 
+
             BasicEntry(
                 title: "잡비",
                 content: "카테고리 없음 관련으로 잡비에 돈을 썼다. 잘한 선택이었길!",
@@ -1485,347 +1736,386 @@ extension BasicEntry {
                 category: category(named: "카테고리 없음")
             ),
 
+
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-11"),
-                money: 1566000,
+                money: 345300,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "장난감",
                 content: "장난감 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-09"),
-                money: 4048000,
+                money: 10400,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "문득 자격증 응시료 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-19"),
-                money: 3089000,
+                money: 30500,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "브런치 카페",
                 content: "브런치 카페 하면서 하루를 마무리했다. 음식 항목으로 기록!",
                 date: date("2025-03-13"),
-                money: 3445000,
+                money: 111100,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "버스 교통카드",
                 content: "오늘은 버스 교통카드에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-03-26"),
-                money: 3070000,
+                money: 20900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "필라테스 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-27"),
-                money: 4727000,
+                money: 124500,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "가전제품 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-05-21"),
-                money: 1699000,
+                money: 8300,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-26"),
-                money: 1738000,
+                money: 215000,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "교통 관련으로 기차 예매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-08-24"),
-                money: 3023000,
+                money: 20500,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "미용비",
                 content: "아침부터 미용비 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-05-02"),
-                money: 2957000,
+                money: 148300,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "운동화",
                 content: "운동화는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-30"),
-                money: 682000,
+                money: 31900,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "자격증 응시료 하면서 하루를 마무리했다. 공부 항목으로 기록!",
                 date: date("2025-03-17"),
-                money: 2463000,
+                money: 145400,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "문득 시험 접수비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-08-02"),
-                money: 702000,
+                money: 13200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "김밥천국 김밥",
                 content: "아침부터 김밥천국 김밥 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-06"),
-                money: 398000,
+                money: 11000,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-27"),
-                money: 2214000,
+                money: 186200,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "김밥천국 김밥",
                 content: "문득 김밥천국 김밥 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-29"),
-                money: 699000,
+                money: 3800,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "잡비",
                 content: "잡비 하면서 하루를 마무리했다. 카테고리 없음 항목으로 기록!",
                 date: date("2025-08-27"),
-                money: 4586000,
+                money: 104300,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "편지지 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-07-12"),
-                money: 4466000,
+                money: 9400,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 하면서 하루를 마무리했다. 공부 항목으로 기록!",
                 date: date("2025-05-19"),
-                money: 1667000,
+                money: 115200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "자격증 응시료",
                 content: "문득 자격증 응시료 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-07"),
-                money: 394000,
+                money: 266800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "아침부터 기타 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-08-14"),
-                money: 2097000,
+                money: 3300,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "문구류 구매",
                 content: "쇼핑 관련으로 문구류 구매에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-30"),
-                money: 1456000,
+                money: 11000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-08"),
-                money: 3022000,
+                money: 25700,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "공부 관련으로 시험 접수비에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-03-23"),
-                money: 4681000,
+                money: 139200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "카테고리 없음 관련으로 기타에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-14"),
-                money: 4871000,
+                money: 7900,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
                 content: "도서 구매 하면서 하루를 마무리했다. 공부 항목으로 기록!",
                 date: date("2025-04-30"),
-                money: 1677000,
+                money: 160900,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "오늘은 편지지 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-07-24"),
-                money: 2011000,
+                money: 10600,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "서점 구경",
                 content: "오늘은 서점 구경에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-26"),
-                money: 2470000,
+                money: 26200,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "병원 진료",
                 content: "병원 진료 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-05"),
-                money: 2304000,
+                money: 95800,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "아침부터 옷 쇼핑 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-13"),
-                money: 3213000,
+                money: 189500,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "호텔 예약",
                 content: "호텔 예약 하면서 하루를 마무리했다. 여행 항목으로 기록!",
                 date: date("2025-04-10"),
-                money: 1223000,
+                money: 177200,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "아침부터 스터디카페 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-03"),
-                money: 2978000,
+                money: 274800,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "고양이 모래",
                 content: "반려동물 관련으로 고양이 모래에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-22"),
-                money: 3090000,
+                money: 78300,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "기타 비용",
                 content: "문득 기타 비용 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-03-05"),
-                money: 1603000,
+                money: 9400,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "기타 비용",
                 content: "기타 비용는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-03-08"),
-                money: 4847000,
+                money: 3300,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "병원 진료",
                 content: "오늘은 병원 진료에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-28"),
-                money: 620000,
+                money: 101700,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "헬스장 등록",
                 content: "운동 관련으로 헬스장 등록에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-08-01"),
-                money: 1284000,
+                money: 154100,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "한의원 방문",
                 content: "아침부터 한의원 방문 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-05-12"),
-                money: 1751000,
+                money: 108200,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
@@ -1836,41 +2126,46 @@ extension BasicEntry {
                 category: category(named: "건강")
             ),
 
+
             BasicEntry(
                 title: "콘서트",
                 content: "문득 콘서트 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-21"),
-                money: 1393000,
+                money: 100700,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "분식집 떡볶이",
                 content: "문득 분식집 떡볶이 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-23"),
-                money: 2071000,
+                money: 10000,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "오늘은 택시비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-07"),
-                money: 4396000,
+                money: 25100,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "문득 택시비 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-01"),
-                money: 1504000,
+                money: 67000,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
@@ -1881,140 +2176,156 @@ extension BasicEntry {
                 category: category(named: "선물")
             ),
 
+
             BasicEntry(
                 title: "편지지 구매",
                 content: "아침부터 편지지 구매 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-19"),
-                money: 1868000,
+                money: 5600,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "지하철 요금 하면서 하루를 마무리했다. 교통 항목으로 기록!",
                 date: date("2025-05-25"),
-                money: 680000,
+                money: 17500,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "아침부터 가전제품 구매 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-08-10"),
-                money: 2126000,
+                money: 4800,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "예비비",
                 content: "카테고리 없음 관련으로 예비비에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-05-09"),
-                money: 1986000,
+                money: 13000,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "기차 예매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-08-24"),
-                money: 4995000,
+                money: 37600,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "맥도날드 햄버거",
                 content: "맥도날드 햄버거는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-08"),
-                money: 270000,
+                money: 7700,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "운동화",
                 content: "운동화 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-23"),
-                money: 4354000,
+                money: 242300,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "렌터카 결제",
                 content: "아침부터 렌터카 결제 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-11"),
-                money: 3222000,
+                money: 398000,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "김밥천국 김밥",
                 content: "김밥천국 김밥 하면서 하루를 마무리했다. 음식 항목으로 기록!",
                 date: date("2025-07-06"),
-                money: 4905000,
+                money: 14900,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "꽃다발 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-02"),
-                money: 781000,
+                money: 11500,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "교통 관련으로 택시비에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-01"),
-                money: 3001000,
+                money: 38900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "장난감",
                 content: "장난감 하면서 하루를 마무리했다. 반려동물 항목으로 기록!",
                 date: date("2025-07-23"),
-                money: 912000,
+                money: 13700,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "지하철 요금",
                 content: "지하철 요금 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-06-22"),
-                money: 4947000,
+                money: 25800,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "병원 진료",
                 content: "병원 진료 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-14"),
-                money: 957000,
+                money: 70900,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "렌터카 결제",
                 content: "렌터카 결제는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-05-03"),
-                money: 2164000,
+                money: 267800,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "요가 클래스",
@@ -2025,59 +2336,66 @@ extension BasicEntry {
                 category: category(named: "운동")
             ),
 
+
             BasicEntry(
                 title: "화장품 구매",
                 content: "화장품 구매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-22"),
-                money: 2365000,
+                money: 3200,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "문화생활 관련으로 전시회에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-18"),
-                money: 4703000,
+                money: 18100,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "한의원 방문",
                 content: "오늘은 한의원 방문에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-06"),
-                money: 2567000,
+                money: 22800,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "운동화",
                 content: "운동화 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-07-31"),
-                money: 2386000,
+                money: 239600,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "시험 접수비 하면서 하루를 마무리했다. 공부 항목으로 기록!",
                 date: date("2025-03-24"),
-                money: 1163000,
+                money: 97900,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "아침부터 시험 접수비 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-22"),
-                money: 82000,
+                money: 169500,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "현금 인출",
@@ -2088,14 +2406,16 @@ extension BasicEntry {
                 category: category(named: "카테고리 없음")
             ),
 
+
             BasicEntry(
                 title: "렌터카 결제",
                 content: "렌터카 결제 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-07-23"),
-                money: 3831000,
+                money: 218400,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "저녁 치킨",
@@ -2106,95 +2426,106 @@ extension BasicEntry {
                 category: category(named: "음식")
             ),
 
+
             BasicEntry(
                 title: "뮤지컬",
                 content: "문득 뮤지컬 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-09"),
-                money: 326000,
+                money: 121100,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "스터디카페",
                 content: "아침부터 스터디카페 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-04"),
-                money: 3922000,
+                money: 88700,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "관광지 입장료 하면서 하루를 마무리했다. 여행 항목으로 기록!",
                 date: date("2025-08-08"),
-                money: 4841000,
+                money: 328900,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "비행기 예매",
                 content: "비행기 예매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-04-15"),
-                money: 2527000,
+                money: 322500,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "맛집 투어",
                 content: "오늘은 맛집 투어에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-27"),
-                money: 4031000,
+                money: 114700,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "화장품 구매",
                 content: "문득 화장품 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-27"),
-                money: 4869000,
+                money: 12100,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "분식집 떡볶이",
                 content: "음식 관련으로 분식집 떡볶이에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-26"),
-                money: 1082000,
+                money: 11800,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-08-23"),
-                money: 4048000,
+                money: 303300,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "문화생활 관련으로 전시회에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-11"),
-                money: 2422000,
+                money: 96000,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-04-13"),
-                money: 4601000,
+                money: 204000,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "버스 교통카드",
@@ -2205,167 +2536,186 @@ extension BasicEntry {
                 category: category(named: "교통")
             ),
 
+
             BasicEntry(
                 title: "지하철 요금",
                 content: "오늘은 지하철 요금에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-04-29"),
-                money: 3891000,
+                money: 69400,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "뮤지컬 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-08"),
-                money: 296000,
+                money: 184400,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "고양이 모래",
                 content: "아침부터 고양이 모래 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-06-25"),
-                money: 768000,
+                money: 168700,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "뮤지컬",
                 content: "뮤지컬 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-06-30"),
-                money: 4563000,
+                money: 78600,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "기타 하면서 하루를 마무리했다. 카테고리 없음 항목으로 기록!",
                 date: date("2025-06-10"),
-                money: 1989000,
+                money: 6400,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "문득 가전제품 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-19"),
-                money: 4365000,
+                money: 5200,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "선물 관련으로 꽃다발에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-08-12"),
-                money: 1993000,
+                money: 13900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "브런치 카페",
                 content: "브런치 카페 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-28"),
-                money: 832000,
+                money: 42900,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "필라테스 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-01"),
-                money: 1492000,
+                money: 170400,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "기프트 카드",
                 content: "기프트 카드는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-15"),
-                money: 2529000,
+                money: 198700,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "운동화",
                 content: "문득 운동화 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-03-01"),
-                money: 1673000,
+                money: 151700,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-03-03"),
-                money: 4617000,
+                money: 251300,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "렌터카",
                 content: "렌터카 하면서 하루를 마무리했다. 여행 항목으로 기록!",
                 date: date("2025-03-28"),
-                money: 4749000,
+                money: 347900,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "문득 편지지 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-10"),
-                money: 3001000,
+                money: 8600,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "조카 장난감",
                 content: "오늘은 조카 장난감에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-04-02"),
-                money: 2441000,
+                money: 5400,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "헬스장 등록",
                 content: "헬스장 등록는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-08-21"),
-                money: 517000,
+                money: 157600,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
                 content: "선물 관련으로 기념일 선물에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-03-15"),
-                money: 3093000,
+                money: 84300,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "택시비",
                 content: "오늘은 택시비에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-03-06"),
-                money: 856000,
+                money: 14200,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "고양이 모래",
@@ -2376,14 +2726,16 @@ extension BasicEntry {
                 category: category(named: "반려동물")
             ),
 
+
             BasicEntry(
                 title: "한의원 방문",
                 content: "한의원 방문 하면서 하루를 마무리했다. 건강 항목으로 기록!",
                 date: date("2025-06-28"),
-                money: 4665000,
+                money: 75900,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "요가 클래스",
@@ -2394,68 +2746,76 @@ extension BasicEntry {
                 category: category(named: "운동")
             ),
 
+
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "쇼핑 관련으로 옷 쇼핑에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-06-09"),
-                money: 2003000,
+                money: 193000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "관광지 입장료",
                 content: "문득 관광지 입장료 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-06"),
-                money: 4159000,
+                money: 354900,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
                 content: "보조식품 구매 하면서 하루를 마무리했다. 건강 항목으로 기록!",
                 date: date("2025-07-27"),
-                money: 2869000,
+                money: 123700,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "잡비",
                 content: "잡비는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-03-31"),
-                money: 70000,
+                money: 196300,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "오늘은 편지지 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-29"),
-                money: 2748000,
+                money: 6900,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "맥도날드 햄버거",
                 content: "음식 관련으로 맥도날드 햄버거에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-07-30"),
-                money: 19000,
+                money: 11800,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "조카 장난감",
                 content: "아침부터 조카 장난감 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-30"),
-                money: 3168000,
+                money: 8200,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "도서 구매",
@@ -2466,266 +2826,296 @@ extension BasicEntry {
                 category: category(named: "공부")
             ),
 
+
             BasicEntry(
                 title: "문구류 구매",
                 content: "문구류 구매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-03-18"),
-                money: 2260000,
+                money: 4700,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "강아지 사료",
                 content: "아침부터 강아지 사료 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-14"),
-                money: 3254000,
+                money: 87600,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "시험 접수비",
                 content: "시험 접수비 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-04-28"),
-                money: 4936000,
+                money: 207200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "문득 강의 수강 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-07-13"),
-                money: 785000,
+                money: 150700,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "강의 수강",
                 content: "강의 수강 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-30"),
-                money: 1097000,
+                money: 63200,
                 userID: "default_user",
                 category: category(named: "공부")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
                 content: "보조식품 구매 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
                 date: date("2025-05-22"),
-                money: 4997000,
+                money: 106800,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "조카 장난감",
                 content: "오늘은 조카 장난감에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-06-27"),
-                money: 4462000,
+                money: 8600,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "호텔 예약",
                 content: "호텔 예약는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-10"),
-                money: 1063000,
+                money: 327900,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "장난감",
                 content: "오늘은 장난감에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-05-30"),
-                money: 2200000,
+                money: 4200,
                 userID: "default_user",
                 category: category(named: "반려동물")
             ),
+
 
             BasicEntry(
                 title: "PT 비용",
                 content: "운동 관련으로 PT 비용에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-12"),
-                money: 3065000,
+                money: 213500,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "아침부터 필라테스 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-03-05"),
-                money: 2330000,
+                money: 41500,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "분식집 떡볶이",
                 content: "분식집 떡볶이는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-19"),
-                money: 3153000,
+                money: 9500,
                 userID: "default_user",
                 category: category(named: "음식")
             ),
+
 
             BasicEntry(
                 title: "전시회",
                 content: "전시회 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
                 date: date("2025-08-05"),
-                money: 3554000,
+                money: 19600,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "아침부터 가전제품 구매 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-07-21"),
-                money: 4173000,
+                money: 5800,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "기차 예매",
                 content: "기차 예매 하면서 하루를 마무리했다. 교통 항목으로 기록!",
                 date: date("2025-04-07"),
-                money: 1985000,
+                money: 69900,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "맛집 투어",
                 content: "맛집 투어는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-05-13"),
-                money: 1127000,
+                money: 34800,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "기타",
                 content: "문득 기타 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-27"),
-                money: 3538000,
+                money: 6100,
                 userID: "default_user",
                 category: category(named: "카테고리 없음")
             ),
+
 
             BasicEntry(
                 title: "보조식품 구매",
                 content: "보조식품 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
                 date: date("2025-03-02"),
-                money: 2407000,
+                money: 153200,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "약국 구매",
                 content: "문득 약국 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-05-15"),
-                money: 4876000,
+                money: 189700,
                 userID: "default_user",
                 category: category(named: "건강")
             ),
+
 
             BasicEntry(
                 title: "호텔 예약",
                 content: "아침부터 호텔 예약 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-04-27"),
-                money: 4691000,
+                money: 388400,
                 userID: "default_user",
                 category: category(named: "여행")
             ),
+
 
             BasicEntry(
                 title: "렌터카 결제",
                 content: "렌터카 결제는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-04-20"),
-                money: 1970000,
+                money: 390000,
                 userID: "default_user",
                 category: category(named: "교통")
             ),
+
 
             BasicEntry(
                 title: "옷 쇼핑",
                 content: "아침부터 옷 쇼핑 준비하느라 정신 없었지만 잘 마무리되었다.",
                 date: date("2025-05-20"),
-                money: 430000,
+                money: 40900,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "꽃다발",
                 content: "꽃다발는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
                 date: date("2025-07-21"),
-                money: 860000,
+                money: 12200,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "편지지 구매",
                 content: "오늘은 편지지 구매에 돈을 썼다. 예상보다 많이 나왔다.",
                 date: date("2025-08-30"),
-                money: 564000,
+                money: 9200,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "기념일 선물",
                 content: "기념일 선물 하면서 하루를 마무리했다. 선물 항목으로 기록!",
                 date: date("2025-05-09"),
-                money: 1374000,
+                money: 182300,
                 userID: "default_user",
                 category: category(named: "선물")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "가전제품 구매 하면서 하루를 마무리했다. 쇼핑 항목으로 기록!",
                 date: date("2025-07-26"),
-                money: 3344000,
+                money: 10600,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             ),
+
 
             BasicEntry(
                 title: "콘서트",
                 content: "문화생활 관련으로 콘서트에 돈을 썼다. 잘한 선택이었길!",
                 date: date("2025-04-25"),
-                money: 3223000,
+                money: 13900,
                 userID: "default_user",
                 category: category(named: "문화생활")
             ),
+
 
             BasicEntry(
                 title: "필라테스",
                 content: "문득 필라테스 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-04-12"),
-                money: 1792000,
+                money: 172600,
                 userID: "default_user",
                 category: category(named: "운동")
             ),
+
 
             BasicEntry(
                 title: "가전제품 구매",
                 content: "문득 가전제품 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
                 date: date("2025-06-16"),
-                money: 57000,
+                money: 9000,
                 userID: "default_user",
                 category: category(named: "쇼핑")
             )
+
         ]
     }
 }
