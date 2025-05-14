@@ -88,7 +88,7 @@ struct SelectCategoryView: View {
             .toolbarBackground(colorScheme == .dark ? Color(.systemBackground) : Color.creamWhite, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationDestination(isPresented: $showCategoryComposeView) {
-                CategoryComposeView()
+                CategoryComposeView(category: .constant(nil))
             }
         }
         .onAppear {
