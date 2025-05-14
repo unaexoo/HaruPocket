@@ -33,8 +33,6 @@ struct ComposeView: View {
 
     @FocusState private var focused: FieldType?
 
-
-//    let basics: Binding<BasicEntry>?
     @Binding var basics: BasicEntry?
 
     var body: some View {
@@ -155,7 +153,7 @@ struct ComposeView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // TODO: SwiftData 저장 로직 구현
+                    save()
                 } label: {
                     Text("완료")
                         .font(.title3)
@@ -169,6 +167,39 @@ struct ComposeView: View {
                 selectedCategory = item
                 presentModal = false
             }
+        }
+    }
+}
+
+extension ComposeView {
+    func save() {
+        if let basics {
+            // 기존 항목 수정
+            basics.title = title
+            basics.money = Int(money) ?? 0
+            basics.content = content
+            basics.date = date
+            basics.imageFileName = img
+            basics.category = selectedCategory ?? basics.category
+        } else {
+            // 새 항목 저장
+            let newEntry = BasicEntry(
+                title: title,
+                content: content,
+                date: date,
+                money: Int(money) ?? 0,
+                imageFileName: img,
+                userID: username,
+                category: selectedCategory
+            )
+            context.insert(newEntry)
+        }
+
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            print("저장 실패: \(error.localizedDescription)")
         }
     }
 
