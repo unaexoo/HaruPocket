@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15BA6ABE2DD46CF600BA528A /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 15BA6ABD2DD46CF600BA528A /* EmojiPicker */; };
 		4E12C4A62DD45928002404C7 /* SampleImage in Resources */ = {isa = PBXBuildFile; fileRef = 4E12C4A52DD45928002404C7 /* SampleImage */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15BA6ABE2DD46CF600BA528A /* EmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +93,7 @@
 			);
 			name = HaruPocket;
 			packageProductDependencies = (
+				15BA6ABD2DD46CF600BA528A /* EmojiPicker */,
 			);
 			productName = HaruPocket;
 			productReference = 4EF8C80B2DD11B0C00C387E1 /* HaruPocket.app */;
@@ -120,6 +123,9 @@
 			);
 			mainGroup = 4EF8C8022DD11B0C00C387E1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				15BA6ABC2DD46CF600BA528A /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4EF8C80C2DD11B0C00C387E1 /* Products */;
 			projectDirPath = "";
@@ -353,6 +359,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		15BA6ABC2DD46CF600BA528A /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mpetrenco/EmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		15BA6ABD2DD46CF600BA528A /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15BA6ABC2DD46CF600BA528A /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4EF8C8032DD11B0C00C387E1 /* Project object */;
 }
