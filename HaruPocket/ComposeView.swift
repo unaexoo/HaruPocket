@@ -45,7 +45,7 @@ struct ComposeView: View {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(height: 300)
+                        .frame(height: 250)
                         .frame(width: 360)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
@@ -62,7 +62,7 @@ struct ComposeView: View {
                 RoundedRectangle(cornerRadius: 30)
                     .stroke(Color.lightPointColor, lineWidth: 1)
             }
-            .frame(height: 300)
+            .frame(height: 250)
             .frame(width: 360)
             .padding(.bottom)
 
@@ -75,7 +75,7 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
-                            Text(basics?.date ?? Date(), style: .date)
+                            Text(date, style: .date)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .overlay {
@@ -119,7 +119,36 @@ struct ComposeView: View {
                 }
 
                 GridRow {
-                    textFieldView(value: $content, focused: $focused, basics: $basics, title: "내용", fieldType: .content)
+//                    textFieldView(value: $content, focused: $focused, basics: $basics, title: "내용", fieldType: .content)
+                    VStack(spacing: 5) {
+                        Text("내용")
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 10)
+
+                        HStack {
+                            TextEditor(text: $content)
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .focused($focused, equals: .content)
+                                .submitLabel(.done)
+                                .onSubmit {
+                                        focused = nil
+
+                                }
+                                .onAppear{
+                                    content = basics?.content ?? ""
+                                }
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.lightPointColor, lineWidth: 1)
+                        }
+
+                    }
                 }
             }
 
@@ -128,6 +157,10 @@ struct ComposeView: View {
         .onAppear {
             spendingViewModel.username = username
             spendingViewModel.loadCategory(context: context)
+
+            if let basics {
+                self.date = basics.date
+            }
 
             Task {
                 await spendingViewModel.insertSampleData(context: context)
@@ -219,7 +252,7 @@ extension ComposeView {
     NavigationStack {
         ComposeView(basics: .constant(BasicEntry(
             title: "샘플 이미지 항목 1",
-            content: "테스트용 이미지가 포함된 항목입니다.",
+            content: "테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.",
             date: Date(),
             money: 42494,
             imageFileName: "gift.jpg",
