@@ -49,10 +49,11 @@ struct SelectCategoryView: View {
                                     .foregroundColor(Color.lightPointColor)
                             }
                         }
-                        .listRowBackground(Color.white)
+                        .listRowBackground(colorScheme == .dark ? Color(.systemBackground) : Color.white)
                         .tag(category)
                     }
                 }
+                .scrollIndicators(.hidden)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -84,7 +85,7 @@ struct SelectCategoryView: View {
                         .disabled(selected == nil)
                     }
             }
-            .toolbarBackground(Color.creamWhite, for: .navigationBar)
+            .toolbarBackground(colorScheme == .dark ? Color(.systemBackground) : Color.creamWhite, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationDestination(isPresented: $showCategoryComposeView) {
                 CategoryComposeView()
