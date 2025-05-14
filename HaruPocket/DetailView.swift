@@ -17,18 +17,29 @@ struct DetailView: View {
 
     var body: some View {
         VStack(spacing: 40) {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.gray.opacity(0.1))
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1.3, contentMode: .fit)
-                .overlay(
-                    Image(systemName: "photo")
+            Group {
+                if let uiImage = basics.image {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 250)
+                        .frame(width: 360)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                }
+                else {
+                    Image("pocekt")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.gray)
-                )
-                .padding(.horizontal)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(Color.lightPointColor, lineWidth: 1)
+            }
+            .frame(height: 250)
+            .frame(width: 360)
+            .padding(.top, 20)
 
             HStack {
                 Text(basics.title)
@@ -38,20 +49,18 @@ struct DetailView: View {
 
                 Spacer()
 
-                Label {
-                    Text(basics.category?.name ?? "카테고리 없음")
-                        .font(.title3)
-                        .foregroundColor(Color.lightPointColor)
-                } icon: {
-                    Text(basics.category?.emoji ?? "")
-                        .foregroundColor(.gray)
-                }
+                Text(basics.category?.name ?? "카테고리 없음")
+                    .font(.title3)
+                    .foregroundColor(Color.lightPointColor)
 
-                Circle()
-                    .fill(basics.category?.color ?? .gray)
-                    .frame(width: 18, height: 18)
+                Text(basics.category?.emoji ?? "")
+                    .font(.footnote)
+                    .padding(7)
+                    .background(basics.category?.color ?? .gray)
+                    .clipShape(Circle())
+                    .frame(maxHeight: 10)
             }
-            .padding(.horizontal, 40)
+            .padding(.horizontal, 20)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("가격")
@@ -72,28 +81,29 @@ struct DetailView: View {
                         .stroke(Color.brown, lineWidth: 1)
                 )
                 .foregroundColor(Color.lightPointColor)
-
-                Spacer()
+                .padding(.bottom, 20)
 
                 Text("내용")
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
                     .padding(.leading, 10)
 
-                Text(basics.content ?? "")
-                    .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.brown, lineWidth: 1)
-                    )
-                    .foregroundColor(Color.lightPointColor)
+                ScrollView {
+                    Text(basics.content ?? "")
+                        .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
+                        .padding()
+                        .foregroundColor(Color.lightPointColor)
+                }
+                .scrollIndicators(.hidden)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.brown, lineWidth: 1)
+                )
             }
             .padding(.horizontal)
 
             Spacer()
         }
-        //.padding(.top, -30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -154,7 +164,7 @@ struct DetailView: View {
     func formattedDate(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateStyle = .long     // "2025년 5월 14일"
+        formatter.dateStyle = .long
         formatter.timeStyle = .none
 
         return formatter.string(from: date)
@@ -165,18 +175,18 @@ struct DetailView: View {
     NavigationStack {
         DetailView(basics: .constant(
             BasicEntry(
-            title: "샘플 이미지 항목 1",
-            content: "테스트용 이미지가 포함된 항목입니다.",
-            date: Date(),
-            money: 42494,
-            imageFileName: "gift.jpg",
-            userID: "default_user",
-            category: Category(
-                name: "테스트",
-                color: .blue,
-                emoji: "💡",
-                userID: "default_user"
-            ))
+                title: "샘플 이미지 항목 1",
+                content: "테스트용 이미지가 포함된 항목입니다.",
+                date: Date(),
+                money: 42494,
+                imageFileName: "gift.jpg",
+                userID: "default_user",
+                category: Category(
+                    name: "테스트",
+                    color: .blue,
+                    emoji: "💡",
+                    userID: "default_user"
+                ))
         ))
         .modelContainer(
             for: [BasicEntry.self, Category.self, Statics.self],
