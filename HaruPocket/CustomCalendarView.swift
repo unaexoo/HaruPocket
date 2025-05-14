@@ -7,7 +7,7 @@ struct CustomCalendarView: View {
     @AppStorage("username") private var username: String = "default_user"
 
     @StateObject private var calendarViewModel: CalendarViewModel
-    @StateObject private var spendingViewModel = SpendingViewModel()
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     @Environment(\.dismiss) var dismiss
 
@@ -62,11 +62,15 @@ struct CustomCalendarView: View {
                 NavigationStack {
                     homeTabView
                         .navigationTitle("지갑 속 하루")
-                        .toolbar(.hidden, for: .navigationBar)
+                        .navigationBarTitleDisplayMode(.large)
                         .navigationDestination(isPresented: $showComposeView) {
-                            ComposeView(
-                                basics: .constant(nil)
-                            )
+                            ComposeView(basics: .constant(nil))
+                                .onDisappear {
+                                    showComposeView = false
+                                    spendingViewModel.loadEntry(
+                                        context: context
+                                    )
+                                }
                         }
                 }
                 .tabItem {
@@ -115,11 +119,6 @@ struct CustomCalendarView: View {
 
     private var homeTabView: some View {
         VStack {
-            Text("지갑 속 하루")
-                .font(.largeTitle)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-
             headerView
             Rectangle()
                 .fill(.quaternary)
@@ -152,16 +151,20 @@ struct CustomCalendarView: View {
     }
 
     private var floatingAddButton: some View {
-        Button {
-            showComposeView = true
-        } label: {
-            Image(systemName: "plus")
-                .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.white)
-                .frame(width: 56, height: 56)
-                .background(Color.lightMainColor)
-                .clipShape(Circle())
-                .shadow(radius: 4)
+        VStack {
+            if selectedTab == 2 && showComposeView == false {
+                Button {
+                    showComposeView = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 50)
+                        .background(Color.lightMainColor)
+                        .clipShape(Circle())
+                        .shadow(radius: 4)
+                }
+            }
         }
         .padding(.trailing, 20)
         .padding(.bottom, 70)
@@ -238,6 +241,8 @@ struct CustomCalendarView: View {
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
             )
+            .environmentObject(SpendingViewModel())
+            .navigationTitle("지갑 속 하루")
     }
 }
 
