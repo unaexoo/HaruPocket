@@ -212,6 +212,7 @@ struct StatisticsView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 
