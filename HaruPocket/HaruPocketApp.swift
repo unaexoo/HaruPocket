@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct HaruPocketApp: App {
+    @StateObject var spendingViewModel = SpendingViewModel()
+
     let sharedModelContainer: ModelContainer
     init() {
         let schema = Schema([ BasicEntry.self, Category.self, Statics.self ])
@@ -35,6 +37,7 @@ struct HaruPocketApp: App {
     var body: some Scene {
         WindowGroup {
             CustomCalendarView()
+                .environmentObject(spendingViewModel)
                 .modelContainer(sharedModelContainer)
         }
     }
