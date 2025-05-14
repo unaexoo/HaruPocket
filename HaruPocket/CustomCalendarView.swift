@@ -168,7 +168,8 @@ struct CustomCalendarView: View {
             EntryListView(
                 date: calendarViewModel.selectedDate,
                 entries: spendingViewModel.spending,
-                username: spendingViewModel.username
+                username: spendingViewModel.username,
+                spendingViewModel: spendingViewModel
             )
 
             Spacer()
@@ -182,7 +183,7 @@ struct CustomCalendarView: View {
             Spacer()
             HStack {
                 Spacer()
-                NavigationLink(destination: ComposeView(basics: nil)) {
+                NavigationLink(destination: ComposeView(basics: .constant(nil))) {
                     Image(systemName: "plus")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.white)
@@ -356,6 +357,7 @@ struct EntryListView: View {
     let date: Date
     let entries: [BasicEntry]
     let username: String
+    @ObservedObject var spendingViewModel: SpendingViewModel
 
     var body: some View {
         let filtered = entries.filter {
@@ -383,33 +385,31 @@ struct EntryListView: View {
                                     .padding(.vertical, 4)
 
                                 ForEach(group, id: \.id) { entry in
-                                    NavigationLink(
-                                        destination: DetailView()
-                                    ) {
-                                        HStack {
-                                            Circle()
-                                                .fill(
-                                                    entry.category?.color
-                                                        ?? .gray
-                                                )
-                                                .frame(width: 10, height: 10)
+                                    if let index = spendingViewModel.spending.firstIndex(where: { $0.id == entry.id }) {
+                                        NavigationLink(
+                                            destination: DetailView(basics: $spendingViewModel.spending[index])
+                                        ) {
+                                            HStack {
+                                                Circle()
+                                                    .fill(entry.category?.color ?? .gray)
+                                                    .frame(width: 10, height: 10)
 
-                                            Text(entry.title)
-                                                .foregroundStyle(.primary)
-                                                .lineLimit(1)
+                                                Text(entry.title)
+                                                    .foregroundStyle(.primary)
+                                                    .lineLimit(1)
 
-                                            Spacer()
+                                            	Spacer()
 
-                                            Text("\(entry.money.formatted())원")
-                                                .foregroundStyle(.secondary)
-
-                                            Image(systemName: "chevron.right")
-                                                .foregroundColor(.gray)
+                                                Text("\(entry.money.formatted())원")
+                                                    .foregroundStyle(.secondary)
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.gray)
+                                            }
+                                            .padding(.vertical, 8)
                                         }
-                                        .padding(.vertical, 8)
+                                        .buttonStyle(.plain)
+                                        .navigationBarBackButtonHidden(true)
                                     }
-                                    .buttonStyle(.plain)
-                                    .navigationBarBackButtonHidden(true)
                                 }
                             }
                             .padding(.bottom, 8)
