@@ -25,6 +25,8 @@ struct StatisticsView: View {
     @EnvironmentObject var spendingViewModel: SpendingViewModel
     @StateObject private var statisticsViewModel: StatisticsViewModel
 
+    @State private var date = Date.now
+
     init() {
         _statisticsViewModel = StateObject(wrappedValue: StatisticsViewModel(entries: []))
     }
@@ -32,6 +34,44 @@ struct StatisticsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
+
+                HStack {
+                    Button {
+                        date = changeMonth(by: -1, from: date)
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(Color.lightPointColor)
+                    }
+
+                    Spacer()
+
+                    Text(formattedDate(from: date) ?? "\(date)")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            DatePicker("날짜", selection: $date, displayedComponents: .date)
+                                .labelsHidden()
+                                .colorMultiply(.clear)
+                        }
+
+                    Spacer()
+
+                    Button {
+                        date = changeMonth(by: 1, from: date)
+                    } label: {
+                        Image(systemName: "chevron.forward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(Color.lightPointColor)
+                    }
+                }
+                .padding(.top)
+                .padding(.horizontal)
+
                 let (totalMoney, top5ByCountItems, top5ByMoneyItems) = computeStatistics()
 
                 HStack(spacing: 0) {
@@ -39,13 +79,14 @@ struct StatisticsView: View {
 
                     Text("\(totalMoney)원 ")
                         .foregroundStyle(Color.lightMainColor)
+                        .fontWeight(.semibold)
 
                     Text("썼어요!")
 
                 }
                 .font(.title2)
-                .fontWeight(.semibold)
-                .padding(.vertical, 20)
+                .padding()
+                .padding(.top, 20)
 
                 ChartView(title: "최다", dataItems: top5ByCountItems)
 
@@ -83,9 +124,10 @@ extension StatisticsView {
 
         let statisticsViewModel = StatisticsViewModel(entries: filteredEntries)
 
-        let totalMoney = statisticsViewModel.totalMoneyForMonth(month: "2025-05")
+        let totalMoney = statisticsViewModel.totalMoneyForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
-        let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: "2025-05")
+
+        let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
         let top5ByCountItems: [DataItem] = top5ByCount.map {
             DataItem(id: UUID(), title: $0.0, count: $0.1.count, money: $0.1.money, color: $0.1.color)
@@ -97,6 +139,21 @@ extension StatisticsView {
 
         return (totalMoney, top5ByCountItems, top5ByMoneyItems)
     }
+
+    func formattedDate(from date: Date?, format: String = "yyyy년 MM월") -> String? {
+        guard let date else { return nil }
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = format
+        let formattedDate = formatter.string(from: date)
+
+        return formattedDate
+    }
+
+    func changeMonth(by value: Int, from date: Date) -> Date {
+            Calendar.current.date(byAdding: .month, value: value, to: date) ?? date
+        }
 }
 
 #Preview {
