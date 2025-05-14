@@ -21,7 +21,7 @@ extension Category {
             Category(name: "선물", color: Color(hexString: "#FDD835"), emoji: "🎁", userID: "default_user"),
             Category(name: "운동", color: Color(hexString: "#00C853"), emoji: "🏋️‍♀️", userID: "default_user"),
             Category(name: "반려동물", color: Color(hexString: "#FFAB91"), emoji: "🐶", userID: "default_user"),
-            Category(name: "카테고리 없음", color: Color(hexString: "#A040A0"), emoji: "❓", userID: "default_user"),
+            Category(name: "카테고리 없음", color: Color(hexString: "#EBEBF0"), emoji: "❓", userID: "default_user"),
         ]
     }
 }
