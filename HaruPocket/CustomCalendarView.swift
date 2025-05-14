@@ -164,7 +164,7 @@ struct CustomCalendarView: View {
                 .shadow(radius: 4)
         }
         .padding(.trailing, 20)
-        .padding(.bottom, 70)ß
+        .padding(.bottom, 70)
     }
 
     private var headerView: some View {
