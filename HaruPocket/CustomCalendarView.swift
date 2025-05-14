@@ -12,27 +12,8 @@ struct CustomCalendarView: View {
     @Environment(\.dismiss) var dismiss
 
     @State private var selectedTab = 2
-    @State private var prevTab = 2
-
-    enum ModalTab: Int, Identifiable {
-        case category = 0
-        case list = 1
-        case photo = 3
-        case stats = 4
-        var id: Int { rawValue }
-
-        var title: String {
-            switch self {
-            case .category: return "카테고리"
-            case .list: return "리스트"
-            case .photo: return "사진"
-            case .stats: return "통계"
-            }
-        }
-    }
-    @State private var activeModal: ModalTab? = nil
-
     @State var isLaunching: Bool = true
+    @State private var showComposeView = false
 
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
 
@@ -42,7 +23,6 @@ struct CustomCalendarView: View {
         _calendarViewModel = StateObject(
             wrappedValue: CalendarViewModel(username: storedUsername)
         )
-        _spendingViewModel = StateObject(wrappedValue: SpendingViewModel())
     }
 
     var body: some View {
@@ -59,75 +39,68 @@ struct CustomCalendarView: View {
                     }
                 }
         } else {
-            NavigationStack {
-                ZStack {
-                    TabView(selection: $selectedTab) {
-                        Color.clear
-                            .tabItem { Label("카테고리", systemImage: "tag") }
-                            .tag(0)
-
-                        Color.clear
-                            .tabItem {
-                                Label("리스트", systemImage: "list.bullet")
-                            }
-                            .tag(1)
-
-                        homeTabView
-                            .toolbar(.hidden, for: .navigationBar)
-                            .tabItem { Label("홈", systemImage: "house") }
-                            .tag(2)
-
-                        Color.clear
-                            .tabItem { Label("사진", systemImage: "photo") }
-                            .tag(3)
-
-                        Color.clear
-                            .tabItem { Label("통계", systemImage: "chart.pie") }
-                            .tag(4)
-                    }
-                    if selectedTab == 2 {
-                        floatingAddButton
-                    }
+            TabView(selection: $selectedTab) {
+                NavigationStack {
+                    CategoryView()
+                        .navigationTitle("카테고리")
                 }
-                .toolbar(.hidden, for: .navigationBar)
-                .onChange(of: selectedTab) { _, new in
-                    if let modal = ModalTab(rawValue: new) {
-                        activeModal = modal
-                        selectedTab = prevTab
-                    } else {
-                        prevTab = new
-                    }
+                .tabItem {
+                    Label("카테고리", systemImage: "tag")
                 }
-                .fullScreenCover(item: $activeModal) { modal in
-                    NavigationStack {
-                        Group {
-                            switch modal {
-                            case .category:
-                                CategoryView()
-                            case .list:
-                                CategoryListView(
-                                    category: spendingViewModel.categories[0]
-                                )
-                            case .photo:
-                                CategoryView()
-                            case .stats:
-                                StatisticsView()
-                            }
+                .tag(0)
+
+                NavigationStack {
+                    CategoryView()
+                        .navigationTitle("리스트")
+                        .toolbar(.hidden, for: .navigationBar)
+                }
+                .tabItem {
+                    Label("리스트", systemImage: "list.bullet")
+                }
+                .tag(1)
+
+                NavigationStack {
+                    homeTabView
+                        .navigationTitle("지갑 속 하루")
+                        .toolbar(.hidden, for: .navigationBar)
+                        .navigationDestination(isPresented: $showComposeView) {
+                            ComposeView(
+                                basics: .constant(nil)
+                            )
                         }
-                    }
-                    .navigationTitle(modal.title)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                activeModal = nil
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .font(.body.weight(.bold))
-                            }
-                        }
-                    }
+                }
+                .tabItem {
+                    Label("홈", systemImage: "house")
+                }
+                .tag(2)
+
+                NavigationStack {
+                    CategoryView()
+                        .navigationTitle("사진")
+                }
+                .tabItem {
+                    Label("사진", systemImage: "photo")
+                }
+                .tag(3)
+
+                NavigationStack {
+                    StatisticsView()
+                        .navigationTitle("통계")
+                }
+                .tabItem {
+                    Label("통계", systemImage: "chart.pie")
+                }
+                .tag(4)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if selectedTab == 2 {
+                    floatingAddButton
                 }
             }
+            .tint(
+                colorScheme == .dark
+                    ? Color.darkMainColor : Color.lightMainColor
+            )
             .onAppear {
                 spendingViewModel.username = username
                 spendingViewModel.loadCategory(context: context)
@@ -179,23 +152,19 @@ struct CustomCalendarView: View {
     }
 
     private var floatingAddButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                NavigationLink(destination: ComposeView(basics: .constant(nil))) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 56, height: 56)
-                        .background(Color.lightMainColor)
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
-                }
-                .padding(.trailing, 20)
-                .padding(.bottom, 70)
-            }
+        Button {
+            showComposeView = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.lightMainColor)
+                .clipShape(Circle())
+                .shadow(radius: 4)
         }
+        .padding(.trailing, 20)
+        .padding(.bottom, 70)ß
     }
 
     private var headerView: some View {
@@ -332,25 +301,30 @@ struct DayCellView: View {
     var body: some View {
         let day = Calendar.current.component(.day, from: date)
 
-        VStack(spacing: 4) {
-            Text("\(day)")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(
-                    isCurrentMonth ? .primary : .quaternary
-                )
-                .frame(width: 30, height: 30)
+        VStack(spacing: 0) {
+            ZStack {
+                if isSelected {
+                    Circle()
+                        .fill(Color.lightMainColor.opacity(0.2))
+                        .frame(width: 20, height: 20)
+                }
+
+                Text("\(day)")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundStyle(
+                        isCurrentMonth ? .primary : .quaternary
+                    )
+            }
+            .frame(height: 20)
 
             CategoryDotView(entries: entries)
         }
         .frame(width: 40, height: 40)
-        .background(
-            Circle()
-                .fill(isSelected ? Color.lightMainColor.opacity(0.2) : .clear)
-        )
         .onTapGesture {
             onSelect()
         }
     }
+
 }
 
 struct EntryListView: View {
@@ -385,25 +359,43 @@ struct EntryListView: View {
                                     .padding(.vertical, 4)
 
                                 ForEach(group, id: \.id) { entry in
-                                    if let index = spendingViewModel.spending.firstIndex(where: { $0.id == entry.id }) {
+                                    if let index = spendingViewModel.spending
+                                        .firstIndex(where: { $0.id == entry.id }
+                                        )
+                                    {
                                         NavigationLink(
-                                            destination: DetailView(basics: $spendingViewModel.spending[index])
+                                            destination: DetailView(
+                                                basics:
+                                                    $spendingViewModel.spending[
+                                                        index
+                                                    ]
+                                            )
                                         ) {
                                             HStack {
                                                 Circle()
-                                                    .fill(entry.category?.color ?? .gray)
-                                                    .frame(width: 10, height: 10)
+                                                    .fill(
+                                                        entry.category?.color
+                                                            ?? .gray
+                                                    )
+                                                    .frame(
+                                                        width: 10,
+                                                        height: 10
+                                                    )
 
                                                 Text(entry.title)
                                                     .foregroundStyle(.primary)
                                                     .lineLimit(1)
 
-                                            	Spacer()
+                                                Spacer()
 
-                                                Text("\(entry.money.formatted())원")
-                                                    .foregroundStyle(.secondary)
-                                                Image(systemName: "chevron.right")
-                                                    .foregroundColor(.gray)
+                                                Text(
+                                                    "\(entry.money.formatted())원"
+                                                )
+                                                .foregroundStyle(.secondary)
+                                                Image(
+                                                    systemName: "chevron.right"
+                                                )
+                                                .foregroundColor(.gray)
                                             }
                                             .padding(.vertical, 8)
                                         }
