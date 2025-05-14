@@ -32,23 +32,7 @@ struct StatisticsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                let filteredEntries = spendingViewModel.spending.filter {
-                    $0.userID == spendingViewModel.username
-                }
-
-                let statisticsViewModel = StatisticsViewModel(entries: filteredEntries)
-
-                let totalMoney = statisticsViewModel.totalMoneyForMonth(month: "2025-05")
-
-                let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: "2025-05")
-
-                let top5ByCountItems: [DataItem] = top5ByCount.map {
-                    DataItem(id: UUID(), title: $0.0, count: $0.1.count, money: $0.1.money, color: $0.1.color)
-                }
-
-                let top5ByMoneyItems: [DataItem] = top5ByMoney.map {
-                    DataItem(id: UUID(), title: $0.0, count: $0.1.count, money: $0.1.money, color: $0.1.color)
-                }
+                let (totalMoney, top5ByCountItems, top5ByMoneyItems) = computeStatistics()
 
                 HStack(spacing: 0) {
                     Text("이번 달에는 ")
@@ -101,6 +85,31 @@ struct StatisticsView: View {
     }
 }
 
+
+extension StatisticsView {
+    func computeStatistics()
+    -> (totalMoney: Int, top5ByCountItems: [DataItem], top5ByMoneyItems: [DataItem]) {
+        let filteredEntries = spendingViewModel.spending.filter {
+            $0.userID == spendingViewModel.username
+        }
+
+        let statisticsViewModel = StatisticsViewModel(entries: filteredEntries)
+
+        let totalMoney = statisticsViewModel.totalMoneyForMonth(month: "2025-05")
+
+        let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: "2025-05")
+
+        let top5ByCountItems: [DataItem] = top5ByCount.map {
+            DataItem(id: UUID(), title: $0.0, count: $0.1.count, money: $0.1.money, color: $0.1.color)
+        }
+
+        let top5ByMoneyItems: [DataItem] = top5ByMoney.map {
+            DataItem(id: UUID(), title: $0.0, count: $0.1.count, money: $0.1.money, color: $0.1.color)
+        }
+
+        return (totalMoney, top5ByCountItems, top5ByMoneyItems)
+    }
+}
 
 #Preview {
     NavigationStack {
