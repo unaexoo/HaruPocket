@@ -16,7 +16,8 @@ struct CategoryComposeView: View {
     @State private var isEmojiPickerVisible: Bool = false
 
     //var onSave: (CategoryModel) -> Void
-    var onCancel: () -> Void
+//    var onCancel: () -> Void
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationStack {
@@ -104,7 +105,8 @@ struct CategoryComposeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        onCancel()
+//                        onCancel()
+                        dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
                             .resizable()
@@ -147,6 +149,6 @@ struct CategoryComposeView: View {
 #Preview {
     CategoryComposeView(
         //onSave: { _ in },
-        onCancel: { }
+//        onCancel: { }
     )
 }

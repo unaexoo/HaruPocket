@@ -182,7 +182,7 @@ struct CustomCalendarView: View {
             Spacer()
             HStack {
                 Spacer()
-                NavigationLink(destination: ComposeView()) {
+                NavigationLink(destination: ComposeView(basics: nil)) {
                     Image(systemName: "plus")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.white)
