@@ -33,7 +33,7 @@ struct ComposeView: View {
 
     @FocusState private var focused: FieldType?
 
-    let basics: Binding<BasicEntry>?
+    @Binding var basics: BasicEntry?
 
     var body: some View {
         VStack {
@@ -41,7 +41,7 @@ struct ComposeView: View {
                 // TODO: 이미지피커
                 print("이미지 버튼 클릭")
             } label: {
-                if let uiImage = basics?.wrappedValue.image {
+                if let uiImage = basics?.image {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -75,7 +75,7 @@ struct ComposeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 10)
 
-                            Text(basics?.wrappedValue.date ?? Date(), style: .date)
+                            Text(basics?.date ?? Date(), style: .date)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .overlay {
@@ -102,24 +102,24 @@ struct ComposeView: View {
                             }
 
                             if categories.count <= 6 {
-                                SelectCategoryByMenu(selectedCategory: $selectedCategory, categories: categories, basics: basics)
+                                SelectCategoryByMenu(selectedCategory: $selectedCategory, basics: $basics, categories: categories)
                             } else {
-                                SelectCategoryBySheet(presentModal: $presentModal, selectedCategory: $selectedCategory, basics: basics)
+                                SelectCategoryBySheet(presentModal: $presentModal, selectedCategory: $selectedCategory, basics: $basics)
                             }
                         }
                     }
                 }
 
                 GridRow {
-                    textFieldView(value: $title, focused: $focused, title: "제목", fieldType: .title, basics: basics)
+                    textFieldView(value: $title, focused: $focused, basics: $basics, title: "제목", fieldType: .title)
                 }
 
                 GridRow {
-                    textFieldView(value: $money, focused: $focused, title: "가격", fieldType: .money, basics: basics)
+                    textFieldView(value: $money, focused: $focused, basics: $basics, title: "가격", fieldType: .money)
                 }
 
                 GridRow {
-                    textFieldView(value: $content, focused: $focused, title: "내용", fieldType: .content, basics: basics)
+                    textFieldView(value: $content, focused: $focused, basics: $basics, title: "내용", fieldType: .content)
                 }
             }
 
@@ -148,12 +148,12 @@ struct ComposeView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                Text(formattedDate(from: basics?.wrappedValue.date) ?? "새로운 소비")
+                Text(formattedDate(from: basics?.date) ?? "새로운 소비")
                     .font(.title2)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // TODO: SwiftData 저장 로직 구현
+                    save()
                 } label: {
                     Text("완료")
                         .font(.title3)
@@ -167,6 +167,39 @@ struct ComposeView: View {
                 selectedCategory = item
                 presentModal = false
             }
+        }
+    }
+}
+
+extension ComposeView {
+    func save() {
+        if let basics {
+            // 기존 항목 수정
+            basics.title = title
+            basics.money = Int(money) ?? 0
+            basics.content = content
+            basics.date = date
+            basics.imageFileName = img
+            basics.category = selectedCategory ?? basics.category
+        } else {
+            // 새 항목 저장
+            let newEntry = BasicEntry(
+                title: title,
+                content: content,
+                date: date,
+                money: Int(money) ?? 0,
+                imageFileName: img,
+                userID: username,
+                category: selectedCategory
+            )
+            context.insert(newEntry)
+        }
+
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            print("저장 실패: \(error.localizedDescription)")
         }
     }
 
@@ -206,7 +239,7 @@ struct ComposeView: View {
 
 #Preview("Create") {
     NavigationStack {
-        ComposeView(basics: nil)
+        ComposeView(basics: .constant(nil))
             .modelContainer(
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
@@ -217,9 +250,10 @@ struct ComposeView: View {
 struct textFieldView: View {
     @Binding var value: String
     @FocusState<FieldType?>.Binding var focused: FieldType?
+    @Binding var basics: BasicEntry?
+
     var title: String
     var fieldType: FieldType
-    let basics: Binding<BasicEntry>?
 
     var body: some View {
         VStack(spacing: 5) {
@@ -251,11 +285,11 @@ struct textFieldView: View {
                         if let basics {
                             switch fieldType {
                             case .title:
-                                value = basics.wrappedValue.title
+                                value = basics.title
                             case .money:
-                                value = String(basics.wrappedValue.money)
+                                value = String(basics.money)
                             case .content:
-                                value = basics.wrappedValue.content ?? ""
+                                value = basics.content ?? ""
                             }
                         }
                     }
@@ -274,10 +308,10 @@ struct textFieldView: View {
 
 struct SelectCategoryByMenu: View {
     @Binding var selectedCategory: Category?
+    @Binding var basics: BasicEntry?
     let categories: [Category]
-    let basics: Binding<BasicEntry>?
     var currentCategory: Category? {
-        selectedCategory ?? basics?.wrappedValue.category
+        selectedCategory ?? basics?.category
     }
 
     var body: some View {
@@ -332,10 +366,10 @@ struct SelectCategoryByMenu: View {
 struct SelectCategoryBySheet: View {
     @Binding var presentModal: Bool
     @Binding var selectedCategory: Category?
-    let basics: Binding<BasicEntry>?
+    @Binding var basics: BasicEntry?
 
     var currentCategory: Category? {
-        selectedCategory ?? basics?.wrappedValue.category
+        selectedCategory ?? basics?.category
     }
 
     var body: some View {

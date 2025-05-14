@@ -33,33 +33,33 @@ struct CategoryListView: View {
 
 
             ForEach(filtereditems) { item in
-                NavigationLink {
-                    DetailView()
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.title)
-                            // 날짜를 yyyy.MM.dd 형식으로 표시
-                            Text(formattedDate(item.date))
-                                .font(.footnote)
+                if let index = spendingViewModel.spending.firstIndex(where: { $0.id == item.id }) {
+                    NavigationLink {
+                        DetailView(basics: $spendingViewModel.spending[index])
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.title)
+                                // 날짜를 yyyy.MM.dd 형식으로 표시
+                                Text(formattedDate(item.date))
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Text("\(item.money)원")
                                 .foregroundColor(.gray)
                         }
-                        Spacer()
-                        Text("\(item.money)원")
-                            .foregroundColor(.gray)
-                    }
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            // SwiftData에서 해당 항목 삭제
-                            context.delete(item)
-                            try? context.save()
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                // SwiftData에서 해당 항목 삭제
+                                context.delete(item)
+                                try? context.save()
 
-                            // ViewModel에서도 제거
-                            if let index = spendingViewModel.spending.firstIndex(where: { $0.id == item.id }) {
+                                // ViewModel에서도 제거
                                 spendingViewModel.spending.remove(at: index)
+                            } label: {
+                                Label("삭제", systemImage: "trash")
                             }
-                        } label: {
-                            Label("삭제", systemImage: "trash")
                         }
                     }
                 }

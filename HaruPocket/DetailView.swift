@@ -13,14 +13,7 @@ struct DetailView: View {
     @State private var showDeleteAlert = false
     @State private var showComposeView = false
 
-    let dateString = "2025.05.12"
-    let image = Image("sampleImage")
-    let categoryName = "음식"
-    let categoryIcon = "🍚"
-    let categoryColor = Color.pink
-    let title = "돈가스"
-    let price = "48,000"
-    let memo = "맛있는 돈가스~"
+    @Binding var basics: BasicEntry
 
     var body: some View {
         VStack(spacing: 40) {
@@ -38,7 +31,7 @@ struct DetailView: View {
                 .padding(.horizontal)
 
             HStack {
-                Text(title)
+                Text(basics.title)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(Color.lightPointColor)
@@ -46,16 +39,16 @@ struct DetailView: View {
                 Spacer()
 
                 Label {
-                    Text(categoryName)
+                    Text(basics.category?.name ?? "카테고리 없음")
                         .font(.title3)
                         .foregroundColor(Color.lightPointColor)
                 } icon: {
-                    Text(categoryIcon)
+                    Text(basics.category?.emoji ?? "")
                         .foregroundColor(.gray)
                 }
 
                 Circle()
-                    .fill(categoryColor)
+                    .fill(basics.category?.color ?? .gray)
                     .frame(width: 18, height: 18)
             }
             .padding(.horizontal, 40)
@@ -67,7 +60,7 @@ struct DetailView: View {
                     .padding(.leading, 10)
 
                 HStack {
-                    Text(price)
+                    Text("\(basics.money)")
                         .font(.body)
                     Spacer()
                     Text("원")
@@ -87,7 +80,7 @@ struct DetailView: View {
                     .foregroundColor(.gray)
                     .padding(.leading, 10)
 
-                Text(memo)
+                Text(basics.content ?? "")
                     .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
                     .padding()
                     .background(
@@ -117,7 +110,7 @@ struct DetailView: View {
             }
 
             ToolbarItem(placement: .principal) {
-                Text(dateString)
+                Text(formattedDate(from: basics.date))
                     .font(.title2)
             }
 
@@ -153,27 +146,42 @@ struct DetailView: View {
             }
         }
         .navigationDestination(isPresented: $showComposeView) {
-            ComposeView(basics: .constant(BasicEntry(
-                title: "샘플 이미지 항목 1",
-                content: "테스트용 이미지가 포함된 항목입니다.",
-                date: Date(),
-                money: 42494,
-                imageFileName: "gift.jpg",
-                userID: "default_user",
-                category: Category(
-                    name: "테스트",
-                    color: .blue,
-                    emoji: "💡",
-                    userID: "default_user"
-                ))))
+            ComposeView(basics: Binding($basics))
 
         }
+    }
+
+    func formattedDate(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateStyle = .long     // "2025년 5월 14일"
+        formatter.timeStyle = .none
+
+        return formatter.string(from: date)
     }
 }
 
 #Preview {
     NavigationStack {
-        DetailView()
+        DetailView(basics: .constant(
+            BasicEntry(
+            title: "샘플 이미지 항목 1",
+            content: "테스트용 이미지가 포함된 항목입니다.",
+            date: Date(),
+            money: 42494,
+            imageFileName: "gift.jpg",
+            userID: "default_user",
+            category: Category(
+                name: "테스트",
+                color: .blue,
+                emoji: "💡",
+                userID: "default_user"
+            ))
+        ))
+        .modelContainer(
+            for: [BasicEntry.self, Category.self, Statics.self],
+            inMemory: true
+        )
     }
 }
 
