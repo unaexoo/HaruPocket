@@ -141,6 +141,13 @@ struct CategoryView: View {
         }
         .navigationDestination(isPresented: $showCategoryComposeView) {
             CategoryComposeView(category: .constant(nil))
+                .onDisappear {
+                    showCategoryComposeView = false
+                    spendingViewModel.hasLoadedCategory = false
+                    spendingViewModel.loadCategory(
+                        context: context
+                    )
+                }
         }
     }
 }
