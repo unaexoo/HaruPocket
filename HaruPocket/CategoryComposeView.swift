@@ -21,8 +21,18 @@ struct CategoryComposeView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     @Binding var category: Category?
+
+    // 다크모드에 대응
+    private var pointColor: Color {
+        colorScheme == .dark ? .darkPointColor : .lightPointColor
+    }
+
+    private var textColor: Color {
+        colorScheme == .dark ? .creamWhite : .black
+    }
 
     var body: some View {
         VStack(spacing: 30) {
@@ -36,8 +46,9 @@ struct CategoryComposeView: View {
                     .padding(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.lightPointColor, lineWidth: 1)
+                            .stroke(pointColor, lineWidth: 1)
                     )
+                    .foregroundColor(textColor)
                     .onAppear {
                         name = category?.name ?? ""
                     }
@@ -47,7 +58,7 @@ struct CategoryComposeView: View {
                 HStack {
                     Text("색상")
                         .font(.title2)
-                        .foregroundColor(.black)
+                        .foregroundColor(textColor)
 
                     Spacer()
 
@@ -70,7 +81,7 @@ struct CategoryComposeView: View {
             HStack {
                 Text("이모지")
                     .font(.title2)
-                    .foregroundColor(.black)
+                    .foregroundColor(textColor)
 
                 Spacer()
 
@@ -99,13 +110,14 @@ struct CategoryComposeView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
             }
 
             ToolbarItem(placement: .principal) {
                 Text(category != nil ? "카테고리 수정" : "카테고리 생성")
                     .font(.title2)
+                    .foregroundColor(textColor)
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -114,10 +126,11 @@ struct CategoryComposeView: View {
                 } label: {
                     Text("완료")
                         .font(.title3)
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
             }
         }
+        .toolbar(.hidden, for: .tabBar)
         .emojiPicker(
             isDisplayed: $isEmojiPickerVisible,
             onEmojiSelected: { emoji in

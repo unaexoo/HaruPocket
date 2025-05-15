@@ -9,11 +9,25 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var showDeleteAlert = false
     @State private var showComposeView = false
 
     @Binding var basics: BasicEntry
+
+    // 다크모드 대응
+    private var pointColor: Color {
+        colorScheme == .dark ? .darkPointColor : .lightPointColor
+    }
+
+    private var borderColor: Color {
+        colorScheme == .dark ? .darkBrown : .brown
+    }
+
+    private var backgroundColor: Color {
+        colorScheme == .dark ? .darkMainColor : .subColor
+    }
 
     var body: some View {
         VStack(spacing: 40) {
@@ -35,7 +49,7 @@ struct DetailView: View {
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 30)
-                    .stroke(Color.lightPointColor, lineWidth: 1)
+                    .stroke(pointColor, lineWidth: 1)
             }
             .frame(height: 250)
             .frame(width: 360)
@@ -45,13 +59,13 @@ struct DetailView: View {
                 Text(basics.title)
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.lightPointColor)
+                    .foregroundColor(pointColor)
 
                 Spacer()
 
                 Text(basics.category?.name ?? "카테고리 없음")
                     .font(.title3)
-                    .foregroundColor(Color.lightPointColor)
+                    .foregroundColor(pointColor)
 
                 Text(basics.category?.emoji ?? "")
                     .font(.footnote)
@@ -73,14 +87,14 @@ struct DetailView: View {
                         .font(.body)
                     Spacer()
                     Text("원")
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
                 .padding()
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.brown, lineWidth: 1)
+                        .stroke(borderColor, lineWidth: 1)
                 )
-                .foregroundColor(Color.lightPointColor)
+                .foregroundColor(pointColor)
                 .padding(.bottom, 20)
 
                 Text("내용")
@@ -92,12 +106,12 @@ struct DetailView: View {
                     Text(basics.content ?? "")
                         .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
                         .padding()
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
                 .scrollIndicators(.hidden)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.brown, lineWidth: 1)
+                        .stroke(borderColor, lineWidth: 1)
                 )
             }
             .padding(.horizontal)
@@ -115,17 +129,17 @@ struct DetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
             }
 
             ToolbarItem(placement: .principal) {
                 Text(formattedDate(from: basics.date))
                     .font(.title2)
+                    .foregroundColor(pointColor)
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-
                 Button {
                     showComposeView = true
                 } label: {
@@ -133,7 +147,7 @@ struct DetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
 
                 Button {
@@ -143,21 +157,20 @@ struct DetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Color.lightPointColor)
+                        .foregroundColor(pointColor)
                 }
             }
         }
         .alert("정말 삭제하시겠습니까?", isPresented: $showDeleteAlert) {
             Button("네", role: .destructive) {
-                // 삭제 처리: 이 부분은 팀원 코드와 연동
+                // 삭제 처리: 팀원 코드와 연동
             }
             Button("아니오", role: .cancel) {
-                // alert 자동으로 사라짐
+
             }
         }
         .navigationDestination(isPresented: $showComposeView) {
             ComposeView(date: basics.date, basics: Binding($basics))
-
         }
     }
 
@@ -194,4 +207,5 @@ struct DetailView: View {
         )
     }
 }
+
 
