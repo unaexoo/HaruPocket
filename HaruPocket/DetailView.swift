@@ -156,7 +156,7 @@ struct DetailView: View {
             }
         }
         .navigationDestination(isPresented: $showComposeView) {
-            ComposeView(basics: Binding($basics))
+            ComposeView(date: basics.date, basics: Binding($basics))
 
         }
     }
@@ -179,7 +179,7 @@ struct DetailView: View {
                 content: "테스트용 이미지가 포함된 항목입니다.",
                 date: Date(),
                 money: 42494,
-                imageFileName: "gift.jpg",
+                imageFileName: "SampleImage/gift.jpg",
                 userID: "default_user",
                 category: Category(
                     name: "테스트",

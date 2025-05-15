@@ -8,20 +8,26 @@
 import SwiftUI
 
 struct SelectCategoryView: View {
-    let onSelect: (Category?) -> Void
+    @AppStorage("username") private var username: String = "default_user"
 
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
+
+    @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
-    @Environment(\.editMode) private var editMode
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var selected: Category? = nil
     @State private var showCategoryComposeView = false
 
-    let categories = Category.sampleList
+    let onSelect: (Category?) -> Void
 
     var body: some View {
         NavigationStack {
             VStack {
+                let categories = spendingViewModel.categories.filter {
+                    $0.userID == spendingViewModel.username
+                }
+
                 List(selection: $selected) {
                     Button {
                         showCategoryComposeView = true
@@ -42,8 +48,6 @@ struct SelectCategoryView: View {
 
                             Spacer()
 
-
-
                             if selected == category {
                                 Image(systemName: "checkmark")
                                     .foregroundColor(Color.lightPointColor)
@@ -54,6 +58,14 @@ struct SelectCategoryView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+            }
+            .onAppear {
+                spendingViewModel.username = username
+                spendingViewModel.loadCategory(context: context)
+
+                Task {
+                    await spendingViewModel.insertSampleData(context: context)
+                }
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -90,9 +102,6 @@ struct SelectCategoryView: View {
             .navigationDestination(isPresented: $showCategoryComposeView) {
                 CategoryComposeView(category: .constant(nil))
             }
-        }
-        .onAppear {
-            editMode?.wrappedValue = .active
         }
     }
 }
