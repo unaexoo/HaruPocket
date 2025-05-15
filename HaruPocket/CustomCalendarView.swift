@@ -437,6 +437,7 @@ struct EntryListView: View {
     let entries: [BasicEntry]
     let username: String
     @ObservedObject var spendingViewModel: SpendingViewModel
+    @Environment(\.modelContext) private var context
 
     var body: some View {
         let filtered = entries.filter {
@@ -477,6 +478,12 @@ struct EntryListView: View {
                                                         index
                                                     ]
                                             )
+                                            .onDisappear {
+                                                spendingViewModel.hasLoadedEntry = false
+                                                spendingViewModel.loadEntry(
+                                                    context: context
+                                                )
+                                            }
                                         ) {
                                             HStack {
                                                 Circle()

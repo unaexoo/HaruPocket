@@ -7,17 +7,22 @@
 
 import SwiftUI
 
+/// 저장된 이미지가 있는 소비 항목을 그리드로 보여주는 뷰입니다.
+/// 이미지를 탭하면 해당 항목의 상세 페이지로 이동합니다.
 struct PhotoView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
     @EnvironmentObject var spendingViewModel: SpendingViewModel
 
+    /// 그리드 아이템 간의 간격
     private let spacing: CGFloat = 5
+    /// 3열 그리드 레이아웃 구성
     private let columns = Array(repeating: GridItem(spacing: 5), count: 3)
 
     var body: some View {
         ScrollView {
+            // 모든 소비 항목 중 현재 사용자와 이미지가 있는 항목만 필터링 후 날짜 내림차순 정렬
             let allSpending = spendingViewModel.spending
             let filtereditems = allSpending
                 .filter {
@@ -26,6 +31,7 @@ struct PhotoView: View {
                 }
                 .sorted { $0.date > $1.date }
 
+            // 필터링된 항목들을 3열 그리드 형태로 표시
             LazyVGrid(columns: columns, spacing: spacing) {
                 ForEach(filtereditems) { entry in
                     let entryID = entry.id
@@ -64,6 +70,7 @@ struct PhotoView: View {
         }
     }
 
+    /// 그리드 항목 하나의 너비를 계산합니다.
     private var gridItemSize: CGFloat {
         let screenWidth = UIScreen.main.bounds.width
         let totalSpacing = spacing * 4
