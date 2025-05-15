@@ -82,7 +82,7 @@ struct StatisticsView: View {
                         .font(.title)
                         .foregroundStyle(Color.lightPointColor)
 
-                    Image("pocekt")
+                    Image("pocket")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 200)

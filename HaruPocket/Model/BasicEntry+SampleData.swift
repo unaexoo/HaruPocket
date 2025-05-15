@@ -30,7 +30,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "브런치 카페",
                 content: "친구들과 맛있는 브런치를 먹었다. 고마운게 많아서 내가 사줬다.",
-                date: date("2025-08-31"),
+                date: date("2025-05-17"),
                 money: 69000,
                 imageFileName: "SampleImage/brunch.jpg", userID: "default_user",
                 category: category(named: "음식")
