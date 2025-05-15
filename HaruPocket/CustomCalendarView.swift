@@ -167,9 +167,10 @@ struct CustomCalendarView: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(
                     calendarViewModel.daysInMonth(),
-                    id: \.self,
-                    content: dayCell
-                )
+                    id: \.timeIntervalSince1970
+                ) {
+                    dayCell(for: $0)
+                }
             }
 
             Rectangle()
