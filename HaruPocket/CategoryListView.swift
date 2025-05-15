@@ -16,16 +16,14 @@ import SwiftData
 struct CategoryListView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("username") private var username: String = "default_user"
-
-    @State private var showCateogryComposeView = false
-
+    
     @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     @Environment(\.dismiss) var dismiss
 
     // 수정사항
-    let category: Category?
-    
+    @Binding var category: Category?
+
     var body: some View {
         List {
             // 필터링 조건:
@@ -37,8 +35,6 @@ struct CategoryListView: View {
                 .filter { category != nil ? ($0.userID == spendingViewModel.username) && ($0.category?.name == category?.name) : ($0.userID == spendingViewModel.username) }
             // 최신 날짜가 먼저 오도록 정렬
                 .sorted { $0.date > $1.date }
-
-
 
             ForEach(filtereditems) { item in
                 if let index = spendingViewModel.spending.firstIndex(where: { $0.id == item.id }) {
@@ -103,20 +99,6 @@ struct CategoryListView: View {
                             Text(category?.name ?? "나의 모든 소비 기록")
                                 .font(.title2)
                         }
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button {
-//                    showCateogryComposeView = true
-//                } label: {
-//                    Image(systemName: "pencil")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 20, height: 20)
-//                        .foregroundColor(Color.lightPointColor)
-//                }
-//            }
-        }
-        .navigationDestination(isPresented: $showCateogryComposeView) {
-//            CategoryEditView()
         }
     }
 
@@ -131,12 +113,12 @@ struct CategoryListView: View {
 
 #Preview {
     NavigationStack {
-        CategoryListView(category: Category(
+        CategoryListView(category: .constant(Category(
             name: "음식",
             color: .blue,
             emoji: "💡",
             userID: "default_user"
-        ) )
+        )))
         .modelContainer(
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true
@@ -147,7 +129,7 @@ struct CategoryListView: View {
 
 #Preview {
     NavigationStack {
-        CategoryListView(category: nil)
+        CategoryListView(category: .constant(nil))
         .modelContainer(
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true
