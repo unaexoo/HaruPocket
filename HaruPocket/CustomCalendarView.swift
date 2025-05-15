@@ -237,7 +237,7 @@ struct CustomCalendarView: View {
         .tint(
             colorScheme == .dark ? Color.darkPointColor : Color.lightPointColor
         )
-        .padding(.vertical)
+        .padding()
     }
 
     private var weekdayHeader: some View {
