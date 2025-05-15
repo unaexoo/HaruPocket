@@ -260,7 +260,7 @@ struct ChartView: View {
 
                             Spacer()
 
-                            Text("\(title == "최다" ? items.count : items.money)건")
+                            Text(title == "최다" ? "\(items.count)건" : "\(items.money)원")
                                 .font(.callout)
                                 .foregroundStyle(.gray)
                         }
