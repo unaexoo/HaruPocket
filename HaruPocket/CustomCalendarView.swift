@@ -57,7 +57,7 @@ struct CustomCalendarView: View {
                     .tag(0)
 
                     NavigationStack {
-                        CategoryListView(category: nil)
+                        CategoryListView(category: .constant(nil))
                             .navigationTitle("리스트")
                     }
                     .tabItem {
@@ -145,7 +145,6 @@ struct CustomCalendarView: View {
                 spendingViewModel.username = username
                 spendingViewModel.loadCategory(context: context)
                 spendingViewModel.loadEntry(context: context)
-                spendingViewModel.updateStatics(context: context)
                 Task {
                     await spendingViewModel.insertSampleData(context: context)
                 }
@@ -238,7 +237,7 @@ struct CustomCalendarView: View {
         .tint(
             colorScheme == .dark ? Color.darkPointColor : Color.lightPointColor
         )
-        .padding(.vertical)
+        .padding()
     }
 
     private var weekdayHeader: some View {
@@ -307,7 +306,7 @@ struct CustomCalendarView: View {
     NavigationStack {
         CustomCalendarView()
             .modelContainer(
-                for: [BasicEntry.self, Category.self, Statics.self],
+                for: [BasicEntry.self, Category.self],
                 inMemory: true
             )
             .environmentObject(SpendingViewModel())

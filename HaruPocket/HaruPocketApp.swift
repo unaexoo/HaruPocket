@@ -14,7 +14,7 @@ struct HaruPocketApp: App {
 
     let sharedModelContainer: ModelContainer
     init() {
-        let schema = Schema([ BasicEntry.self, Category.self, Statics.self ])
+        let schema = Schema([ BasicEntry.self, Category.self ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {

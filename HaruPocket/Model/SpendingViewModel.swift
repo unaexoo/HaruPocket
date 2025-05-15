@@ -13,7 +13,6 @@ import SwiftUI
 class SpendingViewModel: ObservableObject {
     @Published var spending: [BasicEntry] = []
     @Published var categories: [Category] = []
-    @Published var staticsList: [Statics] = []
     @Published var username: String = "default_user"
 
     func loadEntry(context: ModelContext) {
@@ -40,103 +39,55 @@ class SpendingViewModel: ObservableObject {
         }
     }
 
-    func updateStatics(context: ModelContext) {
-        let userID = self.username
-        var totalAmount = 0
-        var updatedStatics: [UUID: Statics] = [:]
+//    func addEntry(
+//        context: ModelContext,
+//        title: String,
+//        content: String? = nil,
+//        date: Date,
+//        money: Int,
+//        imageFileName: String? = nil,
+//        category: Category?,
+//        imageData: Data? = nil
+//    ) {
+//        let userID = self.username
+//        let entry = BasicEntry(
+//            title: title,
+//            content: content,
+//            date: date,
+//            money: money,
+//            imageFileName: imageFileName,
+//            userID: userID,
+//            category: category
+//        )
+//        context.insert(entry)
+//
+//        let stat = Statics.fetchOrCreate(
+//            context: context,
+//            userID: userID,
+//            categoryName: category?.name ?? "기타",
+//            categoryColor: category?.color ?? .gray
+//        )
+//        stat.updateWith(entry: entry)
+//
+//        saveContext(context)
+//        spending.append(entry)
+//
+//        if !staticsList.contains(where: { $0.id == stat.id }) {
+//            staticsList.append(stat)
+//        }
+//    }
 
-        for category in categories where category.userID == userID {
-            let entries = category.diary
-            let amount = entries.map(\.money).reduce(0, +)
-            let count = entries.count
-            totalAmount += amount
-
-            let stat = Statics.fetchOrCreate(
-                context: context,
-                userID: userID,
-                categoryName: category.name,
-                categoryColor: category.color
-            )
-
-            stat.categoryAmount = amount
-            stat.categoryCount = count
-            updatedStatics[stat.id] = stat
-        }
-
-        for stat in updatedStatics.values {
-            stat.totalAmount = totalAmount
-        }
-
-        staticsList = Array(updatedStatics.values)
-    }
-
-    func resetStatics(context: ModelContext) {
-        let userID = self.username
-        let descriptor = FetchDescriptor<Statics>(
-            predicate: #Predicate { $0.userID == userID }
-        )
-        do {
-            let stats = try context.fetch(descriptor)
-            for stat in stats {
-                stat.totalAmount = 0
-                stat.categoryAmount = 0
-                stat.categoryCount = 0
-            }
-            staticsList = stats
-        } catch {
-            print("Statics 초기화 실패: \(error)")
-        }
-    }
-
-    func addEntry(
-        context: ModelContext,
-        title: String,
-        content: String? = nil,
-        date: Date,
-        money: Int,
-        imageFileName: String? = nil,
-        category: Category?,
-        imageData: Data? = nil
-    ) {
-        let userID = self.username
-        let entry = BasicEntry(
-            title: title,
-            content: content,
-            date: date,
-            money: money,
-            imageFileName: imageFileName,
-            userID: userID,
-            category: category
-        )
-        context.insert(entry)
-
-        let stat = Statics.fetchOrCreate(
-            context: context,
-            userID: userID,
-            categoryName: category?.name ?? "기타",
-            categoryColor: category?.color ?? .gray
-        )
-        stat.updateWith(entry: entry)
-
-        saveContext(context)
-        spending.append(entry)
-
-        if !staticsList.contains(where: { $0.id == stat.id }) {
-            staticsList.append(stat)
-        }
-    }
-
-    func deleteEntry(context: ModelContext, entry: BasicEntry) {
-        if let stat = staticsList.first(where: {
-            $0.categoryName == entry.category?.name
-        }) {
-            stat.removeEntry(entry)
-        }
-
-        context.delete(entry)
-        saveContext(context)
-        spending.removeAll { $0.id == entry.id }
-    }
+//    func deleteEntry(context: ModelContext, entry: BasicEntry) {
+//        if let stat = staticsList.first(where: {
+//            $0.categoryName == entry.category?.name
+//        }) {
+//            stat.removeEntry(entry)
+//        }
+//
+//        context.delete(entry)
+//        saveContext(context)
+//        spending.removeAll { $0.id == entry.id }
+//    }
 
     func updateEntry(
         context: ModelContext,
@@ -171,6 +122,21 @@ class SpendingViewModel: ObservableObject {
     }
 
     func deleteCategory(context: ModelContext, category: Category) {
+        let userID = self.username
+
+        var fallbackCategory: Category
+        if let existing = categories.first(where: { $0.name == "카테고리 없음" && $0.userID == userID }) {
+            fallbackCategory = existing
+        } else {
+            fallbackCategory = Category(name: "기타", color: .gray, emoji: "📂", userID: userID)
+            context.insert(fallbackCategory)
+            categories.append(fallbackCategory)
+        }
+
+        for entry in spending where entry.category?.id == category.id {
+            entry.category = fallbackCategory
+        }
+
         context.delete(category)
         saveContext(context)
         categories.removeAll { $0.id == category.id }
@@ -211,7 +177,6 @@ class SpendingViewModel: ObservableObject {
             saveContext(context)
             loadCategory(context: context)
             loadEntry(context: context)
-            updateStatics(context: context)
 
             print("동기 샘플 데이터 삽입 완료")
         } catch {

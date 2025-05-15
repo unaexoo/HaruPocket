@@ -202,7 +202,7 @@ struct DetailView: View {
                 ))
         ))
         .modelContainer(
-            for: [BasicEntry.self, Category.self, Statics.self],
+            for: [BasicEntry.self, Category.self],
             inMemory: true
         )
     }
