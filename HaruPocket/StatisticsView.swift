@@ -109,10 +109,9 @@ struct StatisticsView: View {
                     .padding()
                     .padding(.top, 20)
 
-                    ChartView(title: "최다", dataItems: top5ByCountItems)
-
                     ChartView(title: "최대", dataItems: top5ByMoneyItems)
 
+                    ChartView(title: "최다", dataItems: top5ByCountItems)
                 }
                 .onAppear {
                     spendingViewModel.username = username
@@ -242,7 +241,7 @@ struct ChartView: View {
                 .scaledToFit()
                 .frame(width: 300, height: 300)
 
-                Text(title == "최다" ? "이번 달 최다 소비" : "이번 달 최고 소비")
+                Text(title == "최다" ? "이번 달 최다 소비 Top 5" : "이번 달 최고 소비 Top 5")
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
