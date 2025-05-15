@@ -79,37 +79,38 @@ struct CustomCalendarView: View {
                         }
                         .navigationTitle("지갑 속 하루")
                         .navigationBarTitleDisplayMode(.large)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button {
-                                    showYearPicker.toggle()
-                                } label: {
-                                    HStack {
-                                        Text("\(String(selectedYear))년")
-                                        Image(systemName: "chevron.down")
-                                    }
-                                    .font(.headline)
-                                    .foregroundStyle(
-                                        colorScheme == .dark
+                        .overlay(alignment: .topTrailing) {
+                            Button {
+                                showYearPicker.toggle()
+                            } label: {
+                                HStack {
+                                    Text("\(String(selectedYear))년")
+                                    Image(systemName: "chevron.down")
+                                }
+                                .font(.headline)
+                                .foregroundStyle(
+                                    colorScheme == .dark
                                         ? Color.darkPointColor
                                         : Color.lightPointColor
-                                    )
-                                    .offset(y: 45)
-
-                                }
+                                )
+                                .padding(.trailing, 30)
+                                .padding(.bottom, 10)
                             }
                         }
                         .sheet(isPresented: $showYearPicker) {
                             yearPickerSheet
                         }
                         .navigationDestination(isPresented: $showComposeView) {
-                            ComposeView(date: calendarViewModel.selectedDate, basics: .constant(nil))
-                                .onDisappear {
-                                    showComposeView = false
-                                    spendingViewModel.loadEntry(
-                                        context: context
-                                    )
-                                }
+                            ComposeView(
+                                date: calendarViewModel.selectedDate,
+                                basics: .constant(nil)
+                            )
+                            .onDisappear {
+                                showComposeView = false
+                                spendingViewModel.loadEntry(
+                                    context: context
+                                )
+                            }
                         }
                     }
                     .tabItem {
