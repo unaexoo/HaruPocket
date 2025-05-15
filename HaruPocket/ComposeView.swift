@@ -362,7 +362,7 @@ extension ComposeView {
                 userID: "default_user"
             ))))
         .modelContainer(
-            for: [BasicEntry.self, Category.self, Statics.self],
+            for: [BasicEntry.self, Category.self],
             inMemory: true
         )
         .environmentObject(SpendingViewModel())
@@ -373,7 +373,7 @@ extension ComposeView {
     NavigationStack {
         ComposeView(date: Date(), basics: .constant(nil))
             .modelContainer(
-                for: [BasicEntry.self, Category.self, Statics.self],
+                for: [BasicEntry.self, Category.self],
                 inMemory: true
             )
             .environmentObject(SpendingViewModel())

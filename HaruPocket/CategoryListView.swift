@@ -75,7 +75,6 @@ struct CategoryListView: View {
             spendingViewModel.username = username
             spendingViewModel.loadCategory(context: context)
             spendingViewModel.loadEntry(context: context)
-            spendingViewModel.updateStatics(context: context)
 
             Task {
                 await spendingViewModel.insertSampleData(context: context)
@@ -120,7 +119,7 @@ struct CategoryListView: View {
             userID: "default_user"
         )))
         .modelContainer(
-            for: [BasicEntry.self, Category.self, Statics.self],
+            for: [BasicEntry.self, Category.self],
             inMemory: true
         )
         .environmentObject(SpendingViewModel())
@@ -131,7 +130,7 @@ struct CategoryListView: View {
     NavigationStack {
         CategoryListView(category: .constant(nil))
         .modelContainer(
-            for: [BasicEntry.self, Category.self, Statics.self],
+            for: [BasicEntry.self, Category.self],
             inMemory: true
         )
         .environmentObject(SpendingViewModel())

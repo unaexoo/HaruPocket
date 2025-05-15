@@ -86,12 +86,13 @@ struct CategoryView: View {
                     Image(systemName: "plus")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.white)
-                        .padding()
+                        .frame(width: 50, height: 50)
                         .background(Color.lightMainColor)
                         .clipShape(Circle())
                         .shadow(radius: 4)
                 }
-                .padding()
+                .padding(.trailing, 20)
+                .padding(.bottom, 20)
             }
 
         }
@@ -138,7 +139,7 @@ struct CategoryView: View {
         CategoryView()
     }
     .modelContainer(
-        for: [BasicEntry.self, Category.self, Statics.self],
+        for: [BasicEntry.self, Category.self],
         inMemory: true
     )
     .environmentObject(SpendingViewModel())

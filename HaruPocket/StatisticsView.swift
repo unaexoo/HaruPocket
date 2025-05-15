@@ -145,8 +145,6 @@ extension StatisticsView {
 
         let totalMoney = statisticsViewModel.totalMoneyForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
-		print(totalMoney)
-
         DispatchQueue.main.async {
             if totalMoney == 0 {
                 isExpenseListEmpty = true
@@ -186,7 +184,7 @@ extension StatisticsView {
     NavigationStack {
         StatisticsView()
             .modelContainer(
-                for: [BasicEntry.self, Category.self, Statics.self],
+                for: [BasicEntry.self, Category.self],
                 inMemory: true
             )
             .environmentObject(SpendingViewModel())
