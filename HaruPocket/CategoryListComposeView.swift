@@ -48,11 +48,12 @@ struct CategoryListComposeView: View {
                 NavigationLink(destination: CategoryComposeView(category: binding)) {
                     HStack(spacing: 12) {
                         Text(category.name)
+                            .foregroundColor(.primary)
                     }
                     .padding(.vertical, 6)
                 }
                 .tag(category.id)
-                .listRowBackground(Color.clear)
+                .listRowBackground(Color(UIColor.systemBackground))
             }
         }
         .padding(.vertical)

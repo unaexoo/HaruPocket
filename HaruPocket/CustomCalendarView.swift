@@ -125,7 +125,7 @@ struct CustomCalendarView: View {
                     .tag(2)
 
                     NavigationStack {
-                        CategoryView()
+                        PhotoView()
                             .navigationTitle("사진")
                     }
                     .tabItem {
