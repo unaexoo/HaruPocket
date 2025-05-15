@@ -145,11 +145,11 @@ struct CustomCalendarView: View {
             .onAppear {
                 if spendingViewModel.username != username {
                     spendingViewModel.username = username
-                    spendingViewModel.loadCategory(context: context)
-                    spendingViewModel.loadEntry(context: context)
-                    Task {
-                        await spendingViewModel.insertSampleData(context: context)
-                    }
+                }
+                spendingViewModel.loadCategory(context: context)
+                spendingViewModel.loadEntry(context: context)
+                Task {
+                    await spendingViewModel.insertSampleData(context: context)
                 }
             }
         }
