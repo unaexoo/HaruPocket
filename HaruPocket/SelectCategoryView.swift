@@ -108,6 +108,6 @@ struct SelectCategoryView: View {
 
 #Preview {
     SelectCategoryView { selected in
-        print("선택된 값: \(selected!.name)")
+        print("선택된 값: \(selected?.name ?? "카테고리 없음")")
     }
 }
