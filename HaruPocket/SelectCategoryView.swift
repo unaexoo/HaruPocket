@@ -28,6 +28,7 @@ struct SelectCategoryView: View {
                 let categories = allCategories.filter {
                     $0.userID == spendingViewModel.username
                 }
+                    .sorted { $0.name < $1.name }
 
                 List(selection: $selected) {
                     Button {
@@ -67,36 +68,42 @@ struct SelectCategoryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)
             .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("취소")
-                                .font(.title3)
-                                .foregroundColor(Color.lightPointColor)
-                        }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("취소")
+                            .font(.title3)
+                            .foregroundColor(Color.lightPointColor)
                     }
+                }
 
-                    ToolbarItem(placement: .principal) {
-                        Text("카테고리 선택")
-                            .font(.title2)
-                    }
+                ToolbarItem(placement: .principal) {
+                    Text("카테고리 선택")
+                        .font(.title2)
+                }
 
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            onSelect(selected)
-                        } label: {
-                            Text("완료")
-                                .font(.title3)
-                                .foregroundColor(selected == nil ? .gray : Color.lightPointColor)
-                        }
-                        .disabled(selected == nil)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        onSelect(selected)
+                    } label: {
+                        Text("완료")
+                            .font(.title3)
+                            .foregroundColor(selected == nil ? .gray : Color.lightPointColor)
                     }
+                    .disabled(selected == nil)
+                }
             }
             .toolbarBackground(colorScheme == .dark ? Color(.systemBackground) : Color.creamWhite, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationDestination(isPresented: $showCategoryComposeView) {
                 CategoryComposeView(category: .constant(nil))
+                    .onDisappear {
+                        spendingViewModel.hasLoadedCategory = false
+                        spendingViewModel.loadCategory(
+                            context: context
+                        )
+                    }
             }
         }
     }

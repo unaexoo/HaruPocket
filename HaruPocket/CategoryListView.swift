@@ -115,6 +115,7 @@ struct CategoryListView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 
     // 날짜를 yyyy.MM.dd 형식으로 변환해주는 포맷터 함수
