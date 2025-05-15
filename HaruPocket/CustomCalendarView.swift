@@ -334,7 +334,7 @@ struct CategoryDotView: View {
                 return nameA < nameB
             }
 
-        let displayEntries = Array(uniqueEntries.prefix(10))
+        let displayEntries = Array(uniqueEntries.prefix(5))
 
         HStack(spacing: 2) {
             if displayEntries.isEmpty {
