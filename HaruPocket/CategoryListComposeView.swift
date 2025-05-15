@@ -7,15 +7,18 @@ struct CategoryListComposeView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("username") private var username: String = "default_user"
-    @StateObject private var viewModel = SpendingViewModel()
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
     // 체크된 카테고리의 ID들을 저장하는 Set (삭제 등의 작업에 사용)
     @State private var selectedCategoryIDs: Set<UUID> = []
-
     
+    // 편집 모드 여부를 제어하는 상태 변수
+    @State private var isDeleting = false
+    @State private var showDeleteConfirmation = false
+    @State private var showSelectAlert = false
     
-    
+    @State private var showCateogryComposeView = false
     @State var categories: [Category]
-
+    
     var body: some View {
         List {
             // 카테고리가 없을 경우 안내 메시지 표시
@@ -26,35 +29,59 @@ struct CategoryListComposeView: View {
             } else {
                 // 카테고리 목록을 반복하여 표시 (체크박스 형태)
                 ForEach(categories, id: \.id) { category in
-                    HStack(spacing: 12) {
-                        Image(systemName: selectedCategoryIDs.contains(category.id) ? "checkmark.circle.fill" : "circle")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(Color.lightPointColor)
-
-                        Text(category.name)
-                            .foregroundStyle(.primary)
-                    }
-                    .padding(.vertical, 6)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        // 체크 상태 토글: 선택되어 있으면 제거, 아니면 추가
-                        if selectedCategoryIDs.contains(category.id) {
-                            selectedCategoryIDs.remove(category.id)
-                        } else {
-                            selectedCategoryIDs.insert(category.id)
+                    if isDeleting {
+                        // 삭제 모드일 때: 체크박스만 보이기 (애니메이션 적용)
+                        HStack(spacing: 12) {
+                            Image(systemName: selectedCategoryIDs.contains(category.id) ? "checkmark.circle.fill" : "circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(Color.lightPointColor)
+                            
+                            Text(category.name)
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal,5)
+                            
+                        }
+                        .padding(.vertical, 6)
+                        // 리스트 항목 전체를 터치 영역으로 설정
+                        .contentShape(Rectangle())
+                        
+                        // 항목을 탭했을 때 체크 상태를 토글
+                        .onTapGesture {
+                            if selectedCategoryIDs.contains(category.id) {
+                                // 이미 선택된 경우 → 선택 해제
+                                selectedCategoryIDs.remove(category.id)
+                            } else {
+                                // 선택되지 않은 경우 → 선택 추가
+                                selectedCategoryIDs.insert(category.id)
+                            }
+                        }
+                        
+                    } else {
+                        // 삭제 모드가 아닐 때: NavigationLink로 상세 뷰로 이동
+                        NavigationLink(destination: CategoryView()) {
+                            HStack(spacing: 12) {
+                                Text(category.name)
+                                    .foregroundStyle(.primary)
+                            }
+                            .padding(.vertical, 6)
                         }
                     }
                 }
-               
             }
         }
+        .padding(.vertical)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    dismiss()
+                    if isDeleting {
+                        isDeleting = false
+                        selectedCategoryIDs.removeAll()
+                    } else {
+                        dismiss()
+                    }
                 } label: {
                     Image(systemName: "chevron.backward")
                         .resizable()
@@ -68,42 +95,62 @@ struct CategoryListComposeView: View {
                     .font(.title2)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    // 선택된 카테고리들의 name을 기준으로 "카테고리 없음"으로 변경하고 리스트에서 제거
-                    let targetNames: Set<String> = Set(viewModel.categories.filter { selectedCategoryIDs.contains($0.id) }.map { $0.name })
-                    
-                    // 동일한 name을 가진 모든 카테고리 name 변경
-                    for i in viewModel.categories.indices {
-                        if targetNames.contains(viewModel.categories[i].name) {
-                            viewModel.categories[i].name = "카테고리 없음"
+                if isDeleting {
+                    Button {
+                        if !selectedCategoryIDs.isEmpty {
+                            showDeleteConfirmation = true
+                        } else {
+                            showSelectAlert = true
+                        }
+                    } label: {
+                        Image(systemName: "trash.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(Color.lightPointColor)
+                    }
+                    .alert("선택한 카테고리를 삭제할까요?", isPresented: $showDeleteConfirmation) {
+                        Button("삭제", role: .destructive) {
+                            for id in selectedCategoryIDs {
+                                
+                                if let index = categories.firstIndex(where: { $0.id == id }) {
+                                    
+                                    categories.remove(at: index)
+                                }
+                            }
+                            selectedCategoryIDs.removeAll()
+                            isDeleting = false
+                        }
+                        Button("취소", role: .cancel) {
+                            showDeleteConfirmation = false
                         }
                     }
-                    
-                    // 삭제된 name과 일치하는 카테고리 항목은 리스트에서 제거
-                    categories.removeAll { targetNames.contains($0.name) }
-                    
-                    selectedCategoryIDs.removeAll()
-                } label: {
-                    Image(systemName: "trash.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(Color.lightPointColor)
+                    .alert("카테고리를 선택해주세요", isPresented: $showSelectAlert) {
+                        Button("확인", role: .cancel) { showSelectAlert = false }
+                    }
+                } else {
+                    Button {
+                        isDeleting = true
+                    } label: {
+                        Text("편집")
+                            .font(.body)
+                            .foregroundColor(Color.lightPointColor)
+                    }
                 }
             }
         }
         .listStyle(.plain)
-  
-        .navigationDestination(for: Category.self) { category in
-            //CategoryListView(categories: category)
-        }
+        
         .onAppear {
             // 뷰모델의 사용자명 설정 및 카테고리 로딩
-            viewModel.username = username
-            viewModel.loadCategory(context: context)
+            spendingViewModel.username = username
+            spendingViewModel.loadCategory(context: context)
         }
     }
 }
+
+
+
 
 #Preview {
     NavigationStack {
@@ -113,11 +160,10 @@ struct CategoryListComposeView: View {
             Category(name: "쇼핑", color: .purple, emoji: "🛍️", userID: "default_user")
         ]
         CategoryListComposeView(categories: sampleCategories)
+            .environmentObject(SpendingViewModel())
             .modelContainer(
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
             )
     }
 }
-
-  
