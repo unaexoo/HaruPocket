@@ -15,18 +15,18 @@ struct CategoryListView: View {
 
     @State private var showCateogryComposeView = false
 
-    @StateObject private var spendingViewModel = SpendingViewModel()
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     @Environment(\.dismiss) var dismiss
 
     // 수정사항
-    let category: Category
-
+    let category: Category?
+	
     var body: some View {
         List {
             // 사용자의 항목 중 현재 카테고리에 해당하는 항목만 필터링하고, 날짜 기준 최신순으로 정렬
             let filtereditems = spendingViewModel.spending
-                .filter { ($0.userID == spendingViewModel.username) && ($0.category?.name == category.name) }
+                .filter { category != nil ? ($0.userID == spendingViewModel.username) && ($0.category?.name == category?.name) : ($0.userID == spendingViewModel.username) }
             // 최신 날짜가 먼저 오도록 정렬
                 .sorted { $0.date > $1.date }
 
@@ -65,6 +65,7 @@ struct CategoryListView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .listStyle(.plain)
         .onAppear {
             spendingViewModel.username = username
@@ -91,20 +92,20 @@ struct CategoryListView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                Text(category.name)
-                    .font(.title2)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    showCateogryComposeView = true
-                } label: {
-                    Image(systemName: "pencil")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(Color.lightPointColor)
-                }
-            }
+                            Text(category?.name ?? "나의 모든 소비 기록")
+                                .font(.title2)
+                        }
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button {
+//                    showCateogryComposeView = true
+//                } label: {
+//                    Image(systemName: "pencil")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 20, height: 20)
+//                        .foregroundColor(Color.lightPointColor)
+//                }
+//            }
         }
         .navigationDestination(isPresented: $showCateogryComposeView) {
 //            CategoryEditView()
@@ -132,5 +133,6 @@ struct CategoryListView: View {
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true
         )
+        .environmentObject(SpendingViewModel())
     }
 }

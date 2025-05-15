@@ -46,23 +46,18 @@ struct CategoryView: View {
     
     
     
-    // 그룹핑
-    //    var categories: [CategorySample] {
-    //        let grouped = Dictionary(grouping: categories.filter { !$0.category.isEmpty }, by: { $0.category })
-    //            .compactMap { $0.value.first }
-    //        return grouped.sorted {
-    //            $0.category != "카테고리 없음" && ($1.category == "카테고리 없음" || $0.category < $1.category)
-    //        }
-    //    }
+    
     
     
     
     // 2열 세로 그리드를 위한 열(column) 구성 설정
     // .flexible()을 사용해 화면 너비에 맞게 유연하게 칼럼 너비가 조정됨
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+
     
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -95,6 +90,7 @@ struct CategoryView: View {
                     }
                     .padding()
                 }
+                .scrollIndicators(.hidden)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
                 .toolbar {
@@ -147,7 +143,7 @@ struct CategoryView: View {
             CategoryListComposeView(categories: categories)
         }
         .navigationDestination(isPresented: $showCategoryComposeView) {
-//            CategoryComposeView()
+            CategoryComposeView(category: .constant(nil))
         }
     }
 }
