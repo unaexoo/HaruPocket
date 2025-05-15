@@ -250,7 +250,7 @@ HaruPocket
 
 |------|------|
 
-| 언어 | Swift 5.9 |
+| 언어 | Swift 6.0 이상 |
 
 | UI 프레임워크 | SwiftUI |
 
