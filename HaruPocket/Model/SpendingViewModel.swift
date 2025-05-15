@@ -14,8 +14,14 @@ class SpendingViewModel: ObservableObject {
     @Published var spending: [BasicEntry] = []
     @Published var categories: [Category] = []
     @Published var username: String = "default_user"
+    @Published var hasLoadedEntry = false
+    @Published var hasLoadedCategory = false
 
+    @MainActor
     func loadEntry(context: ModelContext) {
+        guard !hasLoadedEntry else { return }
+        hasLoadedEntry = true
+
         let userID = self.username
         let descriptor = FetchDescriptor<BasicEntry>(
             predicate: #Predicate { $0.userID == userID }
@@ -27,7 +33,11 @@ class SpendingViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func loadCategory(context: ModelContext) {
+        guard !hasLoadedCategory else { return }
+        hasLoadedCategory = true
+
         let userID = self.username
         let descriptor = FetchDescriptor<Category>(
             predicate: #Predicate { $0.userID == userID }
@@ -38,56 +48,6 @@ class SpendingViewModel: ObservableObject {
             print("카테고리 로딩 실패: \(error)")
         }
     }
-
-//    func addEntry(
-//        context: ModelContext,
-//        title: String,
-//        content: String? = nil,
-//        date: Date,
-//        money: Int,
-//        imageFileName: String? = nil,
-//        category: Category?,
-//        imageData: Data? = nil
-//    ) {
-//        let userID = self.username
-//        let entry = BasicEntry(
-//            title: title,
-//            content: content,
-//            date: date,
-//            money: money,
-//            imageFileName: imageFileName,
-//            userID: userID,
-//            category: category
-//        )
-//        context.insert(entry)
-//
-//        let stat = Statics.fetchOrCreate(
-//            context: context,
-//            userID: userID,
-//            categoryName: category?.name ?? "기타",
-//            categoryColor: category?.color ?? .gray
-//        )
-//        stat.updateWith(entry: entry)
-//
-//        saveContext(context)
-//        spending.append(entry)
-//
-//        if !staticsList.contains(where: { $0.id == stat.id }) {
-//            staticsList.append(stat)
-//        }
-//    }
-
-//    func deleteEntry(context: ModelContext, entry: BasicEntry) {
-//        if let stat = staticsList.first(where: {
-//            $0.categoryName == entry.category?.name
-//        }) {
-//            stat.removeEntry(entry)
-//        }
-//
-//        context.delete(entry)
-//        saveContext(context)
-//        spending.removeAll { $0.id == entry.id }
-//    }
 
     func updateEntry(
         context: ModelContext,
@@ -167,7 +127,7 @@ class SpendingViewModel: ObservableObject {
                 predicate: #Predicate { $0.userID == userID }
             )
             _ = try context.fetch(descriptor)
-
+            
             let sampleEntries = try await BasicEntry.sampleList(for: username, in: context)
 
             for entry in sampleEntries {
@@ -175,8 +135,8 @@ class SpendingViewModel: ObservableObject {
             }
 
             saveContext(context)
-            loadCategory(context: context)
-            loadEntry(context: context)
+            await loadCategory(context: context)
+            await loadEntry(context: context)
 
             print("동기 샘플 데이터 삽입 완료")
         } catch {

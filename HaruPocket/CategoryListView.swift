@@ -36,34 +36,36 @@ struct CategoryListView: View {
                 //     해당 사용자의 항목 중에서 category 이름이 현재 선택된 category와 일치하는 항목만 필터링
                 // - category가 nil인 경우:
                 //     사용자 ID만 확인하여 전체 소비 항목을 필터링 없이 모두 보여줌 (전체 보기 용도)
-                let filtereditems = spendingViewModel.spending
+                let allSpending = spendingViewModel.spending
+                let filtereditems = allSpending
                     .filter { category != nil ? ($0.userID == spendingViewModel.username) && ($0.category?.name == category?.name) : ($0.userID == spendingViewModel.username) }
                 // 최신 날짜가 먼저 오도록 정렬
                     .sorted { $0.date > $1.date }
 
                 ForEach(filtereditems) { item in
-                    if let index = spendingViewModel.spending.firstIndex(where: { $0.id == item.id }) {
+                    let entryID = item.id
+                    if let index = allSpending.firstIndex(where: { $0.id == entryID }) {
                         NavigationLink {
                             DetailView(basics: $spendingViewModel.spending[index])
                         } label: {
                             VStack(spacing: 0) {
-								Divider()
+                                Divider()
                                     .padding(.horizontal, 20)
 
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(item.title)
                                             .foregroundStyle(Color.primary)
-                                        
+
                                         // 날짜를 yyyy.MM.dd 형식으로 표시
                                         Text(formattedDate(item.date))
                                             .font(.footnote)
                                     }
-                                    
+
                                     Spacer()
-                                    
+
                                     Text("\(item.money)원")
-                                    
+
                                     Image(systemName: "chevron.forward")
                                 }
                                 .foregroundStyle(.gray)
@@ -74,7 +76,7 @@ struct CategoryListView: View {
                                         // SwiftData에서 해당 항목 삭제
                                         context.delete(item)
                                         try? context.save()
-                                        
+
                                         // ViewModel에서도 제거
                                         spendingViewModel.spending.remove(at: index)
                                     } label: {
@@ -89,13 +91,7 @@ struct CategoryListView: View {
             .scrollIndicators(.hidden)
             .listStyle(.plain)
             .onAppear {
-                spendingViewModel.username = username
-                spendingViewModel.loadCategory(context: context)
                 spendingViewModel.loadEntry(context: context)
-
-                Task {
-                    await spendingViewModel.insertSampleData(context: context)
-                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)

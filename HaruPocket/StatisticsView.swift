@@ -114,12 +114,8 @@ struct StatisticsView: View {
                     ChartView(title: "최다", dataItems: top5ByCountItems)
                 }
                 .onAppear {
-                    spendingViewModel.username = username
                     spendingViewModel.loadEntry(context: context)
 
-                    Task {
-                        await spendingViewModel.insertSampleData(context: context)
-                    }
                     let (total, countItems, moneyItems) = computeStatistics()
                     totalMoney = total
                     top5ByCountItems = countItems
@@ -148,7 +144,8 @@ struct StatisticsView: View {
 extension StatisticsView {
     func computeStatistics()
     -> (totalMoney: Int, top5ByCountItems: [DataItem], top5ByMoneyItems: [DataItem]) {
-        let filteredEntries = spendingViewModel.spending.filter {
+        let allSpending = spendingViewModel.spending
+        let filteredEntries = allSpending.filter {
             $0.userID == spendingViewModel.username
         }
 

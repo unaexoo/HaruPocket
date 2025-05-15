@@ -24,7 +24,8 @@ struct SelectCategoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                let categories = spendingViewModel.categories.filter {
+                let allCategories = spendingViewModel.categories
+                let categories = allCategories.filter {
                     $0.userID == spendingViewModel.username
                 }
 
@@ -60,12 +61,7 @@ struct SelectCategoryView: View {
                 .scrollIndicators(.hidden)
             }
             .onAppear {
-                spendingViewModel.username = username
                 spendingViewModel.loadCategory(context: context)
-
-                Task {
-                    await spendingViewModel.insertSampleData(context: context)
-                }
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)

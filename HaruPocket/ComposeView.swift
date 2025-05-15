@@ -100,8 +100,8 @@ struct ComposeView: View {
                                         .font(.callout)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.leading, 10)
-
-                                    let categories = spendingViewModel.categories.filter {
+                                    let allCategories = spendingViewModel.categories
+                                    let categories = allCategories.filter {
                                         $0.userID == spendingViewModel.username
                                     }
 
@@ -226,15 +226,10 @@ struct ComposeView: View {
                 }
                 .padding()
                 .onAppear {
-                    spendingViewModel.username = username
                     spendingViewModel.loadCategory(context: context)
 
                     if let basics {
                         self.date = basics.date
-                    }
-
-                    Task {
-                        await spendingViewModel.insertSampleData(context: context)
                     }
                 }
                 .navigationBarBackButtonHidden(true)
