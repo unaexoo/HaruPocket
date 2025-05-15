@@ -14,6 +14,7 @@ struct CategoryComposeView: View {
     @State private var selectedEmoji: String = "🫥"
     @State private var isColorPickerVisible: Bool = false
     @State private var isEmojiPickerVisible: Bool = false
+    @State private var showAlert = false
 
     @AppStorage("username") private var username: String = "default_user"
 
@@ -138,11 +139,21 @@ struct CategoryComposeView: View {
                 isEmojiPickerVisible = false
             }
         )
+        .alert("경고", isPresented: $showAlert) {
+            Button("확인") { }
+        } message: {
+            Text("카테고리 이름을 입력해주세요")
+        }
     }
 }
 
 extension CategoryComposeView {
     func save() {
+        guard !name.isEmpty else {
+            showAlert = true
+            return
+        }
+
         if let category {
             category.name = name
             category.color = selectedColor
