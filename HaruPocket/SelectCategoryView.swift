@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// 사용자가 카테고리를 선택할 수 있는 화면입니다.
+/// 기존 카테고리를 리스트에서 선택하거나 새 카테고리를 추가할 수 있습니다.
 struct SelectCategoryView: View {
     @AppStorage("username") private var username: String = "default_user"
 
@@ -25,11 +27,13 @@ struct SelectCategoryView: View {
         NavigationStack {
             VStack {
                 let allCategories = spendingViewModel.categories
+                // 현재 사용자에 해당하는 카테고리만 필터링하고 이름 기준으로 정렬
                 let categories = allCategories.filter {
                     $0.userID == spendingViewModel.username
                 }
                     .sorted { $0.name < $1.name }
 
+                // 카테고리 리스트 및 새 카테고리 추가 버튼 표시
                 List(selection: $selected) {
                     Button {
                         showCategoryComposeView = true
@@ -61,6 +65,7 @@ struct SelectCategoryView: View {
                 }
                 .scrollIndicators(.hidden)
             }
+            // 뷰가 나타날 때 카테고리를 로드합니다.
             .onAppear {
                 spendingViewModel.loadCategory(context: context)
             }
@@ -68,6 +73,7 @@ struct SelectCategoryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)
             .toolbar {
+                // 취소 버튼: 화면 닫기
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         dismiss()
@@ -78,11 +84,13 @@ struct SelectCategoryView: View {
                     }
                 }
 
+                // 타이틀 표시
                 ToolbarItem(placement: .principal) {
                     Text("카테고리 선택")
                         .font(.title2)
                 }
 
+                // 완료 버튼: 선택한 카테고리 전달
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         onSelect(selected)
@@ -94,10 +102,13 @@ struct SelectCategoryView: View {
                     .disabled(selected == nil)
                 }
             }
+            // 네비게이션 바 배경색 설정
             .toolbarBackground(colorScheme == .dark ? Color(.systemBackground) : Color.creamWhite, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            // 새 카테고리 추가 화면으로 이동
             .navigationDestination(isPresented: $showCategoryComposeView) {
                 CategoryComposeView(category: .constant(nil))
+                    // 새 카테고리 추가 화면에서 돌아올 때 카테고리 목록을 다시 로드
                     .onDisappear {
                         spendingViewModel.hasLoadedCategory = false
                         spendingViewModel.loadCategory(

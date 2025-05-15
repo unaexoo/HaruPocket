@@ -9,12 +9,16 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 
+/// 소비 내역 입력 폼의 각 필드 타입을 나타냅니다.
 enum FieldType: Int, Hashable {
     case title
     case money
     case content
 }
 
+/// 사용자가 소비 내역을 작성하는 화면입니다.
+/// 이미지를 첨부하거나, 날짜, 카테고리, 제목, 금액, 내용을 입력할 수 있습니다.
+/// 새로운 항목을 생성하거나 기존 항목을 수정할 수 있습니다.
 struct ComposeView: View {
     @AppStorage("username") private var username: String = "default_user"
 
@@ -23,7 +27,6 @@ struct ComposeView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
-    // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
     @State var date: Date
     @State private var selectedCategory: Category?
     @State private var presentModal: Bool = false
@@ -98,7 +101,6 @@ struct ComposeView: View {
                                                 .stroke(Color.lightPointColor, lineWidth: 1)
                                         }
                                         .overlay {
-                                            // TODO: 더 좋은 방법이 있을까?
                                             DatePicker("작성 날짜", selection: $date, displayedComponents: .date)
                                                 .frame(maxWidth: .infinity)
                                                 .labelsHidden()
@@ -294,6 +296,8 @@ struct ComposeView: View {
 }
 
 extension ComposeView {
+    /// 소비 내역을 저장하는 함수입니다.
+    /// 입력된 제목, 금액, 내용, 날짜, 이미지, 카테고리를 기반으로 새로운 항목을 생성하거나 기존 항목을 수정합니다.
     func save() {
         if title.isEmpty {
             showTitleAlert = true
@@ -330,6 +334,9 @@ extension ComposeView {
         }
     }
 
+    /// Date 값을 한국어 형식의 문자열로 변환합니다.
+    /// - Parameter date: 변환할 날짜
+    /// - Returns: 변환된 날짜 문자열
     func formattedDate(from date: Date?) -> String? {
         guard let date else { return nil }
 
@@ -341,6 +348,8 @@ extension ComposeView {
         return formatter.string(from: date)
     }
 
+    /// 선택된 PhotosPickerItem을 UIImage로 변환하여 화면에 표시하고, 문서 디렉토리에 저장합니다.
+    /// - Parameter item: 선택된 PhotosPickerItem
     func convertImage(item: PhotosPickerItem?) async {
         guard let item = item else { return }
         guard let data = try? await item.loadTransferable(type: Data.self) else { return }
@@ -352,6 +361,9 @@ extension ComposeView {
         }
     }
 
+    /// UIImage를 JPEG 형식으로 문서 디렉토리에 저장합니다.
+    /// - Parameter uiImage: 저장할 UIImage
+    /// - Returns: 저장된 파일 이름
     func saveImageToDocuments(uiImage: UIImage) -> String? {
         guard let jpegData = uiImage.jpegData(compressionQuality: 0.8) else { return nil }
         let filename = UUID().uuidString + ".jpg"
@@ -402,6 +414,7 @@ extension ComposeView {
     }
 }
 
+/// 카테고리 개수가 6개 이하일 때, Menu 형태로 카테고리를 선택할 수 있는 뷰입니다.
 struct SelectCategoryByMenu: View {
     @Binding var selectedCategory: Category?
     @Binding var basics: BasicEntry?
@@ -459,6 +472,7 @@ struct SelectCategoryByMenu: View {
     }
 }
 
+/// 카테고리 개수가 7개 이상일 때, 시트로 카테고리를 선택할 수 있는 버튼 뷰입니다.
 struct SelectCategoryBySheet: View {
     @Binding var presentModal: Bool
     @Binding var selectedCategory: Category?

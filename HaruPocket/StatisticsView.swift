@@ -17,6 +17,13 @@ struct DataItem: Identifiable {
     let color: Color
 }
 
+/// 사용자의 소비 내역을 월별로 분석해 통계 차트로 보여주는 화면입니다.
+///
+/// - 날짜 선택 및 이전/다음 달 이동 기능을 제공합니다.
+/// - 해당 월의 총 소비 금액을 요약하여 보여줍니다.
+/// - 소비 내역이 없을 경우 안내 메시지와 이미지를 표시합니다.
+/// - 월별로 소비 카테고리별 Top 5(최다/최고) 항목을 차트와 리스트로 시각화합니다.
+/// - 월 변경, 차트 표시, 통계 요약 등 다양한 사용자 상호작용을 지원합니다.
 struct StatisticsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
@@ -142,6 +149,9 @@ struct StatisticsView: View {
 }
 
 extension StatisticsView {
+    /// 현재 선택된 월에 대한 통계 데이터를 계산합니다.
+    /// 전체 금액, 최다 소비 카테고리 top5, 최고 소비 금액 카테고리 top5를 구합니다.
+    /// - Returns: 총 사용 금액, 사용 횟수 기준 top5 항목 목록, 사용 금액 기준 top5 항목 목록
     func computeStatistics()
     -> (totalMoney: Int, top5ByCountItems: [DataItem], top5ByMoneyItems: [DataItem]) {
         let allSpending = spendingViewModel.spending
@@ -170,6 +180,11 @@ extension StatisticsView {
         return (totalMoney, top5ByCountItems, top5ByMoneyItems)
     }
 
+    /// 주어진 날짜를 지정된 포맷으로 포맷팅합니다.
+    /// - Parameters:
+    ///   - date: 변환할 날짜
+    ///   - format: 사용할 날짜 포맷 (기본값: "yyyy년 MM월")
+    /// - Returns: 포맷팅된 날짜 문자열
     func formattedDate(from date: Date?, format: String = "yyyy년 MM월") -> String? {
         guard let date else { return nil }
 
@@ -181,6 +196,11 @@ extension StatisticsView {
         return formattedDate
     }
 
+    /// 기준 날짜에서 주어진 개월 수만큼 더하거나 뺀 날짜를 반환합니다.
+    /// - Parameters:
+    ///   - value: 더하거나 뺄 개월 수 (음수면 이전 달, 양수면 다음 달)
+    ///   - date: 기준 날짜
+    /// - Returns: 계산된 새로운 날짜
     func changeMonth(by value: Int, from date: Date) -> Date {
         Calendar.current.date(byAdding: .month, value: value, to: date) ?? date
     }
@@ -197,7 +217,9 @@ extension StatisticsView {
     }
 }
 
-
+/// 소비 데이터를 시각화하여 파이 차트와 목록 형태로 보여주는 뷰입니다.
+/// - title에 따라 '최다' 또는 '최대' 소비 정보를 구분해서 보여줍니다.
+/// - 데이터 항목은 SectorMark를 이용해 원형 차트로 표현됩니다.
 struct ChartView: View {
     let title: String
     let dataItems: [DataItem]
