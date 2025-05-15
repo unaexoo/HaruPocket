@@ -53,7 +53,7 @@ struct SelectCategoryView: View {
                                     .foregroundColor(Color.lightPointColor)
                             }
                         }
-                        .listRowBackground(colorScheme == .dark ? Color(.systemBackground) : Color.white)
+                        .listRowBackground(Color.clear)
                         .tag(category)
                     }
                 }
