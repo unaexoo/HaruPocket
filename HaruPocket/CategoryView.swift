@@ -41,7 +41,8 @@ struct CategoryView: View {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 20) {
-                        let categories = spendingViewModel.categories
+                        let allCategories = spendingViewModel.categories
+                        let categories = allCategories
                             .filter { $0.userID == spendingViewModel.username }
                             .sorted {
                                 if $0.name == "카테고리 없음" { return false }
@@ -50,15 +51,16 @@ struct CategoryView: View {
                             }
 
                         ForEach(categories, id: \.id) { category in
-                            if let index = spendingViewModel.categories.firstIndex(where: { $0.id == category.id }) {
+                            let categoryID = category.id
+                            if let index = allCategories.firstIndex(where: { $0.id == categoryID }) {
 
                                 let binding = Binding<Category?>(
-                                            get: { spendingViewModel.categories[index] },
-                                            set: { newValue in
-                                                if let newValue {
-                                                    spendingViewModel.categories[index] = newValue
-                                                }
-                                            })
+                                    get: { allCategories[index] },
+                                    set: { newValue in
+                                        if let newValue {
+                                            spendingViewModel.categories[index] = newValue
+                                        }
+                                    })
 
                                 NavigationLink(destination: CategoryListView(category: binding)) {
                                     VStack(spacing: 8) {
@@ -98,12 +100,7 @@ struct CategoryView: View {
 
         }
         .onAppear {
-            spendingViewModel.username = username
             spendingViewModel.loadCategory(context: context)
-
-            Task {
-                await spendingViewModel.insertSampleData(context: context)
-            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

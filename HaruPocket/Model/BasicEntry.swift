@@ -57,7 +57,6 @@ class BasicEntry {
         let ext = String(nameComponents[1])
 
         if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: subdirectory) {
-            print(url)
             return UIImage(contentsOfFile: url.path)
         } else {
             return nil

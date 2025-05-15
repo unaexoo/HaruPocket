@@ -25,7 +25,8 @@ struct CategoryListComposeView: View {
     @State private var showCateogryComposeView = false
 
     var body: some View {
-        let categories = spendingViewModel.categories
+        let allCategories = spendingViewModel.categories
+        let categories = allCategories
             .filter {
                 $0.userID == spendingViewModel.username &&
                 $0.name != "카테고리 없음"
@@ -33,9 +34,11 @@ struct CategoryListComposeView: View {
             .sorted { $0.name < $1.name }
 
         List(categories, id: \.id, selection: $selectedCategoryIDs) { category in
-            if let index = spendingViewModel.categories.firstIndex(where: { $0.id == category.id }) {
+            let categoryID = category.id
+
+            if let index = allCategories.firstIndex(where: { $0.id == categoryID }) {
                 let binding = Binding<Category?>(
-                    get: { spendingViewModel.categories[index] },
+                    get: { allCategories[index] },
                     set: { newValue in
                         if let newValue {
                             spendingViewModel.categories[index] = newValue
@@ -48,7 +51,7 @@ struct CategoryListComposeView: View {
                     }
                     .padding(.vertical, 6)
                 }
-                .tag(category)
+                .tag(category.id)
                 .listRowBackground(Color.clear)
             }
         }
@@ -100,7 +103,6 @@ struct CategoryListComposeView: View {
         .listStyle(.plain)
         .onAppear {
             // 뷰모델의 사용자명 설정 및 카테고리 로딩
-            spendingViewModel.username = username
             spendingViewModel.loadCategory(context: context)
         }
         .alert(

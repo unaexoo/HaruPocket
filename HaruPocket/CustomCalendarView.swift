@@ -25,7 +25,7 @@ struct CustomCalendarView: View {
 
     init() {
         let storedUsername =
-            UserDefaults.standard.string(forKey: "username") ?? "default_user"
+        UserDefaults.standard.string(forKey: "username") ?? "default_user"
         _calendarViewModel = StateObject(
             wrappedValue: CalendarViewModel(username: storedUsername)
         )
@@ -90,8 +90,8 @@ struct CustomCalendarView: View {
                                 .font(.headline)
                                 .foregroundStyle(
                                     colorScheme == .dark
-                                        ? Color.darkPointColor
-                                        : Color.lightPointColor
+                                    ? Color.darkPointColor
+                                    : Color.lightPointColor
                                 )
                                 .padding(.trailing, 30)
                                 .padding(.bottom, 10)
@@ -107,6 +107,7 @@ struct CustomCalendarView: View {
                             )
                             .onDisappear {
                                 showComposeView = false
+                                spendingViewModel.hasLoadedEntry = false
                                 spendingViewModel.loadEntry(
                                     context: context
                                 )
@@ -139,14 +140,16 @@ struct CustomCalendarView: View {
             }
             .tint(
                 colorScheme == .dark
-                    ? Color.darkMainColor : Color.lightMainColor
+                ? Color.darkMainColor : Color.lightMainColor
             )
             .onAppear {
-                spendingViewModel.username = username
-                spendingViewModel.loadCategory(context: context)
-                spendingViewModel.loadEntry(context: context)
-                Task {
-                    await spendingViewModel.insertSampleData(context: context)
+                if spendingViewModel.username != username {
+                    spendingViewModel.username = username
+                    spendingViewModel.loadCategory(context: context)
+                    spendingViewModel.loadEntry(context: context)
+                    Task {
+                        await spendingViewModel.insertSampleData(context: context)
+                    }
                 }
             }
         }
@@ -223,7 +226,7 @@ struct CustomCalendarView: View {
             .font(.headline)
             .foregroundStyle(
                 colorScheme == .dark
-                    ? Color.darkPointColor : Color.lightPointColor
+                ? Color.darkPointColor : Color.lightPointColor
             )
 
             Spacer()
@@ -408,7 +411,7 @@ struct EntryListView: View {
     var body: some View {
         let filtered = entries.filter {
             $0.userID == username
-                && Calendar.current.isDate($0.date, inSameDayAs: date)
+            && Calendar.current.isDate($0.date, inSameDayAs: date)
         }
 
         let grouped = Dictionary(grouping: filtered) {
@@ -431,8 +434,10 @@ struct EntryListView: View {
                                     .padding(.vertical, 4)
 
                                 ForEach(group, id: \.id) { entry in
+                                    let entryID = entry.id
+
                                     if let index = spendingViewModel.spending
-                                        .firstIndex(where: { $0.id == entry.id }
+                                        .firstIndex(where: { $0.id == entryID }
                                         )
                                     {
                                         NavigationLink(
@@ -447,7 +452,7 @@ struct EntryListView: View {
                                                 Circle()
                                                     .fill(
                                                         entry.category?.color
-                                                            ?? .gray
+                                                        ?? .gray
                                                     )
                                                     .frame(
                                                         width: 10,
@@ -498,8 +503,8 @@ struct SplashView: View {
                     .bold()
                     .foregroundStyle(
                         colorScheme == .dark
-                            ? Color.darkPointColor
-                            : Color.lightPointColor
+                        ? Color.darkPointColor
+                        : Color.lightPointColor
                     )
                     .padding(.bottom),
                 alignment: .bottom
