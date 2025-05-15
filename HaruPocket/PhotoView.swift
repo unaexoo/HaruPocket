@@ -27,16 +27,23 @@ struct PhotoView: View {
                 .sorted { $0.date > $1.date }
 
             LazyVGrid(columns: columns, spacing: spacing) {
-                ForEach(filtereditems, id: \.id) { entry in
-                    if let uiImage = entry.image {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: gridItemSize, height: gridItemSize)
-                            .clipped()
-                    } else {
-                        Color.gray
-                            .frame(width: gridItemSize, height: gridItemSize)
+                ForEach(filtereditems) { entry in
+                    let entryID = entry.id
+                    if let index = allSpending.firstIndex(where: { $0.id == entryID }) {
+                        NavigationLink {
+                            DetailView(basics: $spendingViewModel.spending[index])
+                        } label: {
+                            if let uiImage = entry.image {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: gridItemSize, height: gridItemSize)
+                                    .clipped()
+                            } else {
+                                Color.gray
+                                    .frame(width: gridItemSize, height: gridItemSize)
+                            }
+                        }
                     }
                 }
             }
@@ -58,10 +65,10 @@ struct PhotoView: View {
     }
 
     private var gridItemSize: CGFloat {
-            let screenWidth = UIScreen.main.bounds.width
-            let totalSpacing = spacing * 4
-            return (screenWidth - totalSpacing) / 3
-        }
+        let screenWidth = UIScreen.main.bounds.width
+        let totalSpacing = spacing * 4
+        return (screenWidth - totalSpacing) / 3
+    }
 }
 
 #Preview {
