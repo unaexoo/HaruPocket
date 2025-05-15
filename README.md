@@ -212,11 +212,9 @@ HaruPocket
 
   
 
-| 홈 화면 (달력 + 리스트)      | 회고 메모 작성          | 월별 통계 화면 | 카테고리 분류 화면 |
-
-|----------------------------|---------------------------|----------------------------|----------------------------|
-
-| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/>
+| 홈 화면 (달력 + 리스트) | 회고 메모 작성 | 월별 통계 화면 | 카테고리 분류 화면 |
+|-------------------------|----------------|----------------|---------------------|
+| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/> |
 
   
 
@@ -246,19 +244,13 @@ HaruPocket
 
   
 
-| 항목 | 내용 |
-
-|------|------|
-
-| 언어 | Swift 6.0 이상 |
-
-| UI 프레임워크 | SwiftUI |
-
-| 데이터 관리 | SwiftData (로컬 기반 ORM) |
-
-| IDE | Xcode 16 이상 |
-
-| 미리보기 구성 | `#Preview` + `.modelContainer(inMemory: true)` |
+| 항목           | 내용                                              |
+|----------------|---------------------------------------------------|
+| 언어           | Swift 6.0 이상                                    |
+| UI 프레임워크  | SwiftUI                                           |
+| 데이터 관리    | SwiftData (로컬 기반 ORM)                        |
+| IDE            | Xcode 16 이상                                     |
+| 미리보기 구성  | `#Preview` + `.modelContainer(inMemory: true)`   |
 
   
 
@@ -299,18 +291,6 @@ HaruPocket은 작은 규모의 프로젝트였지만,
   
 
 ---
-
-  
-
-## 👤 개발자
-
-| 이름  | 역할                    | GitHub                                             |
-| --- | --------------------- | -------------------------------------------------- |
-| 장지현 | iOS 개발 / 기획 / 디자인     | [@jihyeonjjang](https://github.com/jihyeonjjang)   |
-| 고재현 | iOS 개발 / 디자인 / PPT 제작 | [@gojaeheon](https://github.com/JaeHyun9802)         |
-| 윤혜주 | iOS 개발 / 데이터 모델링 / 발표 | [@unaexoo](https://github.com/unaexoo)         |
-| 전윤철 | iOS 개발 / 문서 작성        | [@yooncheoljeon](https://github.com/JYC0609) |
-
 
 
 ## 🧑‍🤝‍🧑 팀원 소개
