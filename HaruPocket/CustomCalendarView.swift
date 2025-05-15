@@ -489,7 +489,7 @@ struct EntryListView: View {
 struct SplashView: View {
     let colorScheme: ColorScheme
     var body: some View {
-        Image("pocekt")
+        Image("pocket")
             .resizable()
             .scaledToFit()
             .overlay(

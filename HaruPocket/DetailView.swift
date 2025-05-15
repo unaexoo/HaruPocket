@@ -44,7 +44,7 @@ struct DetailView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
                 else {
-                    Image("pocekt")
+                    Image("pocket")
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
