@@ -7,7 +7,7 @@
 <img src="https://github.com/user-attachments/assets/fde04fdc-74f0-453d-be49-8e0ca65ec1f5" width="200"/>
 
 
-<h1>HaruPocket</h1>
+<h1>지갑 속 하루</h1>
 
   
 
