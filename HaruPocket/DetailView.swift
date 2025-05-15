@@ -156,7 +156,7 @@ struct DetailView: View {
             }
         }
         .navigationDestination(isPresented: $showComposeView) {
-            ComposeView(basics: Binding($basics))
+            ComposeView(date: basics.date, basics: Binding($basics))
 
         }
     }

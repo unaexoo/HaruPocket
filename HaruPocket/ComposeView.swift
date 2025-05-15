@@ -23,7 +23,7 @@ struct ComposeView: View {
     @Environment(\.dismiss) private var dismiss
 
     // FIXME: 홈뷰에서 선택한 날짜 넘겨받아야함
-    @State private var date = Date.now
+    @State var date: Date
     @State private var selectedCategory: Category?
     @State private var presentModal: Bool = false
     @State private var title: String = ""
@@ -186,7 +186,7 @@ struct ComposeView: View {
                                 HStack {
                                     TextEditor(text: $content)
                                         .padding()
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                        .frame(maxWidth: .infinity, minHeight: 150, maxHeight: .infinity, alignment: .leading)
                                         .textInputAutocapitalization(.never)
                                         .autocorrectionDisabled()
                                         .focused($focused, equals: .content)
@@ -348,7 +348,7 @@ extension ComposeView {
 
 #Preview("Update") {
     NavigationStack {
-        ComposeView(basics: .constant(BasicEntry(
+        ComposeView(date: Date(), basics: .constant(BasicEntry(
             title: "샘플 이미지 항목 1",
             content: "테스트용 이미지가 포함된 항목입니다. 테스트용 이미지가 포함된 항목입니다.",
             date: Date(),
@@ -371,7 +371,7 @@ extension ComposeView {
 
 #Preview("Create") {
     NavigationStack {
-        ComposeView(basics: .constant(nil))
+        ComposeView(date: Date(), basics: .constant(nil))
             .modelContainer(
                 for: [BasicEntry.self, Category.self, Statics.self],
                 inMemory: true
