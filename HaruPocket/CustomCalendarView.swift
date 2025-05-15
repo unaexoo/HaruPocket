@@ -303,18 +303,18 @@ struct CustomCalendarView: View {
             .pickerStyle(.wheel)
 
             Button("확인") {
-                let currentMonth = Calendar.current.component(
-                    .month,
-                    from: calendarViewModel.currentDate
-                )
-                if let targetDate = Calendar.current.date(
-                    from: DateComponents(
-                        year: selectedYear,
-                        month: currentMonth
-                    )
-                ) {
+                let selected = calendarViewModel.selectedDate
+                let components = Calendar.current.dateComponents([.month, .day], from: selected)
+
+                if let targetDate = Calendar.current.date(from: DateComponents(
+                    year: selectedYear,
+                    month: components.month,
+                    day: components.day
+                )) {
                     calendarViewModel.move(to: targetDate)
+                    calendarViewModel.selectedDate = targetDate
                 }
+
                 showYearPicker = false
             }
             .padding()
