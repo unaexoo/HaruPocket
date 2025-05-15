@@ -139,11 +139,6 @@ struct ComposeView: View {
                                         .textInputAutocapitalization(.never)
                                         .autocorrectionDisabled()
                                         .focused($focused, equals: .title)
-                                        .onAppear {
-                                            if let basics {
-                                                title = basics.title
-                                            }
-                                        }
                                 }
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 10)
@@ -168,11 +163,6 @@ struct ComposeView: View {
                                         .autocorrectionDisabled()
                                         .focused($focused, equals: .money)
                                         .keyboardType(.numberPad)
-                                        .onAppear {
-                                            if let basics {
-                                                money = String(basics.money)
-                                            }
-                                        }
                                         .onChange(of: money) {
                                             money = money.filter { $0.isNumber }
                                         }
@@ -201,10 +191,6 @@ struct ComposeView: View {
                                         .textInputAutocapitalization(.never)
                                         .autocorrectionDisabled()
                                         .focused($focused, equals: .content)
-                                        .onAppear {
-                                            content = basics?.content ?? ""
-
-                                        }
                                         .scrollIndicators(.hidden)
                                 }
                                 .overlay {
@@ -241,6 +227,10 @@ struct ComposeView: View {
 
                     if let basics {
                         self.date = basics.date
+                        title = basics.title
+                        money = String(basics.money)
+                        content = basics.content ?? ""
+                        img = basics.imageFileName ?? ""
                     }
                 }
                 .navigationBarBackButtonHidden(true)
