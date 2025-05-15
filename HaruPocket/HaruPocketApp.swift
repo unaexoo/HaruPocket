@@ -25,12 +25,16 @@ struct HaruPocketApp: App {
         } catch {
             print("모델 컨테이너 생성 실패:", error)
 
-            sharedModelContainer = try! ModelContainer(
-                for: schema,
-                configurations: [
-                    ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-                ]
-            )
+            do {
+                sharedModelContainer = try ModelContainer(
+                    for: schema,
+                    configurations: [
+                        ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+                    ]
+                )
+            } catch {
+                fatalError("메모리 컨테이너 생성도 실패: \(error)")
+            }
         }
     }
 

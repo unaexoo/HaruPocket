@@ -48,8 +48,11 @@ class StatisticsViewModel: ObservableObject {
                 categorySummary[categoryName] = (count: 0, money: 0, color: category.color)
             }
 
-            categorySummary[categoryName]!.count += 1
-            categorySummary[categoryName]!.money += entry.money
+            if var current = categorySummary[categoryName] {
+                current.count += 1
+                current.money += entry.money
+                categorySummary[categoryName] = current
+            }
         }
 
         return summarizeCategoryData(from: categorySummary)
