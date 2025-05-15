@@ -26,7 +26,7 @@ extension Color {
     }
 
     static var darkPointColor: Color { // 은은한 밝은 피치
-        Color(red: 159/255, green: 107/255, blue: 63/255)
+        Color(red: 255/255, green: 185/255, blue: 128/255)
     }
 
     static var darkBrown: Color { // 다크 브라운
