@@ -43,13 +43,21 @@ class BasicEntry {
 
     var image: UIImage? {
         guard let imageFileName else { return nil }
-        let components = imageFileName.split(separator: ".")
-        guard components.count == 2 else { return nil }
 
-        let name = String(components[0])
-        let ext = String(components[1])
+        let pathComponents = imageFileName.split(separator: "/").map { String($0) }
+        guard pathComponents.count == 2 else { return nil }
 
-        if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "SampleImage") {
+        let subdirectory = pathComponents[0]
+        let fileNameWithExtension = pathComponents[1]
+
+        let nameComponents = fileNameWithExtension.split(separator: ".")
+        guard nameComponents.count == 2 else { return nil }
+
+        let name = String(nameComponents[0])
+        let ext = String(nameComponents[1])
+
+        if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: subdirectory) {
+            print(url)
             return UIImage(contentsOfFile: url.path)
         } else {
             return nil
