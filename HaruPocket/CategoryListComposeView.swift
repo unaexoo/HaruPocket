@@ -26,12 +26,11 @@ struct CategoryListComposeView: View {
 
     var body: some View {
         let categories = spendingViewModel.categories
-            .filter { $0.userID == spendingViewModel.username }
-            .sorted {
-                if $0.name == "카테고리 없음" { return false }
-                if $1.name == "카테고리 없음" { return true }
-                return $0.name < $1.name
+            .filter {
+                $0.userID == spendingViewModel.username &&
+                $0.name != "카테고리 없음"
             }
+            .sorted { $0.name < $1.name }
 
         List(categories, id: \.id, selection: $selectedCategoryIDs) { category in
             if let index = spendingViewModel.categories.firstIndex(where: { $0.id == category.id }) {
