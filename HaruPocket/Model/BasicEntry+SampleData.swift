@@ -29,91 +29,91 @@ extension BasicEntry {
         return [
             BasicEntry(
                 title: "브런치 카페",
-                content: "음식 관련으로 브런치 카페에 돈을 썼다. 잘한 선택이었길!",
-                date: date("2025-04-16"),
+                content: "친구들과 맛있는 브런치를 먹었다. 고마운게 많아서 내가 사줬다.",
+                date: date("2025-08-31"),
                 money: 69000,
-                imageFileName: "SampleImage/brunch", userID: "default_user",
+                imageFileName: "SampleImage/brunch.jpg", userID: "default_user",
                 category: category(named: "음식")
             ),
 
             BasicEntry(
                 title: "서점 구경",
-                content: "아침부터 서점 구경 준비하느라 정신 없었지만 잘 마무리되었다.",
-                date: date("2025-06-28"),
+                content: "아침에 서점 구경갔다가 책을 구매했다.",
+                date: date("2025-05-14"),
                 money: 68900,
-                imageFileName: "SampleImage/book", userID: "default_user",
+                imageFileName: "SampleImage/book.jpg", userID: "default_user",
                 category: category(named: "문화생활")
             ),
 
             BasicEntry(
                 title: "꽃다발",
-                content: "문득 꽃다발 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
-                date: date("2025-06-06"),
-                money: 5900,
-                imageFileName: "SampleImage/flower", userID: "default_user",
+                content: "지나가다 꽃을 보고 어머니가 생각나서 구매했다.",
+                date: date("2025-05-14"),
+                money: 59000,
+                imageFileName: "SampleImage/flower.jpg", userID: "default_user",
                 category: category(named: "선물")
             ),
 
             BasicEntry(
-                title: "기념일 선물",
-                content: "선물 관련으로 기념일 선물에 돈을 썼다. 잘한 선택이었길!",
-                date: date("2025-07-07"),
-                money: 1674000,
-                imageFileName: "SampleImage/gift", userID: "default_user",
+                title: "조카 선물",
+                content: "조카에게 장난감 선물을 사줬다. 좋아하는 모습을 보니 기분이 좋다.",
+                date: date("2025-05-15"),
+                money: 49900,
+                imageFileName: "SampleImage/gift.jpg", userID: "default_user",
                 category: category(named: "선물")
             ),
 
             BasicEntry(
                 title: "헬스장 등록",
-                content: "헬스장 등록 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
-                date: date("2025-05-15"),
-                money: 32300,
-                imageFileName: "SampleImage/gym", userID: "default_user",
+                content: "건강관리를 시작하려고 헬스장 12개월을 결제했다. 꼭 자주 가야지!",
+                date: date("2025-05-14"),
+                money: 330000,
+                imageFileName: "SampleImage/gym.jpg", userID: "default_user",
                 category: category(named: "운동")
             ),
 
             BasicEntry(
                 title: "뮤지컬",
-                content: "뮤지컬는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
-                date: date("2025-07-23"),
+                content: "보고싶었던 뮤지컬을 드디어 봤다!",
+                date: date("2025-05-16"),
                 money: 191600,
-                imageFileName: "SampleImage/musical", userID: "default_user",
+                imageFileName: "SampleImage/musical.jpg", userID: "default_user",
                 category: category(named: "문화생활")
             ),
 
             BasicEntry(
                 title: "전시회",
                 content: "전시회 하면서 하루를 마무리했다. 문화생활 항목으로 기록!",
-                date: date("2025-06-27"),
+                date: date("2025-05-14"),
                 money: 75900,
-                imageFileName: "SampleImage/exhibition", userID: "default_user",
+                imageFileName: "SampleImage/exhibition.jpg", userID: "default_user",
                 category: category(named: "문화생활")
             ),
 
             BasicEntry(
                 title: "신발 구매",
                 content: "신발 구매 했는데 꽤 만족스러웠다. 돈은 아깝지 않았다.",
-                date: date("2025-08-30"),
-                money: 10100,
-                imageFileName: "SampleImage/shopping", userID: "default_user",
+                date: date("2025-05-15"),
+                money: 129000,
+                imageFileName: "SampleImage/shopping.jpg", userID: "default_user",
                 category: category(named: "쇼핑")
             ),
 
             BasicEntry(
                 title: "저녁 치킨",
-                content: "음식 관련으로 저녁 치킨에 돈을 썼다. 잘한 선택이었길!",
-                date: date("2025-04-06"),
-                money: 149400,
-                imageFileName: "SampleImage/friedChicken", userID: "default_user",
+                content: "오늘 저녁은 치킨이닭!",
+                date: date("2025-05-15"),
+                money: 38000,
+                imageFileName: "SampleImage/friedChicken.jpg", userID: "default_user",
                 category: category(named: "음식")
             ),
 
             BasicEntry(
                 title: "BBQ 치킨 파티",
-                content: "BBQ 치킨 파티에서 친구들과 좋은 시간을 보냈다.",
-                date: date("2025-06-18"),
+                content: "BBQ 치킨 파티하면서 친구들과 좋은 시간을 보냈다.",
+                date: date("2025-05-24"),
                 money: 92000,
-                imageFileName: "SampleImage/bbq", userID: "default_user",
+                imageFileName: "SampleImage/bbq.jpg", userID: "default_user",
                 category: category(named: "음식")
             ),
 
@@ -440,7 +440,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "헬스장 등록",
                 content: "헬스장 등록 지출이 좀 컸지만 좋은 경험이었다고 생각한다.",
-                date: date("2025-05-15"),
+                date: date("2025-08-15"),
                 money: 32300,
                 userID: "default_user",
                 category: category(named: "운동")
@@ -830,7 +830,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "도서 구매",
                 content: "도서 구매는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
-                date: date("2025-05-15"),
+                date: date("2025-03-15"),
                 money: 73100,
                 userID: "default_user",
                 category: category(named: "공부")
@@ -1050,7 +1050,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "기프트 카드",
                 content: "선물 관련으로 기프트 카드에 돈을 썼다. 잘한 선택이었길!",
-                date: date("2025-05-16"),
+                date: date("2025-06-16"),
                 money: 114000,
                 userID: "default_user",
                 category: category(named: "선물")
@@ -1550,7 +1550,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "필라테스",
                 content: "오늘은 필라테스에 돈을 썼다. 예상보다 많이 나왔다.",
-                date: date("2025-05-13"),
+                date: date("2025-05-05"),
                 money: 116800,
                 userID: "default_user",
                 category: category(named: "운동")
@@ -2980,7 +2980,7 @@ extension BasicEntry {
             BasicEntry(
                 title: "맛집 투어",
                 content: "맛집 투어는 필수 지출이었다. 어쩔 수 없이 쓰게 됐다.",
-                date: date("2025-05-13"),
+                date: date("2025-05-26"),
                 money: 34800,
                 userID: "default_user",
                 category: category(named: "여행")
@@ -3008,9 +3008,9 @@ extension BasicEntry {
 
 
             BasicEntry(
-                title: "약국 구매",
-                content: "문득 약국 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
-                date: date("2025-05-15"),
+                title: "약 구매",
+                content: "문득 영양제를 구매 하고 싶어서 바로 결제했다. 충동적이었지만 기분은 좋다.",
+                date: date("2025-04-15"),
                 money: 189700,
                 userID: "default_user",
                 category: category(named: "건강")
