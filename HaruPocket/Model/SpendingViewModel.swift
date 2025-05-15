@@ -9,14 +9,27 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-/// CRUD
+/// `SpendingViewModel`은 소비 일기(`BasicEntry`)와 카테고리(`Category`)에 대한 CRUD 및 데이터 로딩을 담당하는 ViewModel입니다.
+/// - 사용자별 데이터를 분리하여 관리하며, 샘플 데이터 삽입 기능도 포함되어 있습니다.
 class SpendingViewModel: ObservableObject {
+
+    /// 현재 사용자에 해당하는 소비 일기 배열입니다.
     @Published var spending: [BasicEntry] = []
+
+    /// 현재 사용자에 해당하는 카테고리 배열입니다.
     @Published var categories: [Category] = []
+
+    /// 현재 사용자 ID입니다. 기본값은 "default_user"
     @Published var username: String = "default_user"
+
+    /// 소비 일기가 이미 로드되었는지를 나타냅니다.
     @Published var hasLoadedEntry = false
+
+    /// 카테고리가 이미 로드되었는지를 나타냅니다.
     @Published var hasLoadedCategory = false
 
+    /// 소비 일기 데이터를 로드합니다. (1회만 로드)
+    /// - Parameter context: SwiftData의 ModelContext
     @MainActor
     func loadEntry(context: ModelContext) {
         guard !hasLoadedEntry else { return }
@@ -33,6 +46,8 @@ class SpendingViewModel: ObservableObject {
         }
     }
 
+    /// 카테고리 데이터를 로드합니다. (1회만 로드)
+    /// - Parameter context: SwiftData의 ModelContext
     @MainActor
     func loadCategory(context: ModelContext) {
         guard !hasLoadedCategory else { return }
@@ -49,6 +64,7 @@ class SpendingViewModel: ObservableObject {
         }
     }
 
+    /// 기존 소비 일기 항목을 수정합니다.
     func updateEntry(
         context: ModelContext,
         entry: BasicEntry,
@@ -64,6 +80,7 @@ class SpendingViewModel: ObservableObject {
         saveContext(context)
     }
 
+    /// 새로운 카테고리를 추가합니다.
     func addCategory(
         context: ModelContext,
         name: String,
@@ -81,14 +98,22 @@ class SpendingViewModel: ObservableObject {
         categories.append(newCategory)
     }
 
+    /// 선택된 카테고리를 삭제하고, 연결된 소비 일기는 "기타" 또는 "카테고리 없음"으로 대체합니다.
     func deleteCategory(context: ModelContext, category: Category) {
         let userID = self.username
 
         var fallbackCategory: Category
-        if let existing = categories.first(where: { $0.name == "카테고리 없음" && $0.userID == userID }) {
+        if let existing = categories.first(where: {
+            $0.name == "카테고리 없음" && $0.userID == userID
+        }) {
             fallbackCategory = existing
         } else {
-            fallbackCategory = Category(name: "기타", color: .gray, emoji: "📂", userID: userID)
+            fallbackCategory = Category(
+                name: "기타",
+                color: .gray,
+                emoji: "📂",
+                userID: userID
+            )
             context.insert(fallbackCategory)
             categories.append(fallbackCategory)
         }
@@ -102,6 +127,7 @@ class SpendingViewModel: ObservableObject {
         categories.removeAll { $0.id == category.id }
     }
 
+    /// 카테고리 정보를 수정합니다.
     func updateCategory(
         context: ModelContext,
         category: Category,
@@ -113,6 +139,8 @@ class SpendingViewModel: ObservableObject {
         saveContext(context)
     }
 
+    /// 샘플 데이터를 데이터베이스에 삽입합니다.
+    /// - categories와 spending이 비어 있는 경우에만 동작합니다.
     func insertSampleData(context: ModelContext) async {
         guard categories.isEmpty && spending.isEmpty else { return }
 
@@ -127,8 +155,11 @@ class SpendingViewModel: ObservableObject {
                 predicate: #Predicate { $0.userID == userID }
             )
             _ = try context.fetch(descriptor)
-            
-            let sampleEntries = try await BasicEntry.sampleList(for: username, in: context)
+
+            let sampleEntries = try await BasicEntry.sampleList(
+                for: username,
+                in: context
+            )
 
             for entry in sampleEntries {
                 context.insert(entry)
@@ -144,7 +175,7 @@ class SpendingViewModel: ObservableObject {
         }
     }
 
-
+    /// SwiftData의 컨텍스트를 저장합니다.
     func saveContext(_ context: ModelContext) {
         do {
             try context.save()
