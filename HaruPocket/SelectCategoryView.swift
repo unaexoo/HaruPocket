@@ -106,4 +106,9 @@ struct SelectCategoryView: View {
     SelectCategoryView { selected in
         print("선택된 값: \(selected?.name ?? "카테고리 없음")")
     }
+    .modelContainer(
+        for: [BasicEntry.self, Category.self],
+        inMemory: true
+    )
+    .environmentObject(SpendingViewModel())
 }
