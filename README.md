@@ -119,7 +119,94 @@ HaruPocket은 그런 질문에서 출발했습니다.
 
 ---
 
-  
+
+
+## 🚀 실행 방법
+
+### 1. 프로젝트 클론
+
+```bash
+git clone https://github.com/jihyeonjjang/HaruPocket.git
+cd HaruPocket
+```
+
+### 2. Xcode에서 열기
+
+* `HaruPocket.xcodeproj` 또는 `HaruPocket.xcworkspace`를 **Xcode 15 이상**에서 엽니다.
+
+### 3. 패키지 설치 확인
+
+* 프로젝트를 열면 자동으로 **EmojiPicker 2.1.1**이 설치됩니다.
+* 설치 오류가 발생할 경우 `File > Packages > Resolve Package Versions`를 선택하세요.
+
+### 4. 실행
+
+* 시뮬레이터 또는 실제 디바이스를 선택 후 ▶️ 버튼으로 실행합니다.
+
+### 5. 미리보기 사용 (옵션)
+
+* `#Preview` 구조와 `inMemory` 컨테이너를 이용해 SwiftUI 뷰 미리보기가 가능합니다.
+
+---
+## 📦 의존 라이브러리
+
+| 라이브러리 이름 | 버전 | 설명 |
+|----------------|------|------|
+| [EmojiPicker](https://github.com/hsousa/EmojiPicker) | 2.1.1 | SwiftUI 기반의 이모지 선택 컴포넌트로, HaruPocket의 카테고리 생성 시 이모지 선택 UI에 사용됩니다. |
+
+- Swift Package Manager(SPM)를 통해 자동으로 설치됩니다.
+- 프로젝트 실행 시 필요한 경우 다음 메뉴에서 수동 갱신할 수 있습니다:
+---
+
+## 📁 프로젝트 구조
+
+```
+HaruPocket
+├── Font                        # 앱에 사용되는 폰트 리소스
+│   ├── Jua-Regular             # 주 폰트 파일
+│   └── OFL                    # 폰트 라이선스 파일
+│
+├── SampleImage                # 샘플 소비 항목 이미지
+│   ├── bbq
+│   ├── book
+│   ├── brunch
+│   ├── exhibition
+│   ├── flower
+│   ├── friedChicken
+│   ├── gift
+│   ├── gym
+│   ├── musical
+│   └── shopping
+│
+├── HaruPocket
+│   ├── Model                  # 데이터 및 뷰모델 정의
+│   │   ├── BasicEntry.swift
+│   │   ├── BasicEntry+SampleData.swift
+│   │   ├── CalendarViewModel.swift
+│   │   ├── Category.swift
+│   │   ├── Category+SampleData.swift
+│   │   ├── ColorHex.swift
+│   │   └── SpendingViewModel.swift
+│   │
+│   ├── Assets                 # 주요 화면 및 UI 컴포넌트
+│   │   ├── CategoryComposeView.swift
+│   │   ├── CategoryListComposeView.swift
+│   │   ├── CategoryListView.swift
+│   │   ├── CategoryView.swift
+│   │   ├── Color+Predefined.swift
+│   │   ├── ComposeView.swift
+│   │   ├── CustomCalendarView.swift
+│   │   ├── DetailView.swift
+│   │   ├── HaruPocketApp.swift
+│   │   ├── Info.plist
+│   │   ├── PhotoView.swift
+│   │   ├── SelectCategoryView.swift
+│   │   ├── StaticsViewModel.swift
+│   │   └── StatisticsView.swift
+│
+└── Package Dependencies       # 외부 라이브러리
+    └── EmojiPicker 2.1.1      # 이모지 선택 라이브러리
+```
 
 ## 🖼️ 앱 주요 화면
 
@@ -217,17 +304,12 @@ HaruPocket은 작은 규모의 프로젝트였지만,
 
 ## 👤 개발자
 
-  
-
-| 이름 | 역할 | GitHub |
-
-|------|------|--------|
-
-| 장지현 | iOS 개발 / 기획 / 디자인 | [@jihyeonjjang](https://github.com/jihyeonjjang) |
-
-  
-
----
+| 이름  | 역할                    | GitHub                                             |
+| --- | --------------------- | -------------------------------------------------- |
+| 장지현 | iOS 개발 / 기획 / 디자인     | [@jihyeonjjang](https://github.com/jihyeonjjang)   |
+| 고재현 | iOS 개발 / 디자인 / PPT 제작 | [@gojaeheon](https://github.com/JaeHyun9802)         |
+| 윤혜주 | iOS 개발 / 데이터 모델링 / 발표 | [@unaexoo](https://github.com/unaexoo)         |
+| 전윤철 | iOS 개발 / 문서 작성        | [@yooncheoljeon](https://github.com/JYC0609) |
 
   
 
