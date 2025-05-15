@@ -10,6 +10,9 @@ import SwiftUI
 struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.modelContext) private var context
+
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     @State private var showDeleteAlert = false
     @State private var showComposeView = false
@@ -164,10 +167,13 @@ struct DetailView: View {
         .alert("정말 삭제하시겠습니까?", isPresented: $showDeleteAlert) {
             Button("네", role: .destructive) {
                 // 삭제 처리: 팀원 코드와 연동
+                context.delete(basics)
+                try? context.save()
+                spendingViewModel.loadEntry(context: context)
+                
+                dismiss()
             }
-            Button("아니오", role: .cancel) {
-
-            }
+            Button("아니오", role: .cancel) { }
         }
         .navigationDestination(isPresented: $showComposeView) {
             ComposeView(date: basics.date, basics: Binding($basics))
