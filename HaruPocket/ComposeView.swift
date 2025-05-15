@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import PhotosUI
 
 enum FieldType: Int, Hashable {
     case title
@@ -32,6 +33,8 @@ struct ComposeView: View {
     @State private var img: String = ""
     @State private var showTitleAlert = false
     @State private var showMoneyAlert = false
+    @State var selectedItem: PhotosPickerItem?
+    @State var showImage: Image?
 
     @FocusState private var focused: FieldType?
 
@@ -41,34 +44,42 @@ struct ComposeView: View {
         ScrollViewReader {proxy in
             ScrollView {
                 VStack {
-                    Button {
-                        // TODO: 이미지피커
-                        print("이미지 버튼 클릭")
-                    } label: {
-                        if let uiImage = basics?.image {
+                    PhotosPicker(selection: $selectedItem) {
+                        if let image = self.showImage {
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 250)
+                                .frame(width: 360)
+                                .clipShape(RoundedRectangle(cornerRadius: 30))
+                        } else if let uiImage = basics?.image {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(height: 250)
                                 .frame(width: 360)
                                 .clipShape(RoundedRectangle(cornerRadius: 30))
-                        }
-                        else {
+                        } else {
                             Image(systemName: "photo")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
                                 .tint(Color.lightPointColor)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .frame(height: 250)
+                                .frame(width: 360)
                         }
                     }
                     .overlay {
                         RoundedRectangle(cornerRadius: 30)
                             .stroke(Color.lightPointColor, lineWidth: 1)
                     }
-                    .frame(height: 250)
-                    .frame(width: 360)
                     .padding(.bottom)
+                    .onChange(of: selectedItem) { oldValue, newValue in
+                        Task {
+                            await convertImage(item: newValue)
+                        }
+                    }
 
                     Grid(verticalSpacing: 20) {
                         GridRow {
@@ -338,6 +349,32 @@ extension ComposeView {
         formatter.timeStyle = .none
 
         return formatter.string(from: date)
+    }
+
+    func convertImage(item: PhotosPickerItem?) async {
+        guard let item = item else { return }
+        guard let data = try? await item.loadTransferable(type: Data.self) else { return }
+        guard let uiImage = UIImage(data: data) else { return }
+        self.showImage = Image(uiImage: uiImage)
+
+        if let filename = saveImageToDocuments(uiImage: uiImage) {
+            self.img = filename
+        }
+    }
+
+    func saveImageToDocuments(uiImage: UIImage) -> String? {
+        guard let jpegData = uiImage.jpegData(compressionQuality: 0.8) else { return nil }
+        let filename = UUID().uuidString + ".jpg"
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
+
+        do {
+            try jpegData.write(to: url)
+            print("저장된 경로:", url.path)
+            return filename
+        } catch {
+            print("이미지 저장 실패: \(error)")
+            return nil
+        }
     }
 }
 

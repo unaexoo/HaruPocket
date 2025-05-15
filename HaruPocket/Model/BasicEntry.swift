@@ -44,6 +44,14 @@ class BasicEntry {
     var image: UIImage? {
         guard let imageFileName else { return nil }
 
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = documentsURL.appendingPathComponent(imageFileName)
+
+        if FileManager.default.fileExists(atPath: fileURL.path),
+           let documentImage = UIImage(contentsOfFile: fileURL.path) {
+            return documentImage
+        }
+
         let pathComponents = imageFileName.split(separator: "/").map { String($0) }
         guard pathComponents.count == 2 else { return nil }
 
