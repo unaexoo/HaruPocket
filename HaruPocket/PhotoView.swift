@@ -14,7 +14,7 @@ struct PhotoView: View {
     @EnvironmentObject var spendingViewModel: SpendingViewModel
 
     private let spacing: CGFloat = 5
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 5), count: 3)
+    private let columns = Array(repeating: GridItem(spacing: 5), count: 3)
 
     var body: some View {
         ScrollView {

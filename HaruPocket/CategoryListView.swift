@@ -25,7 +25,7 @@ struct CategoryListView: View {
     @Binding var category: Category?
 
     private let columns = [
-        GridItem(.adaptive(minimum: 200, maximum: .infinity), spacing: nil, alignment: nil),
+        GridItem(.adaptive(minimum: 600, maximum: .infinity), spacing: nil, alignment: nil),
     ]
 
     var body: some View {

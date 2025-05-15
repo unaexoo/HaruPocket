@@ -33,94 +33,95 @@ struct DetailView: View {
     }
 
     var body: some View {
-        VStack(spacing: 40) {
-            Group {
-                if let uiImage = basics.image {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 250)
-                        .frame(width: 360)
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
+        ScrollView {
+            VStack(spacing: 40) {
+                Group {
+                    if let uiImage = basics.image {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 250)
+                            .frame(width: 360)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                    }
+                    else {
+                        Image("pocket")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
-                else {
-                    Image("pocket")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(pointColor, lineWidth: 1)
                 }
-            }
-            .overlay {
-                RoundedRectangle(cornerRadius: 30)
-                    .stroke(pointColor, lineWidth: 1)
-            }
-            .frame(height: 250)
-            .frame(width: 360)
-            .padding(.top, 20)
-
-            HStack {
-                Text(basics.title)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(pointColor)
-
-                Spacer()
-
-                Text(basics.category?.name ?? "카테고리 없음")
-                    .font(.title3)
-                    .foregroundColor(pointColor)
-
-                Text(basics.category?.emoji ?? "")
-                    .font(.footnote)
-                    .padding(7)
-                    .background(basics.category?.color ?? .gray)
-                    .clipShape(Circle())
-                    .frame(maxHeight: 10)
-            }
-            .padding(.horizontal, 20)
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text("가격")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.gray)
-                    .padding(.leading, 10)
+                .frame(height: 250)
+                .frame(width: 360)
+                .padding(.top, 20)
 
                 HStack {
-                    Text("\(basics.money)")
-                        .font(.body)
-                    Spacer()
-                    Text("원")
+                    Text(basics.title)
+                        .font(.title)
+                        .fontWeight(.bold)
                         .foregroundColor(pointColor)
+
+                    Spacer()
+
+                    Text(basics.category?.name ?? "카테고리 없음")
+                        .font(.title3)
+                        .foregroundColor(pointColor)
+
+                    Text(basics.category?.emoji ?? "")
+                        .font(.footnote)
+                        .padding(7)
+                        .background(basics.category?.color ?? .gray)
+                        .clipShape(Circle())
+                        .frame(maxHeight: 10)
                 }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(borderColor, lineWidth: 1)
-                )
-                .foregroundColor(pointColor)
-                .padding(.bottom, 20)
+                .padding(.horizontal, 20)
 
-                Text("내용")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.gray)
-                    .padding(.leading, 10)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("가격")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.gray)
+                        .padding(.leading, 10)
 
-                ScrollView {
+                    HStack {
+                        Text("\(basics.money)")
+                            .font(.body)
+                        Spacer()
+                        Text("원")
+                            .foregroundColor(pointColor)
+                    }
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(borderColor, lineWidth: 1)
+                    )
+                    .foregroundColor(pointColor)
+                    .padding(.bottom, 20)
+
+                    Text("내용")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.gray)
+                        .padding(.leading, 10)
+
                     Text(basics.content ?? "")
                         .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
                         .padding()
                         .foregroundColor(pointColor)
-                }
-                .scrollIndicators(.hidden)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(borderColor, lineWidth: 1)
-                )
-            }
-            .padding(.horizontal)
 
-            Spacer()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(borderColor, lineWidth: 1)
+                        )
+                }
+                .padding(.horizontal)
+
+                Spacer()
+            }
         }
+        .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -170,7 +171,7 @@ struct DetailView: View {
                 context.delete(basics)
                 try? context.save()
                 spendingViewModel.loadEntry(context: context)
-                
+
                 dismiss()
             }
             Button("아니오", role: .cancel) { }

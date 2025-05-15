@@ -22,13 +22,16 @@ struct CategoryView: View {
 
     @State private var showCategoryListComposeView = false
     @State private var showCategoryComposeView = false
+    @State private var screenWidth: CGFloat = UIScreen.main.bounds.width
 
-    // 2열 세로 그리드를 위한 열(column) 구성 설정
+    // 열(column) 구성: 아이패드는 더 많은 열, iPhone은 2열
     // .flexible()을 사용해 화면 너비에 맞게 유연하게 칼럼 너비가 조정됨
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+
+    var columns: [GridItem] {
+        let isPad = UIDevice.current.userInterfaceIdiom == .pad
+        let columnCount = isPad ? max(2, Int(screenWidth / 200)) : 2
+        return Array(repeating: GridItem(.flexible()), count: columnCount)
+    }
 
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -39,6 +42,17 @@ struct CategoryView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
+                GeometryReader { geometry in
+                    Color.clear
+                        .onAppear {
+                            screenWidth = geometry.size.width
+                        }
+                        .onChange(of: geometry.size.width) { _, newWidth in
+                            screenWidth = newWidth
+                        }
+                }
+                .frame(height: 0)
+
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 20) {
                         let allCategories = spendingViewModel.categories
@@ -96,8 +110,8 @@ struct CategoryView: View {
                 }
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
-            }
 
+            }
         }
         .onAppear {
             spendingViewModel.loadCategory(context: context)
