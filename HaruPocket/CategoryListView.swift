@@ -9,6 +9,10 @@
 import SwiftUI
 import SwiftData
 
+/// `CategoryListView`는 특정 카테고리에 해당하는 소비 항목을 리스트로 보여주는 뷰입니다.
+/// - category 값이 nil이면 전체 소비 기록을 보여주고,
+/// - category가 지정되어 있으면 해당 카테고리와 일치하는 항목만 필터링하여 보여줍니다.
+/// - 각 항목은 NavigationLink를 통해 상세 뷰로 이동할 수 있으며, 스와이프를 통해 삭제 기능도 제공합니다.
 struct CategoryListView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("username") private var username: String = "default_user"
@@ -21,10 +25,14 @@ struct CategoryListView: View {
 
     // 수정사항
     let category: Category?
-	
+    
     var body: some View {
         List {
-            // 사용자의 항목 중 현재 카테고리에 해당하는 항목만 필터링하고, 날짜 기준 최신순으로 정렬
+            // 필터링 조건:
+            // - category가 nil이 아닌 경우:
+            //     해당 사용자의 항목 중에서 category 이름이 현재 선택된 category와 일치하는 항목만 필터링
+            // - category가 nil인 경우:
+            //     사용자 ID만 확인하여 전체 소비 항목을 필터링 없이 모두 보여줌 (전체 보기 용도)
             let filtereditems = spendingViewModel.spending
                 .filter { category != nil ? ($0.userID == spendingViewModel.username) && ($0.category?.name == category?.name) : ($0.userID == spendingViewModel.username) }
             // 최신 날짜가 먼저 오도록 정렬
@@ -129,6 +137,17 @@ struct CategoryListView: View {
             emoji: "💡",
             userID: "default_user"
         ) )
+        .modelContainer(
+            for: [BasicEntry.self, Category.self, Statics.self],
+            inMemory: true
+        )
+        .environmentObject(SpendingViewModel())
+    }
+}
+
+#Preview {
+    NavigationStack {
+        CategoryListView(category: nil)
         .modelContainer(
             for: [BasicEntry.self, Category.self, Statics.self],
             inMemory: true

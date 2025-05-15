@@ -35,6 +35,12 @@ import SwiftUI
 //    }
 //}
 // ------------------------------------- 삭제해도 될듯?
+
+
+/// `CategoryView`는 사용자에게 등록된 모든 카테고리를 그리드 형태로 보여주는 뷰입니다.
+/// - 각 카테고리는 이모지와 색상을 포함한 카드로 표현되며, 선택 시 해당 카테고리의 소비 내역 화면으로 이동합니다.
+/// - 오른쪽 상단 버튼을 통해 카테고리 편집 화면으로 이동할 수 있으며,
+/// - 오른쪽 하단 플로팅 버튼을 통해 새 카테고리를 추가할 수 있습니다.
 struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -43,7 +49,7 @@ struct CategoryView: View {
 
     let categories = Category.sampleList
     
-    
+//    var categories: Category
     
     
     
@@ -94,17 +100,18 @@ struct CategoryView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.backward")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(Color.lightPointColor)
-                        }
-                    }
+//                    각자 탭바에서 연결되는 뷰 작업하는 사람은 왼쪽상단에 뒤로가기 버튼 없애기
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button {
+//                            dismiss()
+//                        } label: {
+//                            Image(systemName: "chevron.backward")
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 20, height: 20)
+//                                .foregroundColor(Color.lightPointColor)
+//                        }
+//                    }
                     ToolbarItem(placement: .principal) {
                         Text("카테고리")
                             .font(.title2)
@@ -153,4 +160,9 @@ struct CategoryView: View {
     NavigationStack {
         CategoryView()
     }
+    .modelContainer(
+        for: [BasicEntry.self, Category.self, Statics.self],
+        inMemory: true
+    )
+    .environmentObject(SpendingViewModel())
 }
