@@ -311,7 +311,15 @@ HaruPocket은 작은 규모의 프로젝트였지만,
 | 윤혜주 | iOS 개발 / 데이터 모델링 / 발표 | [@unaexoo](https://github.com/unaexoo)         |
 | 전윤철 | iOS 개발 / 문서 작성        | [@yooncheoljeon](https://github.com/JYC0609) |
 
-  
+
+
+## 🧑‍🤝‍🧑 팀원 소개
+|  ![image](https://avatars.githubusercontent.com/jihyeonjjang)   | ![image](https://avatars.githubusercontent.com/JaeHyun9802)     |   ![image](https://avatars.githubusercontent.com/unaexoo)  |  ![image](https://avatars.githubusercontent.com/JYC0609)    |
+| :---: | :---:| :---: | :---: |
+| [장지현](https://github.com/jihyeonjjang) | [고재현](https://github.com/JaeHyun9802) | [윤혜주](https://github.com/unaexoo) | [전윤철](https://github.com/JYC0609) |
+|iOS 개발 / 기획 / 디자인|iOS 개발 / 디자인 / PPT 제작|iOS 개발 / 데이터 모델링 / 발표|iOS 개발 / 문서 작성|
+
+
 
 ## 🪪 라이선스
 
