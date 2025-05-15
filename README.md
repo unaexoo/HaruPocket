@@ -256,7 +256,7 @@ HaruPocket
 
 | 데이터 관리 | SwiftData (로컬 기반 ORM) |
 
-| IDE | Xcode 15 이상 |
+| IDE | Xcode 16 이상 |
 
 | 미리보기 구성 | `#Preview` + `.modelContainer(inMemory: true)` |
 
