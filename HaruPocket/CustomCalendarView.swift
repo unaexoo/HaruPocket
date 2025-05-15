@@ -57,9 +57,8 @@ struct CustomCalendarView: View {
                     .tag(0)
 
                     NavigationStack {
-                        CategoryView()
+                        CategoryListView(category: nil)
                             .navigationTitle("리스트")
-                            .toolbar(.hidden, for: .navigationBar)
                     }
                     .tabItem {
                         Label("리스트", systemImage: "list.bullet")
