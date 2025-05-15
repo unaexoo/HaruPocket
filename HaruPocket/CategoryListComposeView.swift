@@ -1,6 +1,10 @@
 import SwiftUI
 import SwiftData
 
+/// `CategoryListComposeView`는 사용자가 생성한 카테고리들을 리스트 형태로 보여주고, 편집 및 삭제 기능을 제공하는 뷰입니다.
+/// - 삭제 모드로 전환되면 항목 옆에 체크박스가 표시되며, 선택된 항목들을 삭제할 수 있습니다.
+/// - 삭제 버튼을 누르면 해당 카테고리를 categories 배열에서 제거하고, 선택도 초기화됩니다.
+/// - 일반 모드에서는 카테고리를 선택 시 상세 뷰(CategoryView)로 이동합니다.
 struct CategoryListComposeView: View {
     @Environment(\.dismiss) var dismiss
     
