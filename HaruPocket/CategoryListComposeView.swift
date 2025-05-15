@@ -1,29 +1,39 @@
+//
+//  CategoryListComposeView.swift
+//  HaruPocket
+//
+//  Created by YC on 5/13/25.
+//
+
 import SwiftUI
 import SwiftData
 
 /// `CategoryListComposeView`는 사용자가 생성한 카테고리들을 리스트 형태로 보여주고, 편집 및 삭제 기능을 제공하는 뷰입니다.
 /// - 삭제 모드로 전환되면 항목 옆에 체크박스가 표시되며, 선택된 항목들을 삭제할 수 있습니다.
 /// - 삭제 버튼을 누르면 해당 카테고리를 categories 배열에서 제거하고, 선택도 초기화됩니다.
-/// - 일반 모드에서는 카테고리를 선택 시 상세 뷰(CategoryView)로 이동합니다.
+/// - 일반 모드에서는 카테고리를 선택 시 상세 뷰(CategoryComposeView)로 이동합니다.
 struct CategoryListComposeView: View {
     @AppStorage("username") private var username: String = "default_user"
 
     @EnvironmentObject var spendingViewModel: SpendingViewModel
-
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.editMode) private var editMode
 
-    // 체크된 카테고리의 ID들을 저장하는 Set (삭제 등의 작업에 사용)
+    /// 삭제할 카테고리들의 UUID 집합
     @State private var selectedCategoryIDs: Set<UUID> = []
 
-    // 편집 모드 여부를 제어하는 상태 변수
+    /// 삭제 확인 알림창 표시 여부
     @State private var showDeleteConfirmation = false
+
+    /// 선택되지 않은 상태에서 삭제 버튼 누를 경우 경고창 여부
     @State private var showSelectAlert = false
 
+    /// 새 카테고리 추가 화면으로 이동하는 상태 변수
     @State private var showCateogryComposeView = false
 
+    /// 카테고리 편집 리스트 UI 구성
     var body: some View {
         let allCategories = spendingViewModel.categories
         let categories = allCategories
@@ -103,7 +113,7 @@ struct CategoryListComposeView: View {
         }
         .listStyle(.plain)
         .onAppear {
-            // 뷰모델의 사용자명 설정 및 카테고리 로딩
+            /// 사용자명 기준 카테고리 불러오기
             spendingViewModel.loadCategory(context: context)
         }
         .alert(
@@ -132,9 +142,7 @@ struct CategoryListComposeView: View {
     }
 }
 
-
-
-
+/// 미리보기용: 카테고리 편집 리스트 프리뷰
 #Preview {
     NavigationStack {
         CategoryListComposeView()
