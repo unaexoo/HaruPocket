@@ -68,50 +68,51 @@ struct CustomCalendarView: View {
 
                     NavigationStack {
                         ZStack(alignment: .bottomTrailing) {
-                                homeTabView
-                                if showComposeView == false {
-                                    floatingAddButton
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .padding(.trailing, 20)
+                            homeTabView
+                            if showComposeView == false {
+                                floatingAddButton
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .trailing
+                                    )
+                                    .padding(.trailing, 20)
+                            }
+                        }
+                        .navigationTitle("지갑 속 하루")
+                        .navigationBarTitleDisplayMode(.large)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    showYearPicker.toggle()
+                                } label: {
+                                    HStack {
+                                        Text("\(String(selectedYear))년")
+                                        Image(systemName: "chevron.down")
+                                    }
+                                    .font(.headline)
+                                    .foregroundStyle(
+                                        colorScheme == .dark
+                                        ? Color.darkPointColor
+                                        : Color.lightPointColor
+                                    )
+                                    .offset(y: 45)
+
                                 }
                             }
-                            .navigationTitle("지갑 속 하루")
-                            .navigationBarTitleDisplayMode(.large)
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        showYearPicker.toggle()
-                                    } label: {
-                                        HStack {
-                                            Text("\(String(selectedYear))년")
-                                            Image(systemName: "chevron.down")
-                                        }
-                                        .font(.headline)
-                                        .foregroundStyle(
-                                            colorScheme == .dark ? Color.darkPointColor : Color.lightPointColor
-                                        )
-                                        .offset(y: 45)
-
-                                    }
+                        }
+                        .sheet(isPresented: $showYearPicker) {
+                            yearPickerSheet
+                        }
+                        .navigationDestination(isPresented: $showComposeView) {
+                            ComposeView(date: calendarViewModel.selectedDate, basics: .constant(nil))
+                                .onDisappear {
+                                    showComposeView = false
+                                    spendingViewModel.loadEntry(
+                                        context: context
+                                    )
                                 }
-                            }
-                            .sheet(isPresented: $showYearPicker) {
-                                  yearPickerSheet
-                              }
-                            .navigationDestination(isPresented: $showComposeView) {
-                                ComposeView(basics: .constant(nil))
-                                    .onDisappear {
-                                        showComposeView = false
-                                        spendingViewModel.loadEntry(context: context)
-                                    }
-                            }
+                        }
                     }
-                    .tabItem {
-                        Label("홈", systemImage: "house")
-                    }
-                    .tag(2)
-
-
                     .tabItem {
                         Label("홈", systemImage: "house")
                     }
