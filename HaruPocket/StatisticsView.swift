@@ -27,6 +27,10 @@ struct StatisticsView: View {
 
     @State private var date = Date.now
     @State private var isExpenseListEmpty = false
+    @State private var totalMoney: Int = 0
+    @State private var top5ByCountItems: [DataItem] = []
+    @State private var top5ByMoneyItems: [DataItem] = []
+
     let screenHeight = UIScreen.main.bounds.height
 
     init() {
@@ -72,6 +76,7 @@ struct StatisticsView: View {
             .padding(.top)
             .padding(.horizontal)
 
+
             if isExpenseListEmpty {
                 VStack {
                     Text("아직 사용한 금액이 없어요!")
@@ -90,8 +95,6 @@ struct StatisticsView: View {
                 .padding(.top, screenHeight/5)
             } else {
                 VStack(spacing: 0) {
-                    let (totalMoney, top5ByCountItems, top5ByMoneyItems) = computeStatistics()
-
                     HStack(spacing: 0) {
                         Text("이번 달에는 ")
 
@@ -118,21 +121,30 @@ struct StatisticsView: View {
                     Task {
                         await spendingViewModel.insertSampleData(context: context)
                     }
-                }
-                .navigationBarBackButtonHidden(true)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("통계")
-                            .font(.title2)
-                    }
+                    let (total, countItems, moneyItems) = computeStatistics()
+                    totalMoney = total
+                    top5ByCountItems = countItems
+                    top5ByMoneyItems = moneyItems
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("통계")
+                    .font(.title2)
+            }
+        }
         .scrollIndicators(.hidden)
+        .onChange(of: date) {
+            let (total, countItems, moneyItems) = computeStatistics()
+            totalMoney = total
+            top5ByCountItems = countItems
+            top5ByMoneyItems = moneyItems
+        }
     }
 }
-
 
 extension StatisticsView {
     func computeStatistics()
@@ -146,9 +158,7 @@ extension StatisticsView {
         let totalMoney = statisticsViewModel.totalMoneyForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
 
         DispatchQueue.main.async {
-            if totalMoney == 0 {
-                isExpenseListEmpty = true
-            }
+            isExpenseListEmpty = (totalMoney == 0)
         }
 
         let (top5ByCount, top5ByMoney) = statisticsViewModel.entriesByCategoryForMonth(month: formattedDate(from: date, format: "yyyy-MM") ?? "2025-05")
@@ -176,8 +186,8 @@ extension StatisticsView {
     }
 
     func changeMonth(by value: Int, from date: Date) -> Date {
-            Calendar.current.date(byAdding: .month, value: value, to: date) ?? date
-        }
+        Calendar.current.date(byAdding: .month, value: value, to: date) ?? date
+    }
 }
 
 #Preview {
@@ -202,21 +212,21 @@ struct ChartView: View {
                 .fill(.gray.opacity(0.05))
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Text("어디에 가장 ")
-                    
+
                     Text(title == "최다" ? "자주" : "많이")
                         .foregroundStyle(Color.lightMainColor)
-                    
+
                     Text(" 썼을까?")
                 }
                 .font(.title3)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
                 .padding(.horizontal)
-                
+
                 Chart(dataItems) { element in
                     SectorMark(
                         angle: .value("angle", title == "최다" ? element.count : element.money),
@@ -231,25 +241,25 @@ struct ChartView: View {
                 .padding()
                 .scaledToFit()
                 .frame(width: 300, height: 300)
-                
+
                 Text(title == "최다" ? "이번 달 최다 소비" : "이번 달 최고 소비")
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     .padding(.top)
-                
+
                 VStack(alignment: .leading) {
                     ForEach(dataItems) { items in
                         HStack {
                             Circle()
                                 .fill(items.color)
                                 .frame(width: 10, height: 10)
-                            
+
                             Text(items.title)
                                 .font(.callout)
-                            
+
                             Spacer()
-                            
+
                             Text("\(title == "최다" ? items.count : items.money)건")
                                 .font(.callout)
                                 .foregroundStyle(.gray)
@@ -259,7 +269,7 @@ struct ChartView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-                
+
             }
             .padding(20)
         }

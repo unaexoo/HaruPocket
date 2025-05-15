@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 /// `CategoryView`는 사용자에게 등록된 모든 카테고리를 그리드 형태로 보여주는 뷰입니다.
 /// - 각 카테고리는 이모지와 색상을 포함한 카드로 표현되며, 선택 시 해당 카테고리의 소비 내역 화면으로 이동합니다.
@@ -65,12 +66,12 @@ struct CategoryView: View {
                                             .font(.system(size: 60))
                                         Text(category.name)
                                             .font(.title3)
-                                            .foregroundColor(.black)
+                                            .foregroundColor(category.color.isDarkColor() ? .white : .black)
                                     }
                                     .frame(width: 160, height: 160)
                                     .background(category.color)
                                     .cornerRadius(25)
-                                    .shadow(radius: 0.3)
+                                    .shadow(radius: 3)
                                 }
                             }
                         }
@@ -133,6 +134,18 @@ struct CategoryView: View {
     }
 }
 
+extension Color {
+    func isDarkColor() -> Bool {
+        let uiColor = UIColor(self)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        let brightness = (red * 299 + green * 587 + blue * 114) / 1000
+        return brightness < 0.6
+    }
+}
 
 #Preview {
     NavigationStack {
