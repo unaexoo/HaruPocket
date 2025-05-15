@@ -30,208 +30,307 @@ struct ComposeView: View {
     @State private var money: String = ""
     @State private var content: String = ""
     @State private var img: String = ""
+    @State private var showTitleAlert = false
+    @State private var showMoneyAlert = false
 
     @FocusState private var focused: FieldType?
 
     @Binding var basics: BasicEntry?
 
     var body: some View {
-        ScrollView {
-            VStack {
-                Button {
-                    // TODO: 이미지피커
-                    print("이미지 버튼 클릭")
-                } label: {
-                    if let uiImage = basics?.image {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 250)
-                            .frame(width: 360)
-                            .clipShape(RoundedRectangle(cornerRadius: 30))
-                    }
-                    else {
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .tint(Color.lightPointColor)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                }
-                .overlay {
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.lightPointColor, lineWidth: 1)
-                }
-                .frame(height: 250)
-                .frame(width: 360)
-                .padding(.bottom)
-
-                Grid(verticalSpacing: 20) {
-                    GridRow {
-                        HStack {
-                            VStack(spacing: 5) {
-                                Text("작성 날짜")
-                                    .font(.callout)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 10)
-
-                                Text(date, style: .date)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .overlay {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.lightPointColor, lineWidth: 1)
-                                    }
-                                    .overlay {
-                                        // TODO: 더 좋은 방법이 있을까?
-                                        DatePicker("작성 날짜", selection: $date, displayedComponents: .date)
-                                            .frame(maxWidth: .infinity)
-                                            .labelsHidden()
-                                            .colorMultiply(.clear)
-                                    }
-                            }
-
-                            VStack(spacing: 5) {
-                                Text("카테고리")
-                                    .font(.callout)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 10)
-
-                                let categories = spendingViewModel.categories.filter {
-                                    $0.userID == spendingViewModel.username
-                                }
-
-                                if categories.count <= 6 {
-                                    SelectCategoryByMenu(selectedCategory: $selectedCategory, basics: $basics, categories: categories)
-                                } else {
-                                    SelectCategoryBySheet(presentModal: $presentModal, selectedCategory: $selectedCategory, basics: $basics)
-                                }
-                            }
+        ScrollViewReader {proxy in
+            ScrollView {
+                VStack {
+                    Button {
+                        // TODO: 이미지피커
+                        print("이미지 버튼 클릭")
+                    } label: {
+                        if let uiImage = basics?.image {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 250)
+                                .frame(width: 360)
+                                .clipShape(RoundedRectangle(cornerRadius: 30))
+                        }
+                        else {
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .tint(Color.lightPointColor)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                     }
-
-                    GridRow {
-                        textFieldView(value: $title, focused: $focused, basics: $basics, title: "제목", fieldType: .title)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(Color.lightPointColor, lineWidth: 1)
                     }
+                    .frame(height: 250)
+                    .frame(width: 360)
+                    .padding(.bottom)
 
-                    GridRow {
-                        textFieldView(value: $money, focused: $focused, basics: $basics, title: "가격", fieldType: .money)
-                    }
-
-                    GridRow {
-                        VStack(spacing: 5) {
-                            Text("내용")
-                                .font(.callout)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 10)
-
+                    Grid(verticalSpacing: 20) {
+                        GridRow {
                             HStack {
-                                TextEditor(text: $content)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .focused($focused, equals: .content)
-                                    .submitLabel(.done)
-                                    .onSubmit {
-                                        focused = nil
-                                    }
-                                    .onAppear {
-                                        content = basics?.content ?? ""
-                                    }
-                                    .scrollIndicators(.hidden)
-                            }
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.lightPointColor, lineWidth: 1)
-                            }
+                                VStack(spacing: 5) {
+                                    Text("작성 날짜")
+                                        .font(.callout)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading, 10)
 
+                                    Text(date, style: .date)
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color.lightPointColor, lineWidth: 1)
+                                        }
+                                        .overlay {
+                                            // TODO: 더 좋은 방법이 있을까?
+                                            DatePicker("작성 날짜", selection: $date, displayedComponents: .date)
+                                                .frame(maxWidth: .infinity)
+                                                .labelsHidden()
+                                                .colorMultiply(.clear)
+                                        }
+                                }
+
+                                VStack(spacing: 5) {
+                                    Text("카테고리")
+                                        .font(.callout)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading, 10)
+
+                                    let categories = spendingViewModel.categories.filter {
+                                        $0.userID == spendingViewModel.username
+                                    }
+
+                                    if categories.count <= 6 {
+                                        SelectCategoryByMenu(selectedCategory: $selectedCategory, basics: $basics, categories: categories)
+                                    } else {
+                                        SelectCategoryBySheet(presentModal: $presentModal, selectedCategory: $selectedCategory, basics: $basics)
+                                    }
+                                }
+                            }
+                        }
+
+                        GridRow {
+                            VStack(spacing: 5) {
+                                Text("제목")
+                                    .font(.callout)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 10)
+
+                                HStack {
+                                    TextField("제목", text: $title)
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled()
+                                        .focused($focused, equals: .title)
+                                        .onAppear {
+                                            if let basics {
+                                                title = basics.title
+                                            }
+                                        }
+                                }
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.lightPointColor, lineWidth: 1)
+                                }
+
+                            }
+                        }
+
+                        GridRow {
+                            VStack(spacing: 5) {
+                                Text("가격")
+                                    .font(.callout)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 10)
+
+                                HStack {
+                                    TextField("가격", text: $money)
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled()
+                                        .focused($focused, equals: .money)
+                                        .keyboardType(.numberPad)
+                                        .onAppear {
+                                            if let basics {
+                                                money = String(basics.money)
+                                            }
+                                        }
+                                        .onChange(of: money) {
+                                            money = money.filter { $0.isNumber }
+                                        }
+
+                                    Text("원")
+                                        .padding(.horizontal)
+                                }
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.lightPointColor, lineWidth: 1)
+                                }
+                            }
+                        }
+
+                        GridRow {
+                            VStack(spacing: 5) {
+                                Text("내용")
+                                    .font(.callout)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 10)
+
+                                HStack {
+                                    TextEditor(text: $content)
+                                        .padding()
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled()
+                                        .focused($focused, equals: .content)
+                                        .onAppear {
+                                            content = basics?.content ?? ""
+
+                                        }
+                                        .scrollIndicators(.hidden)
+                                }
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.lightPointColor, lineWidth: 1)
+                                }
+
+                            }
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+
+                            Button(focused != .content ? "next" : "done") {
+                                switch focused {
+                                case .title:
+                                    focused = .money
+                                case .money:
+                                    focused = .content
+                                case .content:
+                                    focused = nil
+                                case .none:
+                                    focused = nil
+                                }
+                            }
+                        }
+                    }
+
+                }
+                .padding()
+                .onAppear {
+                    spendingViewModel.username = username
+                    spendingViewModel.loadCategory(context: context)
+
+                    if let basics {
+                        self.date = basics.date
+                    }
+
+                    Task {
+                        await spendingViewModel.insertSampleData(context: context)
+                    }
+                }
+                .navigationBarBackButtonHidden(true)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(Color.lightPointColor)
+                        }
+                    }
+                    ToolbarItem(placement: .principal) {
+                        Text(formattedDate(from: basics?.date) ?? "새로운 소비")
+                            .font(.title2)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            save()
+                        } label: {
+                            Text("완료")
+                                .font(.title3)
+                                .foregroundColor(Color.lightPointColor)
                         }
                     }
                 }
-
-            }
-            .padding()
-            .onAppear {
-                spendingViewModel.username = username
-                spendingViewModel.loadCategory(context: context)
-
-                if let basics {
-                    self.date = basics.date
-                }
-
-                Task {
-                    await spendingViewModel.insertSampleData(context: context)
-                }
-            }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Color.lightPointColor)
+                .environment(\.locale, Locale(identifier: "ko_kr"))
+                .sheet(isPresented: $presentModal) {
+                    SelectCategoryView { item in
+                        selectedCategory = item
+                        presentModal = false
                     }
                 }
-                ToolbarItem(placement: .principal) {
-                    Text(formattedDate(from: basics?.date) ?? "새로운 소비")
-                        .font(.title2)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                .alert("경고", isPresented: $showTitleAlert) {
                     Button {
-                        save()
+                        focused = .title
                     } label: {
-                        Text("완료")
-                            .font(.title3)
-                            .foregroundColor(Color.lightPointColor)
+                        Text("확인")
                     }
+                } message: {
+                    Text("제목을 입력해 주세요")
+                }
+                .alert("경고", isPresented: $showMoneyAlert) {
+                    Button {
+                        focused = .money
+                    } label: {
+                        Text("확인")
+                    }
+                } message: {
+                    Text("가격을 입력해 주세요")
                 }
             }
-            .environment(\.locale, Locale(identifier: "ko_kr"))
-            .sheet(isPresented: $presentModal) {
-                SelectCategoryView { item in
-                    selectedCategory = item
-                    presentModal = false
-                }
-            }
+            .scrollIndicators(.hidden)
+            .scrollDismissesKeyboard(.interactively)
         }
-        .scrollIndicators(.hidden)
     }
 }
 
 extension ComposeView {
     func save() {
-        if let basics {
-            basics.title = title
-            basics.money = Int(money) ?? 0
-            basics.content = content
-            basics.date = date
-            basics.imageFileName = img
-            basics.category = selectedCategory ?? basics.category
+        if title.isEmpty {
+            showTitleAlert = true
+        } else if money.isEmpty {
+            showMoneyAlert = true
         } else {
-            let newEntry = BasicEntry(
-                title: title,
-                content: content,
-                date: date,
-                money: Int(money) ?? 0,
-                imageFileName: img,
-                userID: username,
-                category: selectedCategory
-            )
-            context.insert(newEntry)
-        }
+            if let basics {
+                basics.title = title
+                basics.money = Int(money) ?? 0
+                basics.content = content
+                basics.date = date
+                basics.imageFileName = img
+                basics.category = selectedCategory ?? basics.category
+            } else {
 
-        do {
-            try context.save()
-            dismiss()
-        } catch {
-            print("저장 실패: \(error.localizedDescription)")
+                let newEntry = BasicEntry(
+                    title: title,
+                    content: content,
+                    date: date,
+                    money: Int(money) ?? 0,
+                    imageFileName: img,
+                    userID: username,
+                    category: selectedCategory
+                )
+                context.insert(newEntry)
+            }
+
+            do {
+                try context.save()
+                dismiss()
+            } catch {
+                print("저장 실패: \(error.localizedDescription)")
+            }
         }
     }
 
@@ -278,64 +377,6 @@ extension ComposeView {
                 inMemory: true
             )
             .environmentObject(SpendingViewModel())
-    }
-}
-
-struct textFieldView: View {
-    @Binding var value: String
-    @FocusState<FieldType?>.Binding var focused: FieldType?
-    @Binding var basics: BasicEntry?
-
-    var title: String
-    var fieldType: FieldType
-
-    var body: some View {
-        VStack(spacing: 5) {
-            Text(title)
-                .font(.callout)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 10)
-
-            HStack {
-                TextField(title, text: $value)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .focused($focused, equals: fieldType)
-                    .submitLabel(.next)
-                    .onSubmit {
-                        switch fieldType {
-                        case .title:
-                            focused = .money
-                        case .money:
-                            focused = .content
-                        case .content:
-                            focused = nil
-                        }
-                    }
-                    .onAppear {
-                        if let basics {
-                            switch fieldType {
-                            case .title:
-                                value = basics.title
-                            case .money:
-                                value = String(basics.money)
-                            case .content:
-                                value = basics.content ?? ""
-                            }
-                        }
-                    }
-
-                Text(title == "가격" ? "원" : "")
-                    .padding(.horizontal)
-            }
-            .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.lightPointColor, lineWidth: 1)
-            }
-
-        }
     }
 }
 
