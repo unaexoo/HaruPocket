@@ -1,6 +1,9 @@
 import SwiftData
 import SwiftUI
 
+/// `CustomCalendarView`는 지갑 속 하루 앱의 주요 달력 및 홈 화면을 제공하는 뷰입니다.
+/// - 달력에서 날짜를 선택하고 해당 날짜의 소비 내역을 확인하거나 생성할 수 있습니다.
+/// - 탭 뷰를 통해 카테고리, 리스트, 홈, 사진, 통계 화면 간의 전환을 제공합니다.
 struct CustomCalendarView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.colorScheme) private var colorScheme
@@ -21,11 +24,13 @@ struct CustomCalendarView: View {
     @State var isLaunching: Bool = true
     @State private var showComposeView = false
 
+    /// 달력 그리드 열
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
 
+    /// 초기화 시 UserDefaults에서 저장된 사용자 이름을 calendarViewModel에 전달합니다.
     init() {
         let storedUsername =
-        UserDefaults.standard.string(forKey: "username") ?? "default_user"
+            UserDefaults.standard.string(forKey: "username") ?? "default_user"
         _calendarViewModel = StateObject(
             wrappedValue: CalendarViewModel(username: storedUsername)
         )
@@ -90,8 +95,8 @@ struct CustomCalendarView: View {
                                 .font(.headline)
                                 .foregroundStyle(
                                     colorScheme == .dark
-                                    ? Color.darkPointColor
-                                    : Color.lightPointColor
+                                        ? Color.darkPointColor
+                                        : Color.lightPointColor
                                 )
                                 .padding(.trailing, 30)
                                 .padding(.bottom, 10)
@@ -120,7 +125,7 @@ struct CustomCalendarView: View {
                     .tag(2)
 
                     NavigationStack {
-                        PhotoView()
+                        CategoryView()
                             .navigationTitle("사진")
                     }
                     .tabItem {
@@ -140,7 +145,7 @@ struct CustomCalendarView: View {
             }
             .tint(
                 colorScheme == .dark
-                ? Color.darkMainColor : Color.lightMainColor
+                    ? Color.darkMainColor : Color.lightMainColor
             )
             .onAppear {
                 if spendingViewModel.username != username {
@@ -155,14 +160,16 @@ struct CustomCalendarView: View {
         }
     }
 
+    /// 홈 탭
+    /// - 달력, 요일 헤더, 해당 날짜의 소비 내역 리스트를 포함
     private var homeTabView: some View {
         VStack(spacing: 10) {
-            headerView
+            headerView  // 달력 상단 헤더
             Rectangle()
                 .fill(.quaternary)
                 .frame(width: 400, height: 0.5)
 
-            weekdayHeader
+            weekdayHeader  // 요일 헤더
 
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(
@@ -190,6 +197,8 @@ struct CustomCalendarView: View {
         .padding()
     }
 
+    /// + 버튼
+    /// - 홈 탭의 오른쪽 아래 위치한 소비 일기 추가 버튼입니다.
     private var floatingAddButton: some View {
         ZStack {
             Button {
@@ -209,6 +218,8 @@ struct CustomCalendarView: View {
         .padding(.bottom, 20)
     }
 
+    /// 달력 상단 헤더
+    /// - 이전, 다음 월 이동 동작을 수행합니다.
     private var headerView: some View {
         HStack {
             Button {
@@ -227,7 +238,7 @@ struct CustomCalendarView: View {
             .font(.headline)
             .foregroundStyle(
                 colorScheme == .dark
-                ? Color.darkPointColor : Color.lightPointColor
+                    ? Color.darkPointColor : Color.lightPointColor
             )
 
             Spacer()
@@ -244,6 +255,8 @@ struct CustomCalendarView: View {
         .padding()
     }
 
+    /// 달력 요일 헤더
+    /// - 달력의 일-토 표시를 합니다.
     private var weekdayHeader: some View {
         let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
         return HStack {
@@ -255,6 +268,9 @@ struct CustomCalendarView: View {
         }
     }
 
+    /// 개별 날짜 셀을 생성합니다
+    /// - Parameter date: 셀에 해당하는 날짜
+    /// - Returns: 해당 날자의 소비 내역과 함께 셀 뷰를 반환합니다.
     private func dayCell(for date: Date) -> some View {
         let entriesForDay = spendingViewModel.spending.filter {
             Calendar.current.isDate($0.date, inSameDayAs: date)
@@ -272,6 +288,8 @@ struct CustomCalendarView: View {
         )
     }
 
+    /// 연도 선택 시트(View)
+    /// - Picker를 통해 연도를 선택하고 해당 연도의 현재 월로 이동합니다.
     private var yearPickerSheet: some View {
         VStack {
             Text("연도 선택")
@@ -317,6 +335,10 @@ struct CustomCalendarView: View {
     }
 }
 
+/// `CategoryDotView`는 달력 날짜 셀 하단에 소비 카테고리별 색상 점들을 시각적으로 표현하는 뷰입니다.
+/// - 하나의 날짜에 여러 소비 항목이 있을 경우 카테고리별로 정리하여 최대 5개의 점만 표시합니다.
+/// - 카테고리가 2개 이하인 경우: 단순히 나란히 점을 나열합니다.
+/// - 카테고리가 3개 이상인 경우: 좌측으로 살짝 겹쳐지도록 점을 중첩 배치합니다.
 struct CategoryDotView: View {
     let entries: [BasicEntry]
 
@@ -367,6 +389,10 @@ struct CategoryDotView: View {
     }
 }
 
+/// `DayCellView`는 달력의 개별 날짜 셀을 시각적으로 표현하는 뷰입니다.
+/// - 선택된 날짜일 경우 테두리 강조 표시가 적용되며,
+/// - 해당 월의 날짜인지에 따라 텍스트 색상을 다르게 적용합니다.
+/// - 하단에 `CategoryDotView`를 통해 소비 카테고리 시각화도 포함됩니다.
 struct DayCellView: View {
     let date: Date
     let entries: [BasicEntry]
@@ -403,6 +429,9 @@ struct DayCellView: View {
 
 }
 
+/// `EntryListView`는 선택한 날짜에 해당하는 소비 일기를 카테고리별로 분류하여 표시하는 뷰입니다.
+/// - 각 카테고리별로 소비 일기를 그룹화하여 목록으로 나열합니다.
+/// - 항목을 클릭하면 상세 화면(`DetailView`)으로 이동할 수 있습니다.
 struct EntryListView: View {
     let date: Date
     let entries: [BasicEntry]
@@ -412,7 +441,7 @@ struct EntryListView: View {
     var body: some View {
         let filtered = entries.filter {
             $0.userID == username
-            && Calendar.current.isDate($0.date, inSameDayAs: date)
+                && Calendar.current.isDate($0.date, inSameDayAs: date)
         }
 
         let grouped = Dictionary(grouping: filtered) {
@@ -453,7 +482,7 @@ struct EntryListView: View {
                                                 Circle()
                                                     .fill(
                                                         entry.category?.color
-                                                        ?? .gray
+                                                            ?? .gray
                                                     )
                                                     .frame(
                                                         width: 10,
@@ -492,6 +521,8 @@ struct EntryListView: View {
     }
 }
 
+/// `SplashView`는 앱 시작 시 잠시 표시되는 스플래시 화면 뷰입니다.
+/// - 앱 로고 이미지와 앱 이름 텍스트가 포함되어 있으며, 라이트/다크 모드에 따라 색상이 달라집니다.
 struct SplashView: View {
     let colorScheme: ColorScheme
     var body: some View {
@@ -504,8 +535,8 @@ struct SplashView: View {
                     .bold()
                     .foregroundStyle(
                         colorScheme == .dark
-                        ? Color.darkPointColor
-                        : Color.lightPointColor
+                            ? Color.darkPointColor
+                            : Color.lightPointColor
                     )
                     .padding(.bottom),
                 alignment: .bottom
