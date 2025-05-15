@@ -8,77 +8,85 @@
 import SwiftUI
 import EmojiPicker
 
+/// 사용자가 카테고리를 새로 생성하거나 기존 카테고리를 수정할 수 있는 뷰입니다.
 struct CategoryComposeView: View {
+
+    // MARK: - 사용자 입력 상태
+
+    /// 카테고리 이름
     @State private var name: String = ""
-    @State private var selectedColor: Color = Color.lightMainColor
+
+    /// 선택된 색상 (기본값은 lightMainColor)
+    @State private var selectedColor: Color = .lightMainColor
+
+    /// 선택된 이모지 (기본값은 🫥)
     @State private var selectedEmoji: String = "🫥"
-    @State private var isColorPickerVisible: Bool = false
-    @State private var isEmojiPickerVisible: Bool = false
+
+    /// 이름 미입력 시 경고용 Alert 표시 여부
     @State private var showAlert = false
 
+    /// 이모지 선택기 표시 여부
+    @State private var isEmojiPickerVisible: Bool = false
+
+    /// 사용자 고유 ID (UserDefaults 기반 저장)
     @AppStorage("username") private var username: String = "default_user"
 
-    @EnvironmentObject var spendingViewModel: SpendingViewModel
-
+    /// SwiftData 모델 컨텍스트 (삽입 및 저장 기능 사용)
     @Environment(\.modelContext) private var context
+
+    /// 현재 뷰 닫기용 dismiss 함수
     @Environment(\.dismiss) private var dismiss
+
+    /// 시스템 색상 모드 (라이트/다크)
     @Environment(\.colorScheme) private var colorScheme
 
+    /// 카테고리 관련 전역 ViewModel
+    @EnvironmentObject var spendingViewModel: SpendingViewModel
+
+    /// 바인딩으로 주입되는 수정 대상 카테고리 (nil이면 생성 모드)
     @Binding var category: Category?
 
-    // 다크모드에 대응
+    /// 현재 색상 모드에 맞는 포인트 컬러 반환
     private var pointColor: Color {
         colorScheme == .dark ? .darkPointColor : .lightPointColor
     }
 
+    /// 현재 색상 모드에 맞는 일반 텍스트 색상 반환
     private var textColor: Color {
         colorScheme == .dark ? .creamWhite : .black
     }
 
     var body: some View {
         VStack(spacing: 30) {
-            VStack(alignment: .leading, spacing: 4) {
+            // MARK: 제목 입력 영역
+            VStack(alignment: .leading, spacing: 6) {
                 Text("제목")
                     .font(.subheadline)
                     .foregroundColor(.gray)
-                    .padding(.leading, 10)
+                    .padding(.leading, 5)
 
                 TextField("카테고리 이름", text: $name)
                     .padding(10)
-                    .overlay(
+                    .background(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(pointColor, lineWidth: 1)
                     )
                     .foregroundColor(textColor)
-                    .onAppear {
-                        name = category?.name ?? ""
-                    }
             }
 
-            VStack {
-                HStack {
-                    Text("색상")
-                        .font(.title2)
-                        .foregroundColor(textColor)
+            // MARK: 색상 선택 영역
+            HStack {
+                Text("색상")
+                    .font(.title2)
+                    .foregroundColor(textColor)
 
-                    Spacer()
+                Spacer()
 
-                    ColorPicker("색상", selection: $selectedColor)
-                        .labelsHidden()
-                        .onTapGesture {
-                            withAnimation {
-                                isColorPickerVisible.toggle()
-                            }
-                        }
-                }
-
-                if isColorPickerVisible {
-                    ColorPicker("", selection: $selectedColor)
-                        .labelsHidden()
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                }
+                ColorPicker("색상 선택", selection: $selectedColor)
+                    .labelsHidden()
             }
 
+            // MARK: 이모지 선택 영역
             HStack {
                 Text("이모지")
                     .font(.title2)
@@ -97,7 +105,9 @@ struct CategoryComposeView: View {
         }
         .padding(20)
         .onAppear {
-            selectedColor = category?.color ?? Color.lightMainColor
+            // 초기 데이터 세팅 (수정 모드일 경우 기존 값 반영)
+            name = category?.name ?? ""
+            selectedColor = category?.color ?? .lightMainColor
             selectedEmoji = category?.emoji ?? "🫥"
         }
         .navigationBarBackButtonHidden(true)
@@ -145,20 +155,23 @@ struct CategoryComposeView: View {
             Text("카테고리 이름을 입력해주세요")
         }
     }
-}
 
-extension CategoryComposeView {
-    func save() {
+    // MARK: - 저장 함수
+
+    /// 입력값을 기반으로 카테고리를 생성하거나 수정하고, 모델 컨텍스트에 저장합니다.
+    private func save() {
         guard !name.isEmpty else {
             showAlert = true
             return
         }
 
         if let category {
+            // 수정 모드: 기존 카테고리 업데이트
             category.name = name
             category.color = selectedColor
             category.emoji = selectedEmoji
         } else {
+            // 생성 모드: 새 카테고리 인스턴스 생성 및 삽입
             let newCategory = Category(
                 name: name,
                 color: selectedColor,
@@ -176,6 +189,7 @@ extension CategoryComposeView {
         }
     }
 }
+
 
 #Preview {
     NavigationStack {
