@@ -152,7 +152,7 @@ cd HaruPocket
 
 | 라이브러리 이름 | 버전 | 설명 |
 |----------------|------|------|
-| [EmojiPicker](https://github.com/hsousa/EmojiPicker) | 2.1.1 | SwiftUI 기반의 이모지 선택 컴포넌트로, HaruPocket의 카테고리 생성 시 이모지 선택 UI에 사용됩니다. |
+| [EmojiPicker](https://github.com/mpetrenco/EmojiPicker) | 2.1.1 | SwiftUI 기반의 이모지 선택 컴포넌트로, HaruPocket의 카테고리 생성 시 이모지 선택 UI에 사용됩니다. |
 
 - Swift Package Manager(SPM)를 통해 자동으로 설치됩니다.
 - 프로젝트 실행 시 필요한 경우 다음 메뉴에서 수동 갱신할 수 있습니다:
