@@ -152,6 +152,9 @@ struct CustomCalendarView: View {
                     spendingViewModel.username = username
                 }
 
+                spendingViewModel.loadCategory(context: context)
+                spendingViewModel.loadEntry(context: context)
+
                 Task {
                     await spendingViewModel.insertSampleData(context: context)
 
@@ -160,8 +163,6 @@ struct CustomCalendarView: View {
                     spendingViewModel.loadCategory(context: context)
                     spendingViewModel.loadEntry(context: context)
                 }
-
-
             }
         }
     }
