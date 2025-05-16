@@ -7,7 +7,7 @@
 <img src="https://github.com/user-attachments/assets/fde04fdc-74f0-453d-be49-8e0ca65ec1f5" width="200"/>
 
 
-<h1>HaruPocket</h1>
+<h1>지갑 속 하루</h1>
 
   
 
@@ -19,7 +19,7 @@
 
 누적된 금액보다 중요한 건, 그날의 내가 왜 소비했는지를 돌아보는 것.<br/>
 
-HaruPocket은 소비를 통해 나를 이해하고 삶의 흐름을 기록할 수 있도록 도와주는,<br/>
+지갑 속 하루는 소비를 통해 나를 이해하고 삶의 흐름을 기록할 수 있도록 도와주는,<br/>
 
 회고 중심 소비 기록 앱입니다.
 
@@ -35,7 +35,7 @@ HaruPocket은 소비를 통해 나를 이해하고 삶의 흐름을 기록할 �
 
   
 
-## 🧭 Introduction
+## 🧭 설명
 
   
 
@@ -212,11 +212,9 @@ HaruPocket
 
   
 
-| 홈 화면 (달력 + 리스트)      | 회고 메모 작성          | 월별 통계 화면 | 카테고리 분류 화면 |
-
-|----------------------------|---------------------------|----------------------------|----------------------------|
-
-| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/>
+| 홈 화면 (달력 + 리스트) | 회고 메모 작성 | 월별 통계 화면 | 카테고리 분류 화면 |
+|-------------------------|----------------|----------------|---------------------|
+| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/> |
 
   
 
@@ -246,19 +244,13 @@ HaruPocket
 
   
 
-| 항목 | 내용 |
-
-|------|------|
-
-| 언어 | Swift 5.9 |
-
-| UI 프레임워크 | SwiftUI |
-
-| 데이터 관리 | SwiftData (로컬 기반 ORM) |
-
-| IDE | Xcode 15 이상 |
-
-| 미리보기 구성 | `#Preview` + `.modelContainer(inMemory: true)` |
+| 항목           | 내용                                              |
+|----------------|---------------------------------------------------|
+| 언어           | Swift 6.0 이상                                    |
+| UI 프레임워크  | SwiftUI                                           |
+| 데이터 관리    | SwiftData (로컬 기반 ORM)                        |
+| IDE            | Xcode 16 이상                                     |
+| 미리보기 구성  | `#Preview` + `.modelContainer(inMemory: true)`   |
 
   
 
@@ -300,18 +292,14 @@ HaruPocket은 작은 규모의 프로젝트였지만,
 
 ---
 
-  
 
-## 👤 개발자
+## 🧑‍🤝‍🧑 팀원 소개
+|  ![image](https://avatars.githubusercontent.com/jihyeonjjang)   | ![image](https://avatars.githubusercontent.com/JaeHyun9802)     |   ![image](https://avatars.githubusercontent.com/unaexoo)  |  ![image](https://avatars.githubusercontent.com/JYC0609)    |
+| :---: | :---:| :---: | :---: |
+| [장지현](https://github.com/jihyeonjjang) | [고재현](https://github.com/JaeHyun9802) | [윤혜주](https://github.com/unaexoo) | [전윤철](https://github.com/JYC0609) |
+|iOS 개발 / 기획 / 디자인|iOS 개발 / 디자인 / PPT 제작|iOS 개발 / 데이터 모델링 / 발표|iOS 개발 / 문서 작성|
 
-| 이름  | 역할                    | GitHub                                             |
-| --- | --------------------- | -------------------------------------------------- |
-| 장지현 | iOS 개발 / 기획 / 디자인     | [@jihyeonjjang](https://github.com/jihyeonjjang)   |
-| 고재현 | iOS 개발 / 디자인 / PPT 제작 | [@gojaeheon](https://github.com/JaeHyun9802)         |
-| 윤혜주 | iOS 개발 / 데이터 모델링 / 발표 | [@unaexoo](https://github.com/unaexoo)         |
-| 전윤철 | iOS 개발 / 문서 작성        | [@yooncheoljeon](https://github.com/JYC0609) |
 
-  
 
 ## 🪪 라이선스
 
