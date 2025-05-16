@@ -195,6 +195,12 @@ struct DetailView: View {
         }
         .navigationDestination(isPresented: $showComposeView) {
             ComposeView(date: basics.date, basics: Binding($basics))
+                .onDisappear {
+                    spendingViewModel.hasLoadedCategory = false
+                    spendingViewModel.loadCategory(
+                        context: context
+                    )
+                }
         }
     }
 
