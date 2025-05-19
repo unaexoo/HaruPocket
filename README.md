@@ -212,9 +212,13 @@ HaruPocket
 
   
 
-| 홈 화면 (달력 + 리스트) | 회고 메모 작성 | 월별 통계 화면 | 카테고리 분류 화면 |
-|-------------------------|----------------|----------------|---------------------|
-| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/> |
+| 홈 화면 (달력 + 리스트) | 회고 메모 작성 | 월별 통계 화면 | 카테고리 분류 화면 | 사진 화면 |
+|-------------------------|----------------|----------------|---------------------|------------|
+| <img src="https://github.com/user-attachments/assets/5201b697-6663-4da7-897c-d5768a5b8624" width="190"/> | <img src="https://github.com/user-attachments/assets/a67a2154-f90a-4980-9484-d1b92063910a" width="190"/> | <img src="https://github.com/user-attachments/assets/f7cfac11-c081-4002-b4ed-869c08d7687d" width="190"/> | <img src="https://github.com/user-attachments/assets/e5c33f7d-3a42-496a-b2db-897ce5073db7" width="190"/> | <img src="https://github.com/user-attachments/assets/87e14716-19b4-407d-8c7e-09bda9377ba7" width="190"/> |
+
+
+
+
 
   
 
