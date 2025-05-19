@@ -301,10 +301,7 @@ HaruPocket은 작은 규모의 프로젝트였지만,
 
 
 
-## 🪪 라이선스
+## 🏆 3등 (이스트소프트 프론티어 앱 과정)
+![est_img](https://github.com/user-attachments/assets/940fb2c0-5df7-4436-bae6-fc7fba1c8906)
 
-  
 
-이 프로젝트는 MIT 라이선스를 따릅니다.
-
-자유롭게 사용, 수정, 배포할 수 있으며 반드시 라이선스 문구를 포함해주세요.
